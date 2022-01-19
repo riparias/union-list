@@ -2,9 +2,7 @@
 
 ## Rationale
 
-<!-- This section gives a quick description of what this repository is for. At least update the "... the data of (blank) ..." or edit as you see fit. -->
-
-This repository contains the functionality to standardize the data of _List of Invasive Alien Species of Union concern_ to a [Darwin Core checklist](https://www.gbif.org/dataset-classes) that can be harvested by [GBIF](http://www.gbif.org).
+This repository contains the functionality to standardize the data of [List of Invasive Alien Species of Union concern](https://ec.europa.eu/environment/nature/invasivealien/list/index_en.htm) to a [Darwin Core checklist](https://www.gbif.org/dataset-classes) that can be harvested by [GBIF](http://www.gbif.org).
 
 ## Workflow
 
