@@ -289,3 +289,67 @@ Save to CSV:
 ```{r}
 write_csv(taxon, here("data", "processed", "taxon.csv"), na = "")
 ```
+
+# Map vernacular names extension
+
+## Term mapping
+
+Create a `vernacular` dataframe starting from `input_data`:
+
+```{r}
+vernacular <- input_data
+```
+
+### TaxonID
+
+```{r}
+vernacular %<>% mutate(dwc_taxonID = taxon_id)
+```
+
+### vernacularName
+
+```{r}
+vernacular %<>% mutate(dwc_vernacularName = english_name)
+```
+
+### source
+
+The `source` is based on expert knowledge, set to `NA`:
+
+```{r}
+vernacular %<>% mutate(dwc_source = NA)
+```
+
+### language
+
+Set language code to `en` (English):
+
+```{r}
+vernacular %<>% mutate(dwc_language = "en")
+```
+
+## Post-processing
+
+Only keep the Darwin Core columns:
+
+```{r}
+vernacular %<>% select(starts_with("dwc_"))
+```
+
+Drop the `dwc_` prefix:
+
+```{r}
+colnames(vernacular) <- str_remove(colnames(vernacular), "dwc_")
+```
+
+Preview data:
+
+```{r}
+vernacular %>% head()
+```
+
+Save to CSV:
+
+```{r}
+write_csv(vernacular, here("data", "processed", "vernacularname.csv"), na = "")
+```

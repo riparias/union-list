@@ -11,7 +11,7 @@
 
 <meta name="author" content="Damiano Oldoni" />
 
-<meta name="date" content="2022-01-24" />
+<meta name="date" content="2022-01-25" />
 
 <title>Darwin Core mapping</title>
 
@@ -347,7 +347,7 @@ div.tocify {
 <h1 class="title toc-ignore">Darwin Core mapping</h1>
 <h3 class="subtitle">For: List of Invasive Alien Species of Union concern</h3>
 <h4 class="author">Damiano Oldoni</h4>
-<h4 class="date">2022-01-24</h4>
+<h4 class="date">2022-01-25</h4>
 
 </div>
 
@@ -609,6 +609,53 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
 </div>
 <p>Save to CSV:</p>
 <pre class="r"><code>write_csv(taxon, here(&quot;data&quot;, &quot;processed&quot;, &quot;taxon.csv&quot;), na = &quot;&quot;)</code></pre>
+</div>
+</div>
+<div id="map-vernacular-names-extension" class="section level1" number="5">
+<h1><span class="header-section-number">5</span> Map vernacular names extension</h1>
+<div id="term-mapping-1" class="section level2" number="5.1">
+<h2><span class="header-section-number">5.1</span> Term mapping</h2>
+<p>Create a <code>vernacular</code> dataframe starting from <code>input_data</code>:</p>
+<pre class="r"><code>vernacular &lt;- input_data</code></pre>
+<div id="taxonid-1" class="section level3" number="5.1.1">
+<h3><span class="header-section-number">5.1.1</span> TaxonID</h3>
+<pre class="r"><code>vernacular %&lt;&gt;% mutate(dwc_taxonID = taxon_id)</code></pre>
+<pre><code>## mutate: new variable &#39;dwc_taxonID&#39; (character) with 75 unique values and 0% NA</code></pre>
+</div>
+<div id="vernacularname" class="section level3" number="5.1.2">
+<h3><span class="header-section-number">5.1.2</span> vernacularName</h3>
+<pre class="r"><code>vernacular %&lt;&gt;% mutate(dwc_vernacularName = english_name)</code></pre>
+<pre><code>## mutate: new variable &#39;dwc_vernacularName&#39; (character) with 66 unique values and 0% NA</code></pre>
+</div>
+<div id="source" class="section level3" number="5.1.3">
+<h3><span class="header-section-number">5.1.3</span> source</h3>
+<p>The <code>source</code> is based on expert knowledge, set to <code>NA</code>:</p>
+<pre class="r"><code>vernacular %&lt;&gt;% mutate(dwc_source = NA)</code></pre>
+<pre><code>## mutate: new variable &#39;dwc_source&#39; (logical) with one unique value and 100% NA</code></pre>
+</div>
+<div id="language-1" class="section level3" number="5.1.4">
+<h3><span class="header-section-number">5.1.4</span> language</h3>
+<p>Set language code to <code>en</code> (English):</p>
+<pre class="r"><code>vernacular %&lt;&gt;% mutate(dwc_language = &quot;en&quot;)</code></pre>
+<pre><code>## mutate: new variable &#39;dwc_language&#39; (character) with one unique value and 0% NA</code></pre>
+</div>
+</div>
+<div id="post-processing-1" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Post-processing</h2>
+<p>Only keep the Darwin Core columns:</p>
+<pre class="r"><code>vernacular %&lt;&gt;% select(starts_with(&quot;dwc_&quot;))</code></pre>
+<pre><code>## select: dropped 6 variables (scientific_name, english_name, entry_into_force, kingdom, rankmarker, …)</code></pre>
+<p>Drop the <code>dwc_</code> prefix:</p>
+<pre class="r"><code>colnames(vernacular) &lt;- str_remove(colnames(vernacular), &quot;dwc_&quot;)</code></pre>
+<p>Preview data:</p>
+<pre class="r"><code>vernacular %&gt;% head()</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["taxonID"],"name":[1],"type":["chr"],"align":["left"]},{"label":["vernacularName"],"name":[2],"type":["chr"],"align":["left"]},{"label":["source"],"name":[3],"type":["lgl"],"align":["right"]},{"label":["language"],"name":[4],"type":["chr"],"align":["left"]}],"data":[{"1":"union-list:taxon:e75968a892a25181e92a7a16e2480191","2":"Golden wreath wattle","3":"NA","4":"en"},{"1":"union-list:taxon:49a114c68be9999ff8cb203bc418d9df","2":"Golden wreath wattle","3":"NA","4":"en"},{"1":"union-list:taxon:88fab226290e72ddf6e538d934aa58a6","2":"Common myna","3":"NA","4":"en"},{"1":"union-list:taxon:dc1a9c7d8ecbea2c17659b65aac590ef","2":"Tree of heaven","3":"NA","4":"en"},{"1":"union-list:taxon:52f42b74b3d05c74023d8a75c402989d","2":"Egyptian goose","3":"NA","4":"en"},{"1":"union-list:taxon:b7674f5e6e0f6beed1f1360ed992f885","2":"Alligator weed","3":"NA","4":"en"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Save to CSV:</p>
+<pre class="r"><code>write_csv(vernacular, here(&quot;data&quot;, &quot;processed&quot;, &quot;vernacularname.csv&quot;), na = &quot;&quot;)</code></pre>
 </div>
 </div>
 
