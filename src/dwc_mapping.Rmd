@@ -132,7 +132,7 @@ taxon <- input_data
 
 ## Term mapping
 
-Map the data to [Darwin Core Taxon](http://rs.gbif.org/core/dwc_taxon_2015-04-24.xml).
+Map the data to [Darwin Core Taxon](https://rs.gbif.org/core/dwc_taxon_2022-02-02.xml).
 
 Start with record-level terms which contain metadata about the dataset (which is generally the same for all records).
 
@@ -154,16 +154,16 @@ taxon %<>% mutate(dwc_license = "http://creativecommons.org/publicdomain/zero/1.
 taxon %<>% mutate(dwc_rightsHolder = "INBO")
 ```
 
-### datasetID
-
-```{r}
-taxon %<>% mutate(dwc_datasetID = "")
-```
-
 ### institutionCode
 
 ```{r}
 taxon %<>% mutate(dwc_institutionCode = "INBO")
+```
+
+### datasetID
+
+```{r}
+taxon %<>% mutate(dwc_datasetID = "")
 ```
 
 ### datasetName
