@@ -2,11 +2,16 @@
 
 ## Rationale
 
-This repository contains the functionality to standardize the data of [List of Invasive Alien Species of Union concern](https://ec.europa.eu/environment/nature/invasivealien/list/index_en.htm) to a [Darwin Core checklist](https://www.gbif.org/dataset-classes) that can be harvested by [GBIF](http://www.gbif.org). The raw data in `data/raw` are based on the [consolidated version (2019)](https://ec.europa.eu/environment/nature/invasivealien/docs/R_2016_1141_Union-list-2019-consolidation.pdf) with scientific names and taking into account modified taxonomy (synonyms).
+This repository contains the functionality to standardize the data of [List of Invasive Alien Species of Union concern](https://ec.europa.eu/environment/nature/invasivealien/list/index_en.htm) to a [Darwin Core checklist](https://www.gbif.org/dataset-classes) that can be harvested by [GBIF](http://www.gbif.org).
 
 ## Workflow
 
 [source data](data/raw) → Darwin Core [mapping script](src/dwc_mapping.Rmd) → generated [Darwin Core files](data/processed)
+
+The source data are manually created from:
+
+- [2019 consolidated version pdf](https://ec.europa.eu/environment/nature/invasivealien/docs/R_2016_1141_Union-list-2019-consolidation.pdf): scientific names with authors, synonym names (in parenthesis) with authors
+- [web page](https://ec.europa.eu/environment/nature/invasivealien/list/index_en.htm): English name, entry into force, kingdom (table headers)
 
 ## Published dataset
 
