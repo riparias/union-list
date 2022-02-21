@@ -68,12 +68,13 @@ input_data %>% head(n = 5)
 
 ## Tidy data
 
-The column `scientific_name_alternative` contains recent taxonomic changes. We remove this column by making new rows for it and copying the information related to English vernacular name (column `english_name`), entry into force date (column `entry_into_force`) and kingdom (column `kingdom`):
+The column `scientific_name_synonym` contains synonym names. We'll create new rows for the values in this column, keeping their association with the original scientific name (`accepted_scientific_name`):
 
 ```{r}
-input_data %<>% 
+input_data %<>%
+  mutate(scientific_name_accepted = scientific_name) %>%
   pivot_longer(
-    starts_with("scientific_name"),
+    c("scientific_name", "scientific_name_synonym"),
     names_to = "col_name", # help column
     values_to = "scientific_name"
   ) %>%
@@ -82,10 +83,10 @@ input_data %<>%
   filter(!is.na(scientific_name))
 ```
 
-This operation results in the following data.frame:
+Preview result of this operation:
 
 ```{r}
-input_data
+input_data %>% head()
 ```
 
 ## Taxon IDs
@@ -100,6 +101,17 @@ input_data %<>% mutate(taxon_id = paste(
   vdigest(paste(scientific_name, kingdom), algo = "md5"),
   sep = ":"
 ))
+```
+
+Join on `scientific_name_accepted` to get the `taxon_id_accepted`:
+
+```{r}
+input_data %<>%
+  left_join(
+    select(input_data, "scientific_name", "taxon_id"),
+    by = c("scientific_name_accepted" = "scientific_name"),
+    suffix = c("", "_accepted")
+  )
 ```
 
 ## Preview data
