@@ -8,6 +8,11 @@ This repository contains the functionality to standardize the data of [List of I
 
 [source data](data/raw) → Darwin Core [mapping script](src/dwc_mapping.Rmd) → generated [Darwin Core files](data/processed)
 
+The source data are manually created from:
+
+- [2019 consolidated version pdf](https://ec.europa.eu/environment/nature/invasivealien/docs/R_2016_1141_Union-list-2019-consolidation.pdf): scientific names with authors, synonym names (in parenthesis) with authors
+- [web page](https://ec.europa.eu/environment/nature/invasivealien/list/index_en.htm): English name, entry into force, kingdom (table headers)
+
 ## Published dataset
 
 <!-- This section provides links to the published dataset. Obviously, you'll only be able to add those links once you have published your dataset. 😋 -->
