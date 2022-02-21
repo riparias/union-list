@@ -192,10 +192,22 @@ The following terms contain information about the taxon:
 taxon %<>% mutate(dwc_taxonID = taxon_id)
 ```
 
+### acceptedNameUsageID
+
+```{r}
+taxon %<>% mutate(dwc_acceptedNameUsageID = taxon_id_accepted)
+```
+
 ### scientificName
 
 ```{r}
 taxon %<>% mutate(dwc_scientificName = scientific_name)
+```
+
+### acceptedNameUsage
+
+```{r}
+taxon %<>% mutate(dwc_acceptedNameUsage = scientific_name_accepted)
 ```
 
 ### kingdom
@@ -236,6 +248,15 @@ Show mapped values:
 taxon %>%
   filter(is.na(dwc_taxonRank)) %>%
   select(dwc_scientificName)
+```
+
+### taxonomicStatus
+
+```{r}
+taxon %<>% mutate(dwc_taxonomicStatus = case_when(
+  taxon_id == taxon_id_accepted ~ "accepted",
+  TRUE ~ "synonym"
+))
 ```
 
 ## Post-processing
