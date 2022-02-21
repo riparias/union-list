@@ -11,11 +11,6 @@ output:
     toc: yes
     toc_depth: 3
     toc_float: yes
-#  pdf_document:
-#    df_print: kable
-#    number_sections: yes
-#    toc: yes
-#    toc_depth: 3
 ---
 
 # Setup 
@@ -28,7 +23,14 @@ Install required libraries (only if the libraries have not been installed before
 
 ```{r}
 installed <- rownames(installed.packages())
-required <- c("tidyverse", "tidylog", "magrittr", "here", "janitor", "digest", "rgbif")
+required <- c(
+  "tidyverse",
+  "tidylog",
+  "magrittr",
+  "here",
+  "janitor",
+  "digest"
+)
 if (!all(required %in% installed)) {
   install.packages(required[!required %in% installed])
 }
@@ -43,7 +45,6 @@ library(magrittr)       # To use %<>% pipes
 library(here)           # To find files
 library(janitor)        # To clean input data
 library(digest)         # To generate hashes
-library(rgbif)          # To use GBIF services
 ```
 
 # Read source data
@@ -51,7 +52,10 @@ library(rgbif)          # To use GBIF services
 Create a data frame `input_data` from the source data:
 
 ```{r}
-input_data <- read_tsv(file = here("data", "raw", "list_of_invasive_alien_species_of_union_concern.tsv")) 
+input_data <- read_tsv(
+  file = here("data", "raw", "list_of_invasive_alien_species_of_union_concern.tsv"),
+  show_col_types = FALSE
+)
 ```
 
 Preview data:
@@ -68,9 +72,11 @@ The column `scientific_name_alternative` contains recent taxonomic changes. We r
 
 ```{r}
 input_data %<>% 
-  pivot_longer(starts_with("scientific_name"),
-               names_to = "col_name", # help column
-               values_to = "scientific_name") %>%
+  pivot_longer(
+    starts_with("scientific_name"),
+    names_to = "col_name", # help column
+    values_to = "scientific_name"
+  ) %>%
   select(-col_name) %>%
   relocate(scientific_name) %>%
   filter(!is.na(scientific_name))
@@ -80,36 +86,6 @@ This operation results in the following data.frame:
 
 ```{r}
 input_data
-```
-
-## Scientific names
-
-Use the [GBIF nameparser](https://www.gbif.org/tools/name-parser) to retrieve nomenclatural information for the scientific names in the checklist:
-
-```{r}
-parsed_names <- input_data %>%
-  distinct(scientific_name) %>%
-  pull() %>% # Create vector from dataframe
-  parsenames() # An rgbif function
-```
-
-Show scientific names with nomenclatural issues, i.e. not of `type = SCIENTIFIC` or that could not be fully parsed. Note: these are not necessarily incorrect.
-
-```{r}
-parsed_names %>%
-  select(scientificname, type, parsed, parsedpartially, rankmarker) %>%
-  filter(!(type == "SCIENTIFIC" & parsed == "TRUE" & parsedpartially == "FALSE"))
-```
-
-## Taxon ranks
-
-The nameparser function also provides information about the rank of the taxon (in `rankmarker`). Here we join this information with our checklist. Cleaning these ranks will be done in the Taxon Core mapping:
-
-```{r}
-input_data %<>% left_join(
-  parsed_names %>%
-  select(scientificname, rankmarker),
-  by = c("scientific_name" = "scientificname"))
 ```
 
 ## Taxon IDs
@@ -128,14 +104,14 @@ input_data %<>% mutate(taxon_id = paste(
 
 ## Preview data
 
-Show the number of taxa and distributions per kingdom and rank:
+Show the number of taxa and distributions per kingdom:
 
 ```{r}
 input_data %>%
-  group_by(kingdom, rankmarker) %>%
+  group_by(kingdom) %>%
   summarize(
     `# taxa` = n_distinct(taxon_id),
-    `# distributions` = n()
+    `# rows` = n()
   ) %>%
   adorn_totals("row")
 ```
@@ -228,40 +204,26 @@ taxon %<>% mutate(dwc_kingdom = kingdom)
 
 ### taxonRank
 
-Inspect values:
-
-```{r}
-taxon %>%
-  group_by(rankmarker) %>%
-  count()
-```
-
 Map values by recoding to the [GBIF rank vocabulary](http://rs.gbif.org/vocabulary/gbif/rank_2015-04-24.xml):
 
 ```{r}
-taxon %<>% mutate(dwc_taxonRank = recode(rankmarker,
-  "agg."      = "speciesAggregate",
-  "f."         = "form",
-  "infrasp."  = "infraspecificname",
-  "sp."       = "species",
-  "var."      = "variety",
-  .default    = "",
-  .missing    = ""
+taxon %<>% mutate(dwc_taxonRank = case_when(
+  # Scientific names often end with authors, so regex only considers beginning
+  scientific_name == "Lespedeza juncea var. sericea (Thunb.) Lace & Hauech" ~ "variety",
+  scientific_name == "Lithobates (Rana) catesbeianus Shaw, 1802" ~ "species",
+  scientific_name == "Procambarus fallax (Hagen, 1870) f. virginalis" ~ "form",
+  scientific_name == "Pueraria montana (Lour.) Merr. var. lobata (Willd.)" ~ "variety",
+  scientific_name == "Vespa velutina nigrithorax de Buysson, 1905" ~ "subspecies",
+  str_detect(scientific_name, "^[A-Z][a-z]+ [a-z]+") ~ "species"
 ))
 ```
 
-Inspect mapped values: 
+Show mapped values: 
 
 ```{r}
 taxon %>%
-  group_by(rankmarker, dwc_taxonRank) %>%
-  count()
-```
-
-### nomenclaturalCode
-
-```{r}
-taxon %<>% mutate(dwc_nomenclaturalCode = "ICZN")
+  filter(is.na(dwc_taxonRank)) %>%
+  select(dwc_scientificName)
 ```
 
 ## Post-processing
@@ -292,13 +254,17 @@ write_csv(taxon, here("data", "processed", "taxon.csv"), na = "")
 
 # Map vernacular names extension
 
-## Term mapping
+## Pre-processing
 
 Create a `vernacular` dataframe starting from `input_data`:
 
 ```{r}
 vernacular <- input_data
 ```
+
+## Term mapping
+
+Map the data to [Vernacular Names](http://rs.gbif.org/extension/gbif/1.0/vernacularname.xml).
 
 ### TaxonID
 
@@ -310,14 +276,6 @@ vernacular %<>% mutate(dwc_taxonID = taxon_id)
 
 ```{r}
 vernacular %<>% mutate(dwc_vernacularName = english_name)
-```
-
-### source
-
-The `source` is based on expert knowledge, set to `NA`:
-
-```{r}
-vernacular %<>% mutate(dwc_source = NA)
 ```
 
 ### language
