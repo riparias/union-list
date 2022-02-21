@@ -275,11 +275,16 @@ $(document).ready(function () {
 <h1>List of Invasive Alien Species of Union concern</h1>
 <div id="rationale" class="section level2">
 <h2>Rationale</h2>
-<p>This repository contains the functionality to standardize the data of <a href="https://ec.europa.eu/environment/nature/invasivealien/list/index_en.htm">List of Invasive Alien Species of Union concern</a> to a <a href="https://www.gbif.org/dataset-classes">Darwin Core checklist</a> that can be harvested by <a href="http://www.gbif.org">GBIF</a>. The raw data in <code>data/raw</code> are based on the <a href="https://ec.europa.eu/environment/nature/invasivealien/docs/R_2016_1141_Union-list-2019-consolidation.pdf">consolidated version (2019)</a> with scientific names and taking into account modified taxonomy (synonyms).</p>
+<p>This repository contains the functionality to standardize the data of <a href="https://ec.europa.eu/environment/nature/invasivealien/list/index_en.htm">List of Invasive Alien Species of Union concern</a> to a <a href="https://www.gbif.org/dataset-classes">Darwin Core checklist</a> that can be harvested by <a href="http://www.gbif.org">GBIF</a>.</p>
 </div>
 <div id="workflow" class="section level2">
 <h2>Workflow</h2>
 <p><a href="data/raw">source data</a> → Darwin Core <a href="src/dwc_mapping.Rmd">mapping script</a> → generated <a href="data/processed">Darwin Core files</a></p>
+<p>The source data are manually created from:</p>
+<ul>
+<li><a href="https://ec.europa.eu/environment/nature/invasivealien/docs/R_2016_1141_Union-list-2019-consolidation.pdf">2019 consolidated version pdf</a>: scientific names with authors, synonym names (in parenthesis) with authors</li>
+<li><a href="https://ec.europa.eu/environment/nature/invasivealien/list/index_en.htm">web page</a>: English name, entry into force, kingdom (table headers)</li>
+</ul>
 </div>
 <div id="published-dataset" class="section level2">
 <h2>Published dataset</h2>

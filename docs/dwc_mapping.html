@@ -386,7 +386,7 @@ library(digest)         # To generate hashes</code></pre>
 <pre class="r"><code>input_data %&gt;% head(n = 5)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["scientific_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["scientific_name_alternative"],"name":[2],"type":["chr"],"align":["left"]},{"label":["english_name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["entry_into_force"],"name":[4],"type":["chr"],"align":["left"]},{"label":["kingdom"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"Acacia saligna (Labill.) H.L.Wendl.","2":"Acacia cyanophylla Lindl.","3":"Golden wreath wattle","4":"15 August 2019","5":"Plantae"},{"1":"Acridotheres tristis Linnaeus, 1766","2":"NA","3":"Common myna","4":"15 August 2019","5":"Animalia"},{"1":"Ailanthus altissima (Mill.) Swingle","2":"NA","3":"Tree of heaven","4":"15 August 2019","5":"Plantae"},{"1":"Alopochen aegyptiacus Linnaeus, 1766","2":"NA","3":"Egyptian goose","4":"2 August 2017","5":"Animalia"},{"1":"Alternanthera philoxeroides (Mart.) Griseb.","2":"NA","3":"Alligator weed","4":"2 August 2017","5":"Plantae"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["scientific_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["scientific_name_synonym"],"name":[2],"type":["chr"],"align":["left"]},{"label":["english_name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["entry_into_force"],"name":[4],"type":["chr"],"align":["left"]},{"label":["kingdom"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"Acacia saligna (Labill.) H.L.Wendl.","2":"Acacia cyanophylla Lindl.","3":"Golden wreath wattle","4":"15 August 2019","5":"Plantae"},{"1":"Acridotheres tristis Linnaeus, 1766","2":"NA","3":"Common myna","4":"15 August 2019","5":"Animalia"},{"1":"Ailanthus altissima (Mill.) Swingle","2":"NA","3":"Tree of heaven","4":"15 August 2019","5":"Plantae"},{"1":"Alopochen aegyptiacus Linnaeus, 1766","2":"NA","3":"Egyptian goose","4":"2 August 2017","5":"Animalia"},{"1":"Alternanthera philoxeroides (Mart.) Griseb.","2":"NA","3":"Alligator weed","4":"2 August 2017","5":"Plantae"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -394,25 +394,27 @@ library(digest)         # To generate hashes</code></pre>
 <h1 number="3"><span class="header-section-number">3</span> Process source data</h1>
 <div id="tidy-data" class="section level2" number="3.1">
 <h2 number="3.1"><span class="header-section-number">3.1</span> Tidy data</h2>
-<p>The column <code>scientific_name_alternative</code> contains recent taxonomic changes. We remove this column by making new rows for it and copying the information related to English vernacular name (column <code>english_name</code>), entry into force date (column <code>entry_into_force</code>) and kingdom (column <code>kingdom</code>):</p>
-<pre class="r"><code>input_data %&lt;&gt;% 
+<p>The column <code>scientific_name_synonym</code> contains synonym names. We’ll create new rows for the values in this column, keeping their association with the original scientific name (<code>accepted_scientific_name</code>):</p>
+<pre class="r"><code>input_data %&lt;&gt;%
+  mutate(scientific_name_accepted = scientific_name) %&gt;%
   pivot_longer(
-    starts_with(&quot;scientific_name&quot;),
+    c(&quot;scientific_name&quot;, &quot;scientific_name_synonym&quot;),
     names_to = &quot;col_name&quot;, # help column
     values_to = &quot;scientific_name&quot;
   ) %&gt;%
   select(-col_name) %&gt;%
   relocate(scientific_name) %&gt;%
   filter(!is.na(scientific_name))</code></pre>
-<pre><code>## pivot_longer: reorganized (scientific_name_alternative) into (col_name) [was 66x5, now 132x5]</code></pre>
+<pre><code>## mutate: new variable &#39;scientific_name_accepted&#39; (character) with 66 unique values and 0% NA</code></pre>
+<pre><code>## pivot_longer: reorganized (scientific_name_synonym) into (col_name) [was 66x6, now 132x6]</code></pre>
 <pre><code>## select: dropped one variable (col_name)</code></pre>
-<pre><code>## relocate: columns reordered (scientific_name, english_name, entry_into_force, kingdom)</code></pre>
+<pre><code>## relocate: columns reordered (scientific_name, english_name, entry_into_force, kingdom, scientific_name_accepted)</code></pre>
 <pre><code>## filter: removed 57 rows (43%), 75 rows remaining</code></pre>
-<p>This operation results in the following data.frame:</p>
-<pre class="r"><code>input_data</code></pre>
+<p>Preview result of this operation:</p>
+<pre class="r"><code>input_data %&gt;% head()</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["scientific_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["english_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["entry_into_force"],"name":[3],"type":["chr"],"align":["left"]},{"label":["kingdom"],"name":[4],"type":["chr"],"align":["left"]}],"data":[{"1":"Acacia saligna (Labill.) H.L.Wendl.","2":"Golden wreath wattle","3":"15 August 2019","4":"Plantae"},{"1":"Acacia cyanophylla Lindl.","2":"Golden wreath wattle","3":"15 August 2019","4":"Plantae"},{"1":"Acridotheres tristis Linnaeus, 1766","2":"Common myna","3":"15 August 2019","4":"Animalia"},{"1":"Ailanthus altissima (Mill.) Swingle","2":"Tree of heaven","3":"15 August 2019","4":"Plantae"},{"1":"Alopochen aegyptiacus Linnaeus, 1766","2":"Egyptian goose","3":"2 August 2017","4":"Animalia"},{"1":"Alternanthera philoxeroides (Mart.) Griseb.","2":"Alligator weed","3":"2 August 2017","4":"Plantae"},{"1":"Andropogon virginicus L.","2":"Broomsedge bluestem","3":"15 August 2019","4":"Plantae"},{"1":"Arthurdendyus triangulatus (Dendy, 1894) Jones & Gerard (1999)","2":"New Zealand flatworm","3":"15 August 2019","4":"Animalia"},{"1":"Asclepias syriaca L.","2":"Common milkweed","3":"2 August 2017","4":"Plantae"},{"1":"Baccharis halimifolia L.","2":"Eastern baccharis","3":"3 August 2016","4":"Plantae"},{"1":"Cabomba caroliniana Gray","2":"Fanwort","3":"3 August 2016","4":"Plantae"},{"1":"Callosciurus erythraeus Pallas, 1779","2":"Pallas' squirrel","3":"3 August 2016","4":"Animalia"},{"1":"Cardiospermum grandiflorum Sw.","2":"Balloon vine","3":"15 August 2019","4":"Plantae"},{"1":"Cortaderia jubata (Lemoine ex Carrière) Stapf","2":"Purple pampas grass","3":"15 August 2019","4":"Plantae"},{"1":"Corvus splendens Viellot, 1817","2":"Indian house crow","3":"3 August 2016","4":"Animalia"},{"1":"Ehrharta calycina Sm.","2":"Perrenial veldt grass","3":"15 August 2019","4":"Plantae"},{"1":"Eichhornia crassipes (Martius) Solms","2":"Water hyacinth","3":"3 August 2016","4":"Plantae"},{"1":"Elodea nuttallii (Planch.) St. John","2":"Nuttall's waterweed","3":"2 August 2017","4":"Plantae"},{"1":"Eriocheir sinensis H. Milne Edwards, 1854","2":"Chinese mittencrab","3":"3 August 2016","4":"Animalia"},{"1":"Gunnera tinctoria (Molina) Mirbel","2":"Chilean rhubarb","3":"2 August 2017","4":"Plantae"},{"1":"Gymnocoronis spilanthoides (D.Don ex Hook. & Arn.) DC.","2":"Senegal tea plant","3":"15 August 2019","4":"Plantae"},{"1":"Heracleum mantegazzianum Sommier & Levier","2":"Giant hogweed","3":"2 August 2017","4":"Plantae"},{"1":"Heracleum persicum Fischer","2":"Persian hogweed","3":"3 August 2016","4":"Plantae"},{"1":"Heracleum sosnowskyi Mandenova","2":"Sosnowsky's hogweed","3":"3 August 2016","4":"Plantae"},{"1":"Herpestes javanicus É. Geoffroy Saint-Hilaire, 1818","2":"Small Asian mongoose","3":"3 August 2016","4":"Animalia"},{"1":"Humulus scandens (Lour.) Merr.","2":"Japanese hop","3":"15 August 2019","4":"Plantae"},{"1":"Hydrocotyle ranunculoides L. f.","2":"Floating pennywort","3":"3 August 2016","4":"Plantae"},{"1":"Impatiens glandulifera Royle","2":"Himalayan balsam","3":"2 August 2017","4":"Plantae"},{"1":"Lagarosiphon major (Ridley) Moss","2":"Curly waterweed","3":"3 August 2016","4":"Plantae"},{"1":"Lepomis gibbosus Linnaeus, 1758","2":"Pumpkinseed","3":"15 August 2019","4":"Animalia"},{"1":"Lespedeza cuneata (Dum.Cours.) G.Don","2":"Chinese bushclover","3":"15 August 2019","4":"Plantae"},{"1":"Lespedeza juncea var. sericea (Thunb.) Lace & Hauech","2":"Chinese bushclover","3":"15 August 2019","4":"Plantae"},{"1":"Lithobates (Rana) catesbeianus Shaw, 1802","2":"American bullfrog","3":"3 August 2016","4":"Animalia"},{"1":"Ludwigia grandiflora (Michx.) Greuter & Burdet","2":"Water-primrose","3":"3 August 2016","4":"Plantae"},{"1":"Ludwigia peploides (Kunth) P.H. Raven","2":"Floating primrose-willow","3":"3 August 2016","4":"Plantae"},{"1":"Lygodium japonicum (Thunb.) Sw.","2":"Vine-like fern","3":"15 August 2019","4":"Plantae"},{"1":"Lysichiton americanus Hultén and St. John","2":"American skunk cabbage","3":"3 August 2016","4":"Plantae"},{"1":"Microstegium vimineum (Trin.) A. Camus","2":"Japanese stiltgrass","3":"2 August 2017","4":"Plantae"},{"1":"Muntiacus reevesi Ogilby, 1839","2":"Muntjac deer","3":"3 August 2016","4":"Animalia"},{"1":"Myocastor coypus Molina, 1782","2":"Coypu","3":"3 August 2016","4":"Animalia"},{"1":"Myriophyllum aquaticum (Vell.) Verdc.","2":"Parrot's feather","3":"3 August 2016","4":"Plantae"},{"1":"Myriophyllum heterophyllum Michaux","2":"Broadleaf watermilfoil","3":"2 August 2017","4":"Plantae"},{"1":"Nasua nasua Linnaeus, 1766","2":"Coati","3":"3 August 2016","4":"Animalia"},{"1":"Nyctereutes procyonoides Gray, 1834","2":"Raccoon dog","3":"2 February 2019","4":"Animalia"},{"1":"Ondatra zibethicus Linnaeus, 1766","2":"Muskrat","3":"2 August 2017","4":"Animalia"},{"1":"Orconectes limosus Rafinesque, 1817","2":"Spiny-cheek crayfish","3":"3 August 2016","4":"Animalia"},{"1":"Faxonius limosus Rafinesque, 1817","2":"Spiny-cheek crayfish","3":"3 August 2016","4":"Animalia"},{"1":"Orconectes virilis Hagen, 1870","2":"Virile crayfish","3":"3 August 2016","4":"Animalia"},{"1":"Faxonius virilis Hagen, 1870","2":"Virile crayfish","3":"3 August 2016","4":"Animalia"},{"1":"Oxyura jamaicensis Gmelin, 1789","2":"Ruddy duck","3":"3 August 2016","4":"Animalia"},{"1":"Pacifastacus leniusculus Dana, 1852","2":"Signal crayfish","3":"3 August 2016","4":"Animalia"},{"1":"Parthenium hysterophorus L.","2":"Whitetop weed","3":"3 August 2016","4":"Plantae"},{"1":"Pennisetum setaceum (Forssk.) Chiov.","2":"Crimson fountaingrass","3":"2 August 2017","4":"Plantae"},{"1":"Perccottus glenii Dybowski, 1877","2":"Amur sleeper","3":"3 August 2016","4":"Animalia"},{"1":"Persicaria perfoliata (L.) H. Gross","2":"Asiatic tearthumb","3":"3 August 2016","4":"Plantae"},{"1":"Polygonum perfoliatum L.","2":"Asiatic tearthumb","3":"3 August 2016","4":"Plantae"},{"1":"Plotosus lineatus (Thunberg, 1787)","2":"Striped eel catfish","3":"15 August 2019","4":"Animalia"},{"1":"Procambarus clarkii Girard, 1852","2":"Red swamp crayfish","3":"3 August 2016","4":"Animalia"},{"1":"Procambarus fallax (Hagen, 1870) f. virginalis","2":"Marbled crayfish","3":"3 August 2016","4":"Animalia"},{"1":"Procambarus virginalis Lyko, 2017","2":"Marbled crayfish","3":"3 August 2016","4":"Animalia"},{"1":"Procyon lotor Linnaeus, 1758","2":"Raccoon","3":"3 August 2016","4":"Animalia"},{"1":"Prosopis juliflora (Sw.) DC.","2":"Mesquite","3":"15 August 2019","4":"Plantae"},{"1":"Pseudorasbora parva Temminck & Schlegel, 1846","2":"Stone moroko","3":"3 August 2016","4":"Animalia"},{"1":"Pueraria montana (Lour.) Merr. var. lobata (Willd.)","2":"Kudzu vine","3":"3 August 2016","4":"Plantae"},{"1":"Pueraria lobata (Willd.) Ohwi","2":"Kudzu vine","3":"3 August 2016","4":"Plantae"},{"1":"Salvinia molesta D.S. Mitch.","2":"Salvinia moss","3":"15 August 2019","4":"Plantae"},{"1":"Salvinia adnata Desv.","2":"Salvinia moss","3":"15 August 2019","4":"Plantae"},{"1":"Sciurus carolinensis Gmelin,1788","2":"Grey squirrel","3":"3 August 2016","4":"Animalia"},{"1":"Sciurus niger Linnaeus, 1758","2":"Fox squirrel","3":"3 August 2016","4":"Animalia"},{"1":"Tamias sibiricus Laxmann, 1769","2":"Siberian chipmunk","3":"3 August 2016","4":"Animalia"},{"1":"Threskiornis aethiopicus Latham, 1790","2":"Sacred ibis","3":"3 August 2016","4":"Animalia"},{"1":"Trachemys scripta Schoepff, 1792","2":"Red-eared, yellow-bellied and Cumberland sliders","3":"3 August 2016","4":"Animalia"},{"1":"Triadica sebifera (L.) Small","2":"Chinese tallow","3":"15 August 2019","4":"Plantae"},{"1":"Sapium sebiferum (L.) Roxb.","2":"Chinese tallow","3":"15 August 2019","4":"Plantae"},{"1":"Vespa velutina nigrithorax de Buysson, 1905","2":"Asian hornet","3":"3 August 2016","4":"Animalia"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["scientific_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["english_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["entry_into_force"],"name":[3],"type":["chr"],"align":["left"]},{"label":["kingdom"],"name":[4],"type":["chr"],"align":["left"]},{"label":["scientific_name_accepted"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"Acacia saligna (Labill.) H.L.Wendl.","2":"Golden wreath wattle","3":"15 August 2019","4":"Plantae","5":"Acacia saligna (Labill.) H.L.Wendl."},{"1":"Acacia cyanophylla Lindl.","2":"Golden wreath wattle","3":"15 August 2019","4":"Plantae","5":"Acacia saligna (Labill.) H.L.Wendl."},{"1":"Acridotheres tristis Linnaeus, 1766","2":"Common myna","3":"15 August 2019","4":"Animalia","5":"Acridotheres tristis Linnaeus, 1766"},{"1":"Ailanthus altissima (Mill.) Swingle","2":"Tree of heaven","3":"15 August 2019","4":"Plantae","5":"Ailanthus altissima (Mill.) Swingle"},{"1":"Alopochen aegyptiacus Linnaeus, 1766","2":"Egyptian goose","3":"2 August 2017","4":"Animalia","5":"Alopochen aegyptiacus Linnaeus, 1766"},{"1":"Alternanthera philoxeroides (Mart.) Griseb.","2":"Alligator weed","3":"2 August 2017","4":"Plantae","5":"Alternanthera philoxeroides (Mart.) Griseb."}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -427,6 +429,20 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
   sep = &quot;:&quot;
 ))</code></pre>
 <pre><code>## mutate: new variable &#39;taxon_id&#39; (character) with 75 unique values and 0% NA</code></pre>
+<p>Join on <code>scientific_name_accepted</code> to get the <code>taxon_id_accepted</code>:</p>
+<pre class="r"><code>input_data %&lt;&gt;%
+  left_join(
+    select(input_data, &quot;scientific_name&quot;, &quot;taxon_id&quot;),
+    by = c(&quot;scientific_name_accepted&quot; = &quot;scientific_name&quot;),
+    suffix = c(&quot;&quot;, &quot;_accepted&quot;)
+  )</code></pre>
+<pre><code>## select: dropped 4 variables (english_name, entry_into_force, kingdom, scientific_name_accepted)</code></pre>
+<pre><code>## left_join: added one column (taxon_id_accepted)</code></pre>
+<pre><code>##            &gt; rows only in x    0</code></pre>
+<pre><code>##            &gt; rows only in y  ( 9)</code></pre>
+<pre><code>##            &gt; matched rows     75</code></pre>
+<pre><code>##            &gt;                 ====</code></pre>
+<pre><code>##            &gt; rows total       75</code></pre>
 </div>
 <div id="preview-data" class="section level2" number="3.3">
 <h2 number="3.3"><span class="header-section-number">3.3</span> Preview data</h2>
@@ -449,7 +465,7 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
 <pre class="r"><code>input_data %&gt;% head()</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["scientific_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["english_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["entry_into_force"],"name":[3],"type":["chr"],"align":["left"]},{"label":["kingdom"],"name":[4],"type":["chr"],"align":["left"]},{"label":["taxon_id"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"Acacia saligna (Labill.) H.L.Wendl.","2":"Golden wreath wattle","3":"15 August 2019","4":"Plantae","5":"union-list:taxon:e75968a892a25181e92a7a16e2480191"},{"1":"Acacia cyanophylla Lindl.","2":"Golden wreath wattle","3":"15 August 2019","4":"Plantae","5":"union-list:taxon:49a114c68be9999ff8cb203bc418d9df"},{"1":"Acridotheres tristis Linnaeus, 1766","2":"Common myna","3":"15 August 2019","4":"Animalia","5":"union-list:taxon:88fab226290e72ddf6e538d934aa58a6"},{"1":"Ailanthus altissima (Mill.) Swingle","2":"Tree of heaven","3":"15 August 2019","4":"Plantae","5":"union-list:taxon:dc1a9c7d8ecbea2c17659b65aac590ef"},{"1":"Alopochen aegyptiacus Linnaeus, 1766","2":"Egyptian goose","3":"2 August 2017","4":"Animalia","5":"union-list:taxon:52f42b74b3d05c74023d8a75c402989d"},{"1":"Alternanthera philoxeroides (Mart.) Griseb.","2":"Alligator weed","3":"2 August 2017","4":"Plantae","5":"union-list:taxon:b7674f5e6e0f6beed1f1360ed992f885"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["scientific_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["english_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["entry_into_force"],"name":[3],"type":["chr"],"align":["left"]},{"label":["kingdom"],"name":[4],"type":["chr"],"align":["left"]},{"label":["scientific_name_accepted"],"name":[5],"type":["chr"],"align":["left"]},{"label":["taxon_id"],"name":[6],"type":["chr"],"align":["left"]},{"label":["taxon_id_accepted"],"name":[7],"type":["chr"],"align":["left"]}],"data":[{"1":"Acacia saligna (Labill.) H.L.Wendl.","2":"Golden wreath wattle","3":"15 August 2019","4":"Plantae","5":"Acacia saligna (Labill.) H.L.Wendl.","6":"union-list:taxon:e75968a892a25181e92a7a16e2480191","7":"union-list:taxon:e75968a892a25181e92a7a16e2480191"},{"1":"Acacia cyanophylla Lindl.","2":"Golden wreath wattle","3":"15 August 2019","4":"Plantae","5":"Acacia saligna (Labill.) H.L.Wendl.","6":"union-list:taxon:49a114c68be9999ff8cb203bc418d9df","7":"union-list:taxon:e75968a892a25181e92a7a16e2480191"},{"1":"Acridotheres tristis Linnaeus, 1766","2":"Common myna","3":"15 August 2019","4":"Animalia","5":"Acridotheres tristis Linnaeus, 1766","6":"union-list:taxon:88fab226290e72ddf6e538d934aa58a6","7":"union-list:taxon:88fab226290e72ddf6e538d934aa58a6"},{"1":"Ailanthus altissima (Mill.) Swingle","2":"Tree of heaven","3":"15 August 2019","4":"Plantae","5":"Ailanthus altissima (Mill.) Swingle","6":"union-list:taxon:dc1a9c7d8ecbea2c17659b65aac590ef","7":"union-list:taxon:dc1a9c7d8ecbea2c17659b65aac590ef"},{"1":"Alopochen aegyptiacus Linnaeus, 1766","2":"Egyptian goose","3":"2 August 2017","4":"Animalia","5":"Alopochen aegyptiacus Linnaeus, 1766","6":"union-list:taxon:52f42b74b3d05c74023d8a75c402989d","7":"union-list:taxon:52f42b74b3d05c74023d8a75c402989d"},{"1":"Alternanthera philoxeroides (Mart.) Griseb.","2":"Alligator weed","3":"2 August 2017","4":"Plantae","5":"Alternanthera philoxeroides (Mart.) Griseb.","6":"union-list:taxon:b7674f5e6e0f6beed1f1360ed992f885","7":"union-list:taxon:b7674f5e6e0f6beed1f1360ed992f885"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -460,7 +476,7 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
 <pre class="r"><code>taxon &lt;- input_data</code></pre>
 <div id="term-mapping" class="section level2" number="4.1">
 <h2 number="4.1"><span class="header-section-number">4.1</span> Term mapping</h2>
-<p>Map the data to <a href="http://rs.gbif.org/core/dwc_taxon_2015-04-24.xml">Darwin Core Taxon</a>.</p>
+<p>Map the data to <a href="https://rs.gbif.org/core/dwc_taxon_2022-02-02.xml">Darwin Core Taxon</a>.</p>
 <p>Start with record-level terms which contain metadata about the dataset (which is generally the same for all records).</p>
 <div id="language" class="section level3" number="4.1.1">
 <h3 number="4.1.1"><span class="header-section-number">4.1.1</span> language</h3>
@@ -477,15 +493,15 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
 <pre class="r"><code>taxon %&lt;&gt;% mutate(dwc_rightsHolder = &quot;INBO&quot;)</code></pre>
 <pre><code>## mutate: new variable &#39;dwc_rightsHolder&#39; (character) with one unique value and 0% NA</code></pre>
 </div>
-<div id="datasetid" class="section level3" number="4.1.4">
-<h3 number="4.1.4"><span class="header-section-number">4.1.4</span> datasetID</h3>
-<pre class="r"><code>taxon %&lt;&gt;% mutate(dwc_datasetID = &quot;&quot;)</code></pre>
-<pre><code>## mutate: new variable &#39;dwc_datasetID&#39; (character) with one unique value and 0% NA</code></pre>
-</div>
-<div id="institutioncode" class="section level3" number="4.1.5">
-<h3 number="4.1.5"><span class="header-section-number">4.1.5</span> institutionCode</h3>
+<div id="institutioncode" class="section level3" number="4.1.4">
+<h3 number="4.1.4"><span class="header-section-number">4.1.4</span> institutionCode</h3>
 <pre class="r"><code>taxon %&lt;&gt;% mutate(dwc_institutionCode = &quot;INBO&quot;)</code></pre>
 <pre><code>## mutate: new variable &#39;dwc_institutionCode&#39; (character) with one unique value and 0% NA</code></pre>
+</div>
+<div id="datasetid" class="section level3" number="4.1.5">
+<h3 number="4.1.5"><span class="header-section-number">4.1.5</span> datasetID</h3>
+<pre class="r"><code>taxon %&lt;&gt;% mutate(dwc_datasetID = &quot;&quot;)</code></pre>
+<pre><code>## mutate: new variable &#39;dwc_datasetID&#39; (character) with one unique value and 0% NA</code></pre>
 </div>
 <div id="datasetname" class="section level3" number="4.1.6">
 <h3 number="4.1.6"><span class="header-section-number">4.1.6</span> datasetName</h3>
@@ -498,13 +514,23 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
 <pre class="r"><code>taxon %&lt;&gt;% mutate(dwc_taxonID = taxon_id)</code></pre>
 <pre><code>## mutate: new variable &#39;dwc_taxonID&#39; (character) with 75 unique values and 0% NA</code></pre>
 </div>
-<div id="scientificname" class="section level3" number="4.1.8">
-<h3 number="4.1.8"><span class="header-section-number">4.1.8</span> scientificName</h3>
+<div id="acceptednameusageid" class="section level3" number="4.1.8">
+<h3 number="4.1.8"><span class="header-section-number">4.1.8</span> acceptedNameUsageID</h3>
+<pre class="r"><code>taxon %&lt;&gt;% mutate(dwc_acceptedNameUsageID = taxon_id_accepted)</code></pre>
+<pre><code>## mutate: new variable &#39;dwc_acceptedNameUsageID&#39; (character) with 66 unique values and 0% NA</code></pre>
+</div>
+<div id="scientificname" class="section level3" number="4.1.9">
+<h3 number="4.1.9"><span class="header-section-number">4.1.9</span> scientificName</h3>
 <pre class="r"><code>taxon %&lt;&gt;% mutate(dwc_scientificName = scientific_name)</code></pre>
 <pre><code>## mutate: new variable &#39;dwc_scientificName&#39; (character) with 75 unique values and 0% NA</code></pre>
 </div>
-<div id="kingdom" class="section level3" number="4.1.9">
-<h3 number="4.1.9"><span class="header-section-number">4.1.9</span> kingdom</h3>
+<div id="acceptednameusage" class="section level3" number="4.1.10">
+<h3 number="4.1.10"><span class="header-section-number">4.1.10</span> acceptedNameUsage</h3>
+<pre class="r"><code>taxon %&lt;&gt;% mutate(dwc_acceptedNameUsage = scientific_name_accepted)</code></pre>
+<pre><code>## mutate: new variable &#39;dwc_acceptedNameUsage&#39; (character) with 66 unique values and 0% NA</code></pre>
+</div>
+<div id="kingdom" class="section level3" number="4.1.11">
+<h3 number="4.1.11"><span class="header-section-number">4.1.11</span> kingdom</h3>
 <p>Inspect values:</p>
 <pre class="r"><code>taxon %&gt;%
   group_by(kingdom) %&gt;%
@@ -520,8 +546,8 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
 <pre class="r"><code>taxon %&lt;&gt;% mutate(dwc_kingdom = kingdom)</code></pre>
 <pre><code>## mutate: new variable &#39;dwc_kingdom&#39; (character) with 2 unique values and 0% NA</code></pre>
 </div>
-<div id="taxonrank" class="section level3" number="4.1.10">
-<h3 number="4.1.10"><span class="header-section-number">4.1.10</span> taxonRank</h3>
+<div id="taxonrank" class="section level3" number="4.1.12">
+<h3 number="4.1.12"><span class="header-section-number">4.1.12</span> taxonRank</h3>
 <p>Map values by recoding to the <a href="http://rs.gbif.org/vocabulary/gbif/rank_2015-04-24.xml">GBIF rank vocabulary</a>:</p>
 <pre class="r"><code>taxon %&lt;&gt;% mutate(dwc_taxonRank = case_when(
   # Scientific names often end with authors, so regex only considers beginning
@@ -538,26 +564,34 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
   filter(is.na(dwc_taxonRank)) %&gt;%
   select(dwc_scientificName)</code></pre>
 <pre><code>## filter: removed all rows (100%)</code></pre>
-<pre><code>## select: dropped 14 variables (scientific_name, english_name, entry_into_force, kingdom, taxon_id, …)</code></pre>
+<pre><code>## select: dropped 18 variables (scientific_name, english_name, entry_into_force, kingdom, scientific_name_accepted, …)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["dwc_scientificName"],"name":[1],"type":["chr"],"align":["left"]}],"data":[],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
+<div id="taxonomicstatus" class="section level3" number="4.1.13">
+<h3 number="4.1.13"><span class="header-section-number">4.1.13</span> taxonomicStatus</h3>
+<pre class="r"><code>taxon %&lt;&gt;% mutate(dwc_taxonomicStatus = case_when(
+  taxon_id == taxon_id_accepted ~ &quot;accepted&quot;,
+  TRUE ~ &quot;synonym&quot;
+))</code></pre>
+<pre><code>## mutate: new variable &#39;dwc_taxonomicStatus&#39; (character) with 2 unique values and 0% NA</code></pre>
+</div>
 </div>
 <div id="post-processing" class="section level2" number="4.2">
 <h2 number="4.2"><span class="header-section-number">4.2</span> Post-processing</h2>
 <p>Only keep the Darwin Core columns:</p>
 <pre class="r"><code>taxon %&lt;&gt;% select(starts_with(&quot;dwc_&quot;))</code></pre>
-<pre><code>## select: dropped 5 variables (scientific_name, english_name, entry_into_force, kingdom, taxon_id)</code></pre>
+<pre><code>## select: dropped 7 variables (scientific_name, english_name, entry_into_force, kingdom, scientific_name_accepted, …)</code></pre>
 <p>Drop the <code>dwc_</code> prefix:</p>
 <pre class="r"><code>colnames(taxon) &lt;- str_remove(colnames(taxon), &quot;dwc_&quot;)</code></pre>
 <p>Preview data:</p>
 <pre class="r"><code>taxon %&gt;% head()</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["language"],"name":[1],"type":["chr"],"align":["left"]},{"label":["license"],"name":[2],"type":["chr"],"align":["left"]},{"label":["rightsHolder"],"name":[3],"type":["chr"],"align":["left"]},{"label":["datasetID"],"name":[4],"type":["chr"],"align":["left"]},{"label":["institutionCode"],"name":[5],"type":["chr"],"align":["left"]},{"label":["datasetName"],"name":[6],"type":["chr"],"align":["left"]},{"label":["taxonID"],"name":[7],"type":["chr"],"align":["left"]},{"label":["scientificName"],"name":[8],"type":["chr"],"align":["left"]},{"label":["kingdom"],"name":[9],"type":["chr"],"align":["left"]},{"label":["taxonRank"],"name":[10],"type":["chr"],"align":["left"]}],"data":[{"1":"en","2":"http://creativecommons.org/publicdomain/zero/1.0/","3":"INBO","4":"","5":"INBO","6":"List of Invasive Alien Species of Union concern","7":"union-list:taxon:e75968a892a25181e92a7a16e2480191","8":"Acacia saligna (Labill.) H.L.Wendl.","9":"Plantae","10":"species"},{"1":"en","2":"http://creativecommons.org/publicdomain/zero/1.0/","3":"INBO","4":"","5":"INBO","6":"List of Invasive Alien Species of Union concern","7":"union-list:taxon:49a114c68be9999ff8cb203bc418d9df","8":"Acacia cyanophylla Lindl.","9":"Plantae","10":"species"},{"1":"en","2":"http://creativecommons.org/publicdomain/zero/1.0/","3":"INBO","4":"","5":"INBO","6":"List of Invasive Alien Species of Union concern","7":"union-list:taxon:88fab226290e72ddf6e538d934aa58a6","8":"Acridotheres tristis Linnaeus, 1766","9":"Animalia","10":"species"},{"1":"en","2":"http://creativecommons.org/publicdomain/zero/1.0/","3":"INBO","4":"","5":"INBO","6":"List of Invasive Alien Species of Union concern","7":"union-list:taxon:dc1a9c7d8ecbea2c17659b65aac590ef","8":"Ailanthus altissima (Mill.) Swingle","9":"Plantae","10":"species"},{"1":"en","2":"http://creativecommons.org/publicdomain/zero/1.0/","3":"INBO","4":"","5":"INBO","6":"List of Invasive Alien Species of Union concern","7":"union-list:taxon:52f42b74b3d05c74023d8a75c402989d","8":"Alopochen aegyptiacus Linnaeus, 1766","9":"Animalia","10":"species"},{"1":"en","2":"http://creativecommons.org/publicdomain/zero/1.0/","3":"INBO","4":"","5":"INBO","6":"List of Invasive Alien Species of Union concern","7":"union-list:taxon:b7674f5e6e0f6beed1f1360ed992f885","8":"Alternanthera philoxeroides (Mart.) Griseb.","9":"Plantae","10":"species"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["language"],"name":[1],"type":["chr"],"align":["left"]},{"label":["license"],"name":[2],"type":["chr"],"align":["left"]},{"label":["rightsHolder"],"name":[3],"type":["chr"],"align":["left"]},{"label":["institutionCode"],"name":[4],"type":["chr"],"align":["left"]},{"label":["datasetID"],"name":[5],"type":["chr"],"align":["left"]},{"label":["datasetName"],"name":[6],"type":["chr"],"align":["left"]},{"label":["taxonID"],"name":[7],"type":["chr"],"align":["left"]},{"label":["acceptedNameUsageID"],"name":[8],"type":["chr"],"align":["left"]},{"label":["scientificName"],"name":[9],"type":["chr"],"align":["left"]},{"label":["acceptedNameUsage"],"name":[10],"type":["chr"],"align":["left"]},{"label":["kingdom"],"name":[11],"type":["chr"],"align":["left"]},{"label":["taxonRank"],"name":[12],"type":["chr"],"align":["left"]},{"label":["taxonomicStatus"],"name":[13],"type":["chr"],"align":["left"]}],"data":[{"1":"en","2":"http://creativecommons.org/publicdomain/zero/1.0/","3":"INBO","4":"INBO","5":"","6":"List of Invasive Alien Species of Union concern","7":"union-list:taxon:e75968a892a25181e92a7a16e2480191","8":"union-list:taxon:e75968a892a25181e92a7a16e2480191","9":"Acacia saligna (Labill.) H.L.Wendl.","10":"Acacia saligna (Labill.) H.L.Wendl.","11":"Plantae","12":"species","13":"accepted"},{"1":"en","2":"http://creativecommons.org/publicdomain/zero/1.0/","3":"INBO","4":"INBO","5":"","6":"List of Invasive Alien Species of Union concern","7":"union-list:taxon:49a114c68be9999ff8cb203bc418d9df","8":"union-list:taxon:e75968a892a25181e92a7a16e2480191","9":"Acacia cyanophylla Lindl.","10":"Acacia saligna (Labill.) H.L.Wendl.","11":"Plantae","12":"species","13":"synonym"},{"1":"en","2":"http://creativecommons.org/publicdomain/zero/1.0/","3":"INBO","4":"INBO","5":"","6":"List of Invasive Alien Species of Union concern","7":"union-list:taxon:88fab226290e72ddf6e538d934aa58a6","8":"union-list:taxon:88fab226290e72ddf6e538d934aa58a6","9":"Acridotheres tristis Linnaeus, 1766","10":"Acridotheres tristis Linnaeus, 1766","11":"Animalia","12":"species","13":"accepted"},{"1":"en","2":"http://creativecommons.org/publicdomain/zero/1.0/","3":"INBO","4":"INBO","5":"","6":"List of Invasive Alien Species of Union concern","7":"union-list:taxon:dc1a9c7d8ecbea2c17659b65aac590ef","8":"union-list:taxon:dc1a9c7d8ecbea2c17659b65aac590ef","9":"Ailanthus altissima (Mill.) Swingle","10":"Ailanthus altissima (Mill.) Swingle","11":"Plantae","12":"species","13":"accepted"},{"1":"en","2":"http://creativecommons.org/publicdomain/zero/1.0/","3":"INBO","4":"INBO","5":"","6":"List of Invasive Alien Species of Union concern","7":"union-list:taxon:52f42b74b3d05c74023d8a75c402989d","8":"union-list:taxon:52f42b74b3d05c74023d8a75c402989d","9":"Alopochen aegyptiacus Linnaeus, 1766","10":"Alopochen aegyptiacus Linnaeus, 1766","11":"Animalia","12":"species","13":"accepted"},{"1":"en","2":"http://creativecommons.org/publicdomain/zero/1.0/","3":"INBO","4":"INBO","5":"","6":"List of Invasive Alien Species of Union concern","7":"union-list:taxon:b7674f5e6e0f6beed1f1360ed992f885","8":"union-list:taxon:b7674f5e6e0f6beed1f1360ed992f885","9":"Alternanthera philoxeroides (Mart.) Griseb.","10":"Alternanthera philoxeroides (Mart.) Griseb.","11":"Plantae","12":"species","13":"accepted"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>Save to CSV:</p>
@@ -595,7 +629,7 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
 <h2 number="5.3"><span class="header-section-number">5.3</span> Post-processing</h2>
 <p>Only keep the Darwin Core columns:</p>
 <pre class="r"><code>vernacular %&lt;&gt;% select(starts_with(&quot;dwc_&quot;))</code></pre>
-<pre><code>## select: dropped 5 variables (scientific_name, english_name, entry_into_force, kingdom, taxon_id)</code></pre>
+<pre><code>## select: dropped 7 variables (scientific_name, english_name, entry_into_force, kingdom, scientific_name_accepted, …)</code></pre>
 <p>Drop the <code>dwc_</code> prefix:</p>
 <pre class="r"><code>colnames(vernacular) &lt;- str_remove(colnames(vernacular), &quot;dwc_&quot;)</code></pre>
 <p>Preview data:</p>
