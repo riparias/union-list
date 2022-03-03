@@ -11,7 +11,7 @@
 
 <meta name="author" content="Damiano Oldoni" />
 
-<meta name="date" content="2022-03-02" />
+<meta name="date" content="2022-03-03" />
 
 <title>Darwin Core mapping</title>
 
@@ -347,7 +347,7 @@ div.tocify {
 <h1 class="title toc-ignore">Darwin Core mapping</h1>
 <h3 class="subtitle">For: List of Invasive Alien Species of Union concern</h3>
 <h4 class="author">Damiano Oldoni</h4>
-<h4 class="date">2022-03-02</h4>
+<h4 class="date">2022-03-03</h4>
 
 </div>
 
@@ -380,13 +380,15 @@ library(digest)         # To generate hashes</code></pre>
 <p>Create a data frame <code>input_data</code> from the source data:</p>
 <pre class="r"><code>input_data &lt;- read_tsv(
   file = here(&quot;data&quot;, &quot;raw&quot;, &quot;list_of_invasive_alien_species_of_union_concern.tsv&quot;),
-  show_col_types = FALSE
+  show_col_types = FALSE,
+  col_types = cols(entry_into_force = col_date(format = &quot;%d %B %Y&quot;)),
+  locale = locale(date_names = &quot;en&quot;)
 )</code></pre>
 <p>Preview data:</p>
 <pre class="r"><code>input_data %&gt;% head(n = 5)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["scientific_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["scientific_name_synonym"],"name":[2],"type":["chr"],"align":["left"]},{"label":["english_name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["entry_into_force"],"name":[4],"type":["chr"],"align":["left"]},{"label":["kingdom"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"Acacia saligna (Labill.) H.L.Wendl.","2":"Acacia cyanophylla Lindl.","3":"Golden wreath wattle","4":"15 August 2019","5":"Plantae"},{"1":"Acridotheres tristis Linnaeus, 1766","2":"NA","3":"Common myna","4":"15 August 2019","5":"Animalia"},{"1":"Ailanthus altissima (Mill.) Swingle","2":"NA","3":"Tree of heaven","4":"15 August 2019","5":"Plantae"},{"1":"Alopochen aegyptiacus Linnaeus, 1766","2":"NA","3":"Egyptian goose","4":"2 August 2017","5":"Animalia"},{"1":"Alternanthera philoxeroides (Mart.) Griseb.","2":"NA","3":"Alligator weed","4":"2 August 2017","5":"Plantae"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["scientific_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["scientific_name_synonym"],"name":[2],"type":["chr"],"align":["left"]},{"label":["english_name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["entry_into_force"],"name":[4],"type":["date"],"align":["right"]},{"label":["kingdom"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"Acacia saligna (Labill.) H.L.Wendl.","2":"Acacia cyanophylla Lindl.","3":"Golden wreath wattle","4":"2019-08-15","5":"Plantae"},{"1":"Acridotheres tristis Linnaeus, 1766","2":"NA","3":"Common myna","4":"2019-08-15","5":"Animalia"},{"1":"Ailanthus altissima (Mill.) Swingle","2":"NA","3":"Tree of heaven","4":"2019-08-15","5":"Plantae"},{"1":"Alopochen aegyptiacus Linnaeus, 1766","2":"NA","3":"Egyptian goose","4":"2017-08-02","5":"Animalia"},{"1":"Alternanthera philoxeroides (Mart.) Griseb.","2":"NA","3":"Alligator weed","4":"2017-08-02","5":"Plantae"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -414,7 +416,7 @@ library(digest)         # To generate hashes</code></pre>
 <pre class="r"><code>input_data %&gt;% head()</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["scientific_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["english_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["entry_into_force"],"name":[3],"type":["chr"],"align":["left"]},{"label":["kingdom"],"name":[4],"type":["chr"],"align":["left"]},{"label":["scientific_name_accepted"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"Acacia saligna (Labill.) H.L.Wendl.","2":"Golden wreath wattle","3":"15 August 2019","4":"Plantae","5":"Acacia saligna (Labill.) H.L.Wendl."},{"1":"Acacia cyanophylla Lindl.","2":"Golden wreath wattle","3":"15 August 2019","4":"Plantae","5":"Acacia saligna (Labill.) H.L.Wendl."},{"1":"Acridotheres tristis Linnaeus, 1766","2":"Common myna","3":"15 August 2019","4":"Animalia","5":"Acridotheres tristis Linnaeus, 1766"},{"1":"Ailanthus altissima (Mill.) Swingle","2":"Tree of heaven","3":"15 August 2019","4":"Plantae","5":"Ailanthus altissima (Mill.) Swingle"},{"1":"Alopochen aegyptiacus Linnaeus, 1766","2":"Egyptian goose","3":"2 August 2017","4":"Animalia","5":"Alopochen aegyptiacus Linnaeus, 1766"},{"1":"Alternanthera philoxeroides (Mart.) Griseb.","2":"Alligator weed","3":"2 August 2017","4":"Plantae","5":"Alternanthera philoxeroides (Mart.) Griseb."}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["scientific_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["english_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["entry_into_force"],"name":[3],"type":["date"],"align":["right"]},{"label":["kingdom"],"name":[4],"type":["chr"],"align":["left"]},{"label":["scientific_name_accepted"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"Acacia saligna (Labill.) H.L.Wendl.","2":"Golden wreath wattle","3":"2019-08-15","4":"Plantae","5":"Acacia saligna (Labill.) H.L.Wendl."},{"1":"Acacia cyanophylla Lindl.","2":"Golden wreath wattle","3":"2019-08-15","4":"Plantae","5":"Acacia saligna (Labill.) H.L.Wendl."},{"1":"Acridotheres tristis Linnaeus, 1766","2":"Common myna","3":"2019-08-15","4":"Animalia","5":"Acridotheres tristis Linnaeus, 1766"},{"1":"Ailanthus altissima (Mill.) Swingle","2":"Tree of heaven","3":"2019-08-15","4":"Plantae","5":"Ailanthus altissima (Mill.) Swingle"},{"1":"Alopochen aegyptiacus Linnaeus, 1766","2":"Egyptian goose","3":"2017-08-02","4":"Animalia","5":"Alopochen aegyptiacus Linnaeus, 1766"},{"1":"Alternanthera philoxeroides (Mart.) Griseb.","2":"Alligator weed","3":"2017-08-02","4":"Plantae","5":"Alternanthera philoxeroides (Mart.) Griseb."}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -465,7 +467,7 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
 <pre class="r"><code>input_data %&gt;% head()</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["scientific_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["english_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["entry_into_force"],"name":[3],"type":["chr"],"align":["left"]},{"label":["kingdom"],"name":[4],"type":["chr"],"align":["left"]},{"label":["scientific_name_accepted"],"name":[5],"type":["chr"],"align":["left"]},{"label":["taxon_id"],"name":[6],"type":["chr"],"align":["left"]},{"label":["taxon_id_accepted"],"name":[7],"type":["chr"],"align":["left"]}],"data":[{"1":"Acacia saligna (Labill.) H.L.Wendl.","2":"Golden wreath wattle","3":"15 August 2019","4":"Plantae","5":"Acacia saligna (Labill.) H.L.Wendl.","6":"union-list:taxon:e75968a892a25181e92a7a16e2480191","7":"union-list:taxon:e75968a892a25181e92a7a16e2480191"},{"1":"Acacia cyanophylla Lindl.","2":"Golden wreath wattle","3":"15 August 2019","4":"Plantae","5":"Acacia saligna (Labill.) H.L.Wendl.","6":"union-list:taxon:49a114c68be9999ff8cb203bc418d9df","7":"union-list:taxon:e75968a892a25181e92a7a16e2480191"},{"1":"Acridotheres tristis Linnaeus, 1766","2":"Common myna","3":"15 August 2019","4":"Animalia","5":"Acridotheres tristis Linnaeus, 1766","6":"union-list:taxon:88fab226290e72ddf6e538d934aa58a6","7":"union-list:taxon:88fab226290e72ddf6e538d934aa58a6"},{"1":"Ailanthus altissima (Mill.) Swingle","2":"Tree of heaven","3":"15 August 2019","4":"Plantae","5":"Ailanthus altissima (Mill.) Swingle","6":"union-list:taxon:dc1a9c7d8ecbea2c17659b65aac590ef","7":"union-list:taxon:dc1a9c7d8ecbea2c17659b65aac590ef"},{"1":"Alopochen aegyptiacus Linnaeus, 1766","2":"Egyptian goose","3":"2 August 2017","4":"Animalia","5":"Alopochen aegyptiacus Linnaeus, 1766","6":"union-list:taxon:52f42b74b3d05c74023d8a75c402989d","7":"union-list:taxon:52f42b74b3d05c74023d8a75c402989d"},{"1":"Alternanthera philoxeroides (Mart.) Griseb.","2":"Alligator weed","3":"2 August 2017","4":"Plantae","5":"Alternanthera philoxeroides (Mart.) Griseb.","6":"union-list:taxon:b7674f5e6e0f6beed1f1360ed992f885","7":"union-list:taxon:b7674f5e6e0f6beed1f1360ed992f885"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["scientific_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["english_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["entry_into_force"],"name":[3],"type":["date"],"align":["right"]},{"label":["kingdom"],"name":[4],"type":["chr"],"align":["left"]},{"label":["scientific_name_accepted"],"name":[5],"type":["chr"],"align":["left"]},{"label":["taxon_id"],"name":[6],"type":["chr"],"align":["left"]},{"label":["taxon_id_accepted"],"name":[7],"type":["chr"],"align":["left"]}],"data":[{"1":"Acacia saligna (Labill.) H.L.Wendl.","2":"Golden wreath wattle","3":"2019-08-15","4":"Plantae","5":"Acacia saligna (Labill.) H.L.Wendl.","6":"union-list:taxon:e75968a892a25181e92a7a16e2480191","7":"union-list:taxon:e75968a892a25181e92a7a16e2480191"},{"1":"Acacia cyanophylla Lindl.","2":"Golden wreath wattle","3":"2019-08-15","4":"Plantae","5":"Acacia saligna (Labill.) H.L.Wendl.","6":"union-list:taxon:49a114c68be9999ff8cb203bc418d9df","7":"union-list:taxon:e75968a892a25181e92a7a16e2480191"},{"1":"Acridotheres tristis Linnaeus, 1766","2":"Common myna","3":"2019-08-15","4":"Animalia","5":"Acridotheres tristis Linnaeus, 1766","6":"union-list:taxon:88fab226290e72ddf6e538d934aa58a6","7":"union-list:taxon:88fab226290e72ddf6e538d934aa58a6"},{"1":"Ailanthus altissima (Mill.) Swingle","2":"Tree of heaven","3":"2019-08-15","4":"Plantae","5":"Ailanthus altissima (Mill.) Swingle","6":"union-list:taxon:dc1a9c7d8ecbea2c17659b65aac590ef","7":"union-list:taxon:dc1a9c7d8ecbea2c17659b65aac590ef"},{"1":"Alopochen aegyptiacus Linnaeus, 1766","2":"Egyptian goose","3":"2017-08-02","4":"Animalia","5":"Alopochen aegyptiacus Linnaeus, 1766","6":"union-list:taxon:52f42b74b3d05c74023d8a75c402989d","7":"union-list:taxon:52f42b74b3d05c74023d8a75c402989d"},{"1":"Alternanthera philoxeroides (Mart.) Griseb.","2":"Alligator weed","3":"2017-08-02","4":"Plantae","5":"Alternanthera philoxeroides (Mart.) Griseb.","6":"union-list:taxon:b7674f5e6e0f6beed1f1360ed992f885","7":"union-list:taxon:b7674f5e6e0f6beed1f1360ed992f885"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -653,9 +655,9 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
 </div>
 <div id="entry-into-force" class="section level2" number="6.2">
 <h2><span class="header-section-number">6.2</span> Entry into force</h2>
-<p>The column <code>entry_into_force</code> contains the date each species has been added to the list. We use it to create a description column</p>
+<p>The column <code>entry_into_force</code> contains the date each species has been added to the list. We use it to create a description column:</p>
 <pre class="r"><code>description %&lt;&gt;% mutate(description = entry_into_force)</code></pre>
-<pre><code>## mutate: new variable &#39;description&#39; (character) with 4 unique values and 0% NA</code></pre>
+<pre><code>## mutate: new variable &#39;description&#39; (Date) with 4 unique values and 0% NA</code></pre>
 <p>Create a <code>type</code> field to indicate the type of description:</p>
 <pre class="r"><code>description %&lt;&gt;% mutate(type = &quot;entry into force&quot;)</code></pre>
 <pre><code>## mutate: new variable &#39;type&#39; (character) with one unique value and 0% NA</code></pre>
@@ -671,7 +673,7 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
 <div id="description" class="section level3" number="6.3.2">
 <h3><span class="header-section-number">6.3.2</span> description</h3>
 <pre class="r"><code>description %&lt;&gt;% mutate(dwc_description = description)</code></pre>
-<pre><code>## mutate: new variable &#39;dwc_description&#39; (character) with 4 unique values and 0% NA</code></pre>
+<pre><code>## mutate: new variable &#39;dwc_description&#39; (Date) with 4 unique values and 0% NA</code></pre>
 </div>
 <div id="type" class="section level3" number="6.3.3">
 <h3><span class="header-section-number">6.3.3</span> type</h3>
@@ -695,7 +697,7 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
 <pre class="r"><code>description %&gt;% head()</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["taxonID"],"name":[1],"type":["chr"],"align":["left"]},{"label":["description"],"name":[2],"type":["chr"],"align":["left"]},{"label":["type"],"name":[3],"type":["chr"],"align":["left"]},{"label":["language"],"name":[4],"type":["chr"],"align":["left"]}],"data":[{"1":"union-list:taxon:e75968a892a25181e92a7a16e2480191","2":"15 August 2019","3":"entry into force","4":"en"},{"1":"union-list:taxon:49a114c68be9999ff8cb203bc418d9df","2":"15 August 2019","3":"entry into force","4":"en"},{"1":"union-list:taxon:88fab226290e72ddf6e538d934aa58a6","2":"15 August 2019","3":"entry into force","4":"en"},{"1":"union-list:taxon:dc1a9c7d8ecbea2c17659b65aac590ef","2":"15 August 2019","3":"entry into force","4":"en"},{"1":"union-list:taxon:52f42b74b3d05c74023d8a75c402989d","2":"2 August 2017","3":"entry into force","4":"en"},{"1":"union-list:taxon:b7674f5e6e0f6beed1f1360ed992f885","2":"2 August 2017","3":"entry into force","4":"en"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["taxonID"],"name":[1],"type":["chr"],"align":["left"]},{"label":["description"],"name":[2],"type":["date"],"align":["right"]},{"label":["type"],"name":[3],"type":["chr"],"align":["left"]},{"label":["language"],"name":[4],"type":["chr"],"align":["left"]}],"data":[{"1":"union-list:taxon:e75968a892a25181e92a7a16e2480191","2":"2019-08-15","3":"entry into force","4":"en"},{"1":"union-list:taxon:49a114c68be9999ff8cb203bc418d9df","2":"2019-08-15","3":"entry into force","4":"en"},{"1":"union-list:taxon:88fab226290e72ddf6e538d934aa58a6","2":"2019-08-15","3":"entry into force","4":"en"},{"1":"union-list:taxon:dc1a9c7d8ecbea2c17659b65aac590ef","2":"2019-08-15","3":"entry into force","4":"en"},{"1":"union-list:taxon:52f42b74b3d05c74023d8a75c402989d","2":"2017-08-02","3":"entry into force","4":"en"},{"1":"union-list:taxon:b7674f5e6e0f6beed1f1360ed992f885","2":"2017-08-02","3":"entry into force","4":"en"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>Save to CSV:</p>
