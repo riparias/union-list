@@ -359,7 +359,7 @@ description <- input_data
 
 ## Entry into force
 
-The column `entry_into_force` contains the date each species has been added to the list. We use it to create a description column 
+The column `entry_into_force` contains the date each species has been added to the list. We use it to create a description column:
 
 ```{r}
 description %<>% mutate(description = entry_into_force)
