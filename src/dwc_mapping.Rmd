@@ -54,7 +54,9 @@ Create a data frame `input_data` from the source data:
 ```{r}
 input_data <- read_tsv(
   file = here("data", "raw", "list_of_invasive_alien_species_of_union_concern.tsv"),
-  show_col_types = FALSE
+  show_col_types = FALSE,
+  col_types = cols(entry_into_force = col_date(format = "%d %B %Y")),
+  locale = locale(date_names = "en")
 )
 ```
 
