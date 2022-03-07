@@ -54,7 +54,9 @@ Create a data frame `input_data` from the source data:
 ```{r}
 input_data <- read_tsv(
   file = here("data", "raw", "list_of_invasive_alien_species_of_union_concern.tsv"),
-  show_col_types = FALSE
+  show_col_types = FALSE,
+  col_types = cols(entry_into_force = col_date(format = "%d %B %Y")),
+  locale = locale(date_names = "en")
 )
 ```
 
@@ -343,4 +345,83 @@ Save to CSV:
 
 ```{r}
 write_csv(vernacular, here("data", "processed", "vernacularname.csv"), na = "")
+```
+
+# Map description extension
+
+In the description extension we want to include the date a species has been added to the list.
+
+## Pre-processing
+
+Create a `description` dataframe starting from `input_data`:
+
+```{r}
+description <- input_data
+```
+
+## Entry into force
+
+The column `entry_into_force` contains the date each species has been added to the list. We use it to create a description column:
+
+```{r}
+description %<>% mutate(description = entry_into_force)
+```
+
+Create a `type` field to indicate the type of description:
+
+```{r}
+description %<>% mutate(type = "entry into force")
+```
+## Term mapping
+
+Map the data to [Taxon Description](https://rs.gbif.org/extension/gbif/1.0/description.xml):
+
+### taxonID
+
+```{r}
+description %<>% mutate(dwc_taxonID = taxon_id)
+```
+
+### description
+
+```{r}
+description %<>% mutate(dwc_description = description)
+```
+
+### type
+
+```{r}
+description %<>% mutate(dwc_type = type)
+```
+
+### language
+
+```{r}
+description %<>% mutate(dwc_language = "en")
+```
+
+## Post-processing
+
+Only keep the Darwin Core columns:
+
+```{r}
+description %<>% select(starts_with("dwc_"))
+```
+
+Drop the `dwc_` prefix:
+
+```{r}
+colnames(description) <- str_remove(colnames(description), "dwc_")
+```
+
+Preview description:
+
+```{r}
+description %>% head()
+```
+
+Save to CSV:
+
+```{r}
+write_csv(description, here("data", "processed", "description.csv"), na = "")
 ```
