@@ -24,12 +24,12 @@ Install required libraries (only if the libraries have not been installed before
 ```{r}
 installed <- rownames(installed.packages())
 required <- c(
-  "tidyverse",
+  "dplyr",
+  "purrr",
+  "readr",
   "tidylog",
-  "magrittr",
   "here",
-  "janitor",
-  "digest"
+  "ISOcodes"
 )
 if (!all(required %in% installed)) {
   install.packages(required[!required %in% installed])
@@ -39,25 +39,25 @@ if (!all(required %in% installed)) {
 Load libraries:
 
 ```{r message = FALSE}
-library(tidyverse)      # To do data science
+library(dplyr)          # To work with data frames
+library(purrr)          # To work with functions and vectors
+library(readr)          # To write text files
 library(tidylog)        # To provide feedback on dplyr functions
-library(magrittr)       # To use %<>% pipes
 library(here)           # To find files
-library(janitor)        # To clean input data
-library(digest)         # To generate hashes
+library(ISOcodes)       # To work with ISO 639 language codes
 ```
 
-# Read source data
+# Read source data from EASIN
 
-Create a data frame `input_data` from the source data:
+The Union list is published officially on EASIN. We pull source data from the EASIN API:
 
-```{r}
-input_data <- read_tsv(
-  file = here("data", "raw", "list_of_invasive_alien_species_of_union_concern.tsv"),
-  show_col_types = FALSE,
-  col_types = cols(entry_into_force = col_date(format = "%d %B %Y")),
-  locale = locale(date_names = "en")
+```{r read_from_json}
+input_data <- jsonlite::fromJSON(
+  "https://easin.jrc.ec.europa.eu/api/cat/euconcern/",
+  simplifyVector = TRUE,
+  flatten = TRUE
 )
+input_data <- input_data$results
 ```
 
 Preview data:
@@ -66,213 +66,229 @@ Preview data:
 input_data %>% head(n = 5)
 ```
 
-# Process source data
-
-## Tidy data
-
-The column `scientific_name_synonym` contains synonym names. We'll create new rows for the values in this column, keeping their association with the original scientific name (`accepted_scientific_name`):
-
-```{r}
-input_data %<>%
-  mutate(scientific_name_accepted = scientific_name) %>%
-  pivot_longer(
-    c("scientific_name", "scientific_name_synonym"),
-    names_to = "col_name", # help column
-    values_to = "scientific_name"
-  ) %>%
-  select(-col_name) %>%
-  relocate(scientific_name) %>%
-  filter(!is.na(scientific_name))
-```
-
-Preview result of this operation:
-
-```{r}
-input_data %>% head()
-```
-
-## Taxon IDs
-
-To link taxa with information in the extension(s), each taxon needs a unique and relatively stable `taxonID`. Here we create one in the form of `dataset_shortname:taxon:hash`, where `hash` is unique code based on scientific name and kingdom (that will remain the same as long as scientific name and kingdom remain the same):
-
-```{r}
-vdigest <- Vectorize(digest) # Vectorize digest function to work with vectors
-input_data %<>% mutate(taxon_id = paste(
-  "union-list",
-  "taxon",
-  vdigest(paste(scientific_name, kingdom), algo = "md5"),
-  sep = ":"
-))
-```
-
-Join on `scientific_name_accepted` to get the `taxon_id_accepted`:
-
-```{r}
-input_data %<>%
-  left_join(
-    select(input_data, "scientific_name", "taxon_id"),
-    by = c("scientific_name_accepted" = "scientific_name"),
-    suffix = c("", "_accepted")
-  )
-```
-
-## Preview data
-
-Show the number of taxa and distributions per kingdom:
-
-```{r}
-input_data %>%
-  group_by(kingdom) %>%
-  summarize(
-    `# taxa` = n_distinct(taxon_id),
-    `# rows` = n()
-  ) %>%
-  adorn_totals("row")
-```
-
-Preview data:
-
-```{r}
-input_data %>% head()
-```
-
 # Taxon core
 
-Create a `taxon` dataframe starting from `input_data`:
+## Pre-processing
+
+Create a `taxon` data frame with the taxonomic part of `input_data`:
+
+```{r taxon_core_raw}
+taxon <- input_data %>%
+  select(Synonyms,
+         SpeciesCatalogueId,
+         SpeciesName,
+         SpeciesNameAuthor,
+         TaxonomyId,
+         Taxonomy.Kingdom,
+         Taxonomy.Phylum,
+         Taxonomy.Class,
+         Taxonomy.Order,
+         Taxonomy.Family)
+```
+
+The column `Synonyms` contains synonym names in a nested data frame form. Example:
 
 ```{r}
-taxon <- input_data
+taxon$Synonyms[2][[1]]
+```
+We flatten the synonyms and select the columns we are interested to:
+
+```{r flatten_synonyms}
+synonyms <- taxon$Synonyms %>%
+  purrr::map_dfr(function(x) {
+    if (length(x) > 0) {
+      x %>%
+        select(Name, SynonymId, SpeciesCatalogueId)
+    } else NULL
+  }
+)
+```
+
+Preview:
+
+```{r}
+synonyms %>% head()
+```
+
+We merge `synonyms` to `taxon`, keeping their association with the original taxa (via `SpeciesCatalogueId`):
+
+```{r flatten_synonyms}
+taxon <- taxon %>%
+  left_join(synonyms, by = "SpeciesCatalogueId")
+
+accepted_taxa_with_synonyms <- taxon %>%
+  filter(!is.na(Name)) %>%
+  mutate(Name = NA_character_,
+         SynonymId = NA_integer_) %>%
+  distinct()
+
+taxon <- taxon %>%
+  bind_rows(accepted_taxa_with_synonyms) %>%
+  arrange(SpeciesCatalogueId)
+```
+
+Preview:
+
+```{r}
+taxon %>% head()
 ```
 
 ## Term mapping
 
-Map the data to [Darwin Core Taxon](https://rs.gbif.org/core/dwc_taxon_2022-02-02.xml).
-
-Start with record-level terms which contain metadata about the dataset (which is generally the same for all records).
+Map the data to [Darwin Core Taxon](https://rs.gbif.org/core/dwc_taxon_2022-02-02.xml):
 
 ### language
 
-```{r}
-taxon %<>% mutate(dwc_language = "en")
+```{r language}
+taxon <- taxon %>% mutate(dwc_language = "en")
 ```
 
 ### license
 
-```{r}
-taxon %<>% mutate(dwc_license = "http://creativecommons.org/publicdomain/zero/1.0/")
+```{r license}
+taxon <- taxon %>% 
+  mutate(dwc_license = "http://creativecommons.org/publicdomain/zero/1.0/")
 ```
 
 ### rightsHolder
 
-```{r}
-taxon %<>% mutate(dwc_rightsHolder = "INBO")
+```{r rightsHolder}
+taxon <- taxon %>% mutate(dwc_rightsHolder = "INBO")
 ```
 
 ### institutionCode
 
-```{r}
-taxon %<>% mutate(dwc_institutionCode = "INBO")
+```{r institutionCode}
+taxon <- taxon %>% mutate(dwc_institutionCode = "INBO")
 ```
 
 ### datasetID
 
-```{r}
-taxon %<>% mutate(dwc_datasetID = "")
+```{r datasetID}
+taxon <- taxon %>% mutate(dwc_datasetID = "")
 ```
 
 ### datasetName
 
-```{r}
-taxon %<>% mutate(dwc_datasetName = "List of Invasive Alien Species of Union concern")
+```{r datasetName}
+taxon <- taxon %>% 
+  mutate(dwc_datasetName = "List of Invasive Alien Species of Union concern")
 ```
 
 The following terms contain information about the taxon:
 
 ### taxonID
 
-```{r}
-taxon %<>% mutate(dwc_taxonID = taxon_id)
+```{r taxonID}
+taxon <- taxon %>% 
+  mutate(dwc_taxonID = if_else(
+    condition = is.na(SynonymId),
+    true = SpeciesCatalogueId,
+    false = paste(SpeciesCatalogueId, SynonymId, sep = "-")
+  )
+)
 ```
 
 ### acceptedNameUsageID
 
-```{r}
-taxon %<>% mutate(dwc_acceptedNameUsageID = taxon_id_accepted)
+```{r acceptedNameUsageID}
+taxon <- taxon %>% mutate(dwc_acceptedNameUsageID = SpeciesCatalogueId)
 ```
 
 ### scientificName
 
+Notice that authorship is absent:
+
 ```{r}
-taxon %<>% mutate(dwc_scientificName = scientific_name)
+all(is.na(taxon$SpeciesNameAuthor))
+```
+
+```{r scientificName}
+taxon <- taxon %>% 
+  mutate(dwc_scientificName = if_else(condition = is.na(SynonymId),
+                                      true = SpeciesName,
+                                      false = Name)
+)
 ```
 
 ### acceptedNameUsage
 
-```{r}
-taxon %<>% mutate(dwc_acceptedNameUsage = scientific_name_accepted)
+```{r acceptedNameUsage}
+taxon <- taxon %>% mutate(dwc_acceptedNameUsage = SpeciesName)
 ```
 
 ### kingdom
 
-Inspect values:
+The higher ranks are only associate to accepted taxa. However, to avoid hemihomonymy, we add kingdom information to synonyms as well:
 
-```{r}
-taxon %>%
-  group_by(kingdom) %>%
-  count()
+```{r kingdom}
+taxon <- taxon %>% mutate(dwc_kingdom = Taxonomy.Kingdom)
 ```
 
-Map values:
+### Phylum
 
-```{r}
-taxon %<>% mutate(dwc_kingdom = kingdom)
+```{r phylum}
+taxon <- taxon %>% 
+  mutate(dwc_phylum = if_else(condition = is.na(SynonymId),
+                                       true = Taxonomy.Phylum,
+                                       false = NA_character_)
+)
 ```
 
-### taxonRank
+### Class
 
-Map values by recoding to the [GBIF rank vocabulary](http://rs.gbif.org/vocabulary/gbif/rank_2015-04-24.xml):
-
-```{r}
-taxon %<>% mutate(dwc_taxonRank = case_when(
-  # Scientific names often end with authors, so regex only considers beginning
-  scientific_name == "Lespedeza juncea var. sericea (Thunb.) Lace & Hauech" ~ "variety",
-  scientific_name == "Lithobates (Rana) catesbeianus Shaw, 1802" ~ "species",
-  scientific_name == "Procambarus fallax (Hagen, 1870) f. virginalis" ~ "form",
-  scientific_name == "Pueraria montana (Lour.) Merr. var. lobata (Willd.)" ~ "variety",
-  scientific_name == "Vespa velutina nigrithorax de Buysson, 1905" ~ "subspecies",
-  str_detect(scientific_name, "^[A-Z][a-z]+ [a-z]+") ~ "species"
-))
+```{r class}
+taxon <- taxon %>% 
+  mutate(dwc_class = if_else(condition = is.na(SynonymId),
+                             true = Taxonomy.Class,
+                             false = NA_character_)
+)
 ```
 
-Show mapped values: 
+### Order
 
-```{r}
-taxon %>%
-  filter(is.na(dwc_taxonRank)) %>%
-  select(dwc_scientificName)
+```{r order}
+taxon <- taxon %>% 
+  mutate(dwc_order = if_else(condition = is.na(SynonymId),
+                             true = Taxonomy.Order,
+                             false = NA_character_)
+)
+```
+
+### Family
+
+```{r family}
+taxon <- taxon %>% 
+  mutate(dwc_family = if_else(condition = is.na(SynonymId),
+                             true = Taxonomy.Family,
+                             false = NA_character_)
+)
 ```
 
 ### taxonomicStatus
 
-```{r}
-taxon %<>% mutate(dwc_taxonomicStatus = case_when(
-  taxon_id == taxon_id_accepted ~ "accepted",
-  TRUE ~ "synonym"
-))
+```{r taxonomicStatus}
+taxon <- taxon %>% 
+  mutate(dwc_taxonomicStatus = if_else(condition = is.na(SynonymId),
+                                       true = "accepted",
+                                       false = "synonym")
+)
 ```
 
 ## Post-processing
 
 Only keep the Darwin Core columns:
 
-```{r}
-taxon %<>% select(starts_with("dwc_"))
+```{r dwc_cols}
+taxon <- taxon %>% select(starts_with("dwc_"))
 ```
 
 Drop the `dwc_` prefix:
 
-```{r}
-colnames(taxon) <- str_remove(colnames(taxon), "dwc_")
+```{r drop_dwc}
+colnames(taxon) <- gsub(pattern = "dwc_", 
+                        x = colnames(taxon),
+                        replacement = "")
 ```
 
 Preview data:
@@ -283,56 +299,169 @@ taxon %>% head()
 
 Save to CSV:
 
-```{r}
+```{r save_csv_taxon_core}
 write_csv(taxon, here("data", "processed", "taxon.csv"), na = "")
 ```
+
+# Map distribution extension
+
+## Pre-processing
+
+The column `Introductions` contains vernacular names in a nested data frame form. Example:
+
+```{r example_introductions}
+input_data$Introductions[1][[1]]
+```
+
+We flatten the introducions and select the columns we are interested to:
+
+```{r flatten_vernacuar_names}
+distribution <- input_data$Introductions %>%
+  purrr::map_dfr(function(x) {
+    if (length(x) > 0) {
+      x 
+    } else NULL
+  }) %>%
+  select(Year,
+         Country,
+         SpeciesCatalogueId,
+         Reference.Name,
+         Reference.Url,
+         Notes)
+```
+
+Preview:
+
+```{r}
+distribution
+```
+
+## Term mapping
+
+## Post-processing
 
 # Map vernacular names extension
 
 ## Pre-processing
 
-Create a `vernacular` dataframe starting from `input_data`:
+The column `CommonNames` contains vernacular names in a nested data frame form. Example:
+
+```{r example_vernacular_names}
+input_data$CommonNames[2][[1]]
+```
+
+We flatten the vernacular names and select the columns we are interested to:
+
+```{r flatten_vernacuar_names}
+vernacular <- input_data$CommonNames %>%
+  purrr::map_dfr(function(x) {
+    if (length(x) > 0) {
+      x 
+    } else NULL
+  }) %>%
+  select(VernacularName, 
+         Language,
+         SpeciesCatalogueId,
+         Reference.Name,
+         Reference.Url)
+```
+
+Preview:
 
 ```{r}
-vernacular <- input_data
+vernacular %>% head()
 ```
 
 ## Term mapping
 
-Map the data to [Vernacular Names](http://rs.gbif.org/extension/gbif/1.0/vernacularname.xml).
+Map the data to [Vernacular Names](http://rs.gbif.org/extension/gbif/1.0/vernacularname.xml):
 
 ### TaxonID
 
-```{r}
-vernacular %<>% mutate(dwc_taxonID = taxon_id)
+```{r vernacular_taxonID}
+vernacular <- vernacular %>% mutate(dwc_taxonID = SpeciesCatalogueId)
 ```
 
 ### vernacularName
 
-```{r}
-vernacular %<>% mutate(dwc_vernacularName = english_name)
+```{r vernacularName}
+vernacular <- vernacular %>% mutate(dwc_vernacularName = VernacularName)
+```
+
+### source
+
+```{r vernacular_source}
+vernacular <- vernacular %>% mutate(dwc_source = case_when(
+  !is.na(Reference.Name) & !is.na(Reference.Url) ~ paste(Reference.Name,
+                                                         Reference.Url,
+                                                         sep = " - "),
+  !is.na(Reference.Name) & is.na(Reference.Url) ~ Reference.Name,
+  # this doesn't occur at the moment
+  is.na(Reference.Name) & !is.na(Reference.Url) ~ Reference.Url,
+  .default = NA_character_
+))
 ```
 
 ### language
 
-Set language code to `en` (English):
+Language is provided in ISO 639-3, i.e. three-letter codes:
 
 ```{r}
-vernacular %<>% mutate(dwc_language = "en")
+vernacular %>% distinct(Language)
+```
+
+We map them to ISO 639-1 (two-letter codes):
+
+```{r map_three_to_two_letter_codes}
+languages <- 
+  vernacular %>% 
+  distinct(Language) %>%
+  filter(!is.na(Language)) %>%
+  # avoid tidylog until this issue is solved:
+  # https://github.com/elbersb/tidylog/issues/58
+  dplyr::left_join(ISOcodes::ISO_639_2 %>%
+              distinct(Alpha_3_T, Alpha_2),
+            by = dplyr::join_by(Language == Alpha_3_T))
+vernacular <- vernacular %>%
+  left_join(languages, by = "Language") %>%
+  rename(dwc_language = Alpha_2)
+```
+
+Some vernacular names have no language:
+
+```{r no_language}
+vernacular %>% filter(is.na(Language))
+```
+
+We assign language code to `en` (English):
+
+```{r assign_en_to_na}
+vernacular <- vernacular %>% 
+  mutate(dwc_language = if_else(condition = is.na(Language),
+                                true = "en", 
+                                false = dwc_language))
+```
+
+Preview:
+
+```{r }
+vernacular %>% head()
 ```
 
 ## Post-processing
 
 Only keep the Darwin Core columns:
 
-```{r}
-vernacular %<>% select(starts_with("dwc_"))
+```{r keep_dwc_vernacular}
+vernacular <- vernacular %>% select(starts_with("dwc_"))
 ```
 
 Drop the `dwc_` prefix:
 
-```{r}
-colnames(vernacular) <- str_remove(colnames(vernacular), "dwc_")
+```{r drop_dwc_vernacular}
+colnames(vernacular) <- gsub(pattern = "dwc_", 
+                        x = colnames(vernacular),
+                        replacement = "")
 ```
 
 Preview data:
@@ -343,85 +472,122 @@ vernacular %>% head()
 
 Save to CSV:
 
-```{r}
+```{r save_vernacular}
 write_csv(vernacular, here("data", "processed", "vernacularname.csv"), na = "")
 ```
 
-# Map description extension
+# Map species profile extension
 
-In the description extension we want to include the date a species has been added to the list.
+In this extension will express broad habitat characteristics (e.g. isTerrestrial) of the species.
 
 ## Pre-processing
 
-Create a `description` dataframe starting from `input_data`:
+The column `SpeciesEnvironments` contains species profile related information in a nested data frame form. Example:
 
-```{r}
-description <- input_data
+```{r example_vernacular_names}
+input_data$SpeciesEnvironments[1][[1]]
 ```
 
-## Entry into force
+We flatten the species environment and select the columns we are interested to:
 
-The column `entry_into_force` contains the date each species has been added to the list. We use it to create a description column:
-
-```{r}
-description %<>% mutate(description = entry_into_force)
+```{r flatten_species_profile}
+species_profile <- input_data$SpeciesEnvironments %>%
+  purrr::map_dfr(function(x) {
+    if (length(x) > 0) {
+      x %>%
+        select(EnvironmentId,
+               Environment.Description,
+               SpeciesCatalogueId)
+    } else NULL
+  }
+)
 ```
 
-Create a `type` field to indicate the type of description:
+Preview:
 
 ```{r}
-description %<>% mutate(type = "entry into force")
+species_profile %>% head()
 ```
+
 ## Term mapping
 
-Map the data to [Taxon Description](https://rs.gbif.org/extension/gbif/1.0/description.xml):
+Map the data to [Species Profile](http://rs.gbif.org/extension/gbif/1.0/speciesprofile.xml):
 
 ### taxonID
 
-```{r}
-description %<>% mutate(dwc_taxonID = taxon_id)
+```{r species_profile_taxonID}
+species_profile <- species_profile %>% mutate(dwc_taxonID = SpeciesCatalogueId)
 ```
 
-### description
+### isMarine
 
-```{r}
-description %<>% mutate(dwc_description = description)
+```{r isMarine}
+species_profile <- species_profile %>% 
+  mutate(dwc_isMarine = if_else(
+    condition = Environment.Description %in% c("Marine", "Estuarian"),
+    true = TRUE,
+    false = FALSE)
+)
 ```
 
-### type
+### isFreshwater
 
-```{r}
-description %<>% mutate(dwc_type = type)
+```{r isFreshwater}
+species_profile <- species_profile %>% 
+  mutate(dwc_isFreshwater = if_else(
+    condition = Environment.Description %in% c("Fresh Water", "Estuarian"),
+    true = TRUE,
+    false = FALSE)
+)
 ```
 
-### language
+### isTerrestrial
 
-```{r}
-description %<>% mutate(dwc_language = "en")
+```{r isTerrestrial}
+species_profile <- species_profile %>% 
+  mutate(dwc_isTerrestrial = if_else(
+    condition = Environment.Description == "Terrestrial",
+    true = TRUE,
+    false = FALSE)
+)
+```
+
+Show mapped values:
+
+```{r show_mapping_environment}
+species_profile %>%
+  select(Environment.Description, 
+         dwc_isMarine, 
+         dwc_isFreshwater, 
+         dwc_isTerrestrial) %>%
+  group_by_all() %>%
+  summarize(records = n())
 ```
 
 ## Post-processing
 
 Only keep the Darwin Core columns:
 
-```{r}
-description %<>% select(starts_with("dwc_"))
+```{r keep_dwc_species_profile}
+species_profile <- species_profile %>% select(starts_with("dwc_"))
 ```
 
 Drop the `dwc_` prefix:
 
-```{r}
-colnames(description) <- str_remove(colnames(description), "dwc_")
+```{r drop_dwc_species_profile}
+colnames(species_profile) <- gsub(pattern = "dwc_", 
+                        x = colnames(species_profile),
+                        replacement = "")
 ```
 
-Preview description:
+Preview data:
 
 ```{r}
-description %>% head()
+species_profile %>% head()
 ```
 
 Save to CSV:
 
-```{r}
-write_csv(description, here("data", "processed", "description.csv"), na = "")
+```{r save_species_profile}
+write_csv(vernacular, here("data", "processed", "speciesprofile.csv"), na = "")
 ```
