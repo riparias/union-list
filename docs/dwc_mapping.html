@@ -11,11 +11,11 @@
 
 <meta name="author" content="Damiano Oldoni" />
 
-<meta name="date" content="2022-03-03" />
+<meta name="date" content="2023-02-20" />
 
 <title>Darwin Core mapping</title>
 
-<script src="site_libs/header-attrs-2.11/header-attrs.js"></script>
+<script src="site_libs/header-attrs-2.20/header-attrs.js"></script>
 <script src="site_libs/jquery-3.6.0/jquery-3.6.0.min.js"></script>
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <link href="site_libs/bootstrap-3.3.5/css/yeti.min.css" rel="stylesheet" />
@@ -66,6 +66,7 @@ if (window.hljs) {
 
 
 
+
 <link rel="stylesheet" href="static/css/riparias.css" type="text/css" />
 
 
@@ -90,6 +91,9 @@ button.code-folding-btn:focus {
 }
 summary {
   display: list-item;
+}
+details > summary > p:only-child {
+  display: inline;
 }
 pre code {
   padding: 0;
@@ -147,11 +151,15 @@ $(document).ready(function () {
     href = "index.html";
   var menuAnchor = $('a[href="' + href + '"]');
 
-  // mark it active
-  menuAnchor.tab('show');
-
-  // if it's got a parent navbar menu mark it active as well
-  menuAnchor.closest('li.dropdown').addClass('active');
+  // mark the anchor link active (and if it's in a dropdown, also mark that active)
+  var dropdown = menuAnchor.closest('li.dropdown');
+  if (window.bootstrap) { // Bootstrap 4+
+    menuAnchor.addClass('active');
+    dropdown.find('> .dropdown-toggle').addClass('active');
+  } else { // Bootstrap 3
+    menuAnchor.parent().addClass('active');
+    dropdown.addClass('active');
+  }
 
   // Navbar adjustments
   var navHeight = $(".navbar").first().height() + 15;
@@ -180,8 +188,8 @@ $(document).ready(function () {
   border-radius: 4px;
 }
 
-.tabset-dropdown > .nav-tabs > li.active:before {
-  content: "";
+.tabset-dropdown > .nav-tabs > li.active:before, .tabset-dropdown > .nav-tabs.nav-tabs-open:before {
+  content: "\e259";
   font-family: 'Glyphicons Halflings';
   display: inline-block;
   padding: 10px;
@@ -189,16 +197,9 @@ $(document).ready(function () {
 }
 
 .tabset-dropdown > .nav-tabs.nav-tabs-open > li.active:before {
-  content: "&#xe258;";
-  border: none;
-}
-
-.tabset-dropdown > .nav-tabs.nav-tabs-open:before {
-  content: "";
+  content: "\e258";
   font-family: 'Glyphicons Halflings';
-  display: inline-block;
-  padding: 10px;
-  border-right: 1px solid #ddd;
+  border: none;
 }
 
 .tabset-dropdown > .nav-tabs > li.active {
@@ -315,7 +316,7 @@ div.tocify {
 <div class="navbar navbar-default  navbar-fixed-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-bs-toggle="collapse" data-target="#navbar" data-bs-target="#navbar">
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
@@ -345,16 +346,18 @@ div.tocify {
 
 
 <h1 class="title toc-ignore">Darwin Core mapping</h1>
-<h3 class="subtitle">For: List of Invasive Alien Species of Union concern</h3>
+<h3 class="subtitle">For: List of Invasive Alien Species of Union
+concern</h3>
 <h4 class="author">Damiano Oldoni</h4>
-<h4 class="date">2022-03-03</h4>
+<h4 class="date">2023-02-20</h4>
 
 </div>
 
 
 <div id="setup" class="section level1" number="1">
 <h1><span class="header-section-number">1</span> Setup</h1>
-<p>Install required libraries (only if the libraries have not been installed before):</p>
+<p>Install required libraries (only if the libraries have not been
+installed before):</p>
 <pre class="r"><code>installed &lt;- rownames(installed.packages())
 required &lt;- c(
   &quot;tidyverse&quot;,
@@ -388,15 +391,19 @@ library(digest)         # To generate hashes</code></pre>
 <pre class="r"><code>input_data %&gt;% head(n = 5)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["scientific_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["scientific_name_synonym"],"name":[2],"type":["chr"],"align":["left"]},{"label":["english_name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["entry_into_force"],"name":[4],"type":["date"],"align":["right"]},{"label":["kingdom"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"Acacia saligna (Labill.) H.L.Wendl.","2":"Acacia cyanophylla Lindl.","3":"Golden wreath wattle","4":"2019-08-15","5":"Plantae"},{"1":"Acridotheres tristis Linnaeus, 1766","2":"NA","3":"Common myna","4":"2019-08-15","5":"Animalia"},{"1":"Ailanthus altissima (Mill.) Swingle","2":"NA","3":"Tree of heaven","4":"2019-08-15","5":"Plantae"},{"1":"Alopochen aegyptiacus Linnaeus, 1766","2":"NA","3":"Egyptian goose","4":"2017-08-02","5":"Animalia"},{"1":"Alternanthera philoxeroides (Mart.) Griseb.","2":"NA","3":"Alligator weed","4":"2017-08-02","5":"Plantae"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["scientific_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["scientific_name_synonym"],"name":[2],"type":["chr"],"align":["left"]},{"label":["english_name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["dutch_name"],"name":[4],"type":["chr"],"align":["left"]},{"label":["french_name"],"name":[5],"type":["chr"],"align":["left"]},{"label":["entry_into_force"],"name":[6],"type":["date"],"align":["right"]},{"label":["kingdom"],"name":[7],"type":["chr"],"align":["left"]}],"data":[{"1":"Acacia saligna (Labill.) H.L.Wendl.","2":"Acacia cyanophylla Lindl.","3":"Golden wreath wattle","4":"wilgacacia","5":"mimosa bleuâtre","6":"2019-08-15","7":"Plantae"},{"1":"Acridotheres tristis Linnaeus, 1766","2":"NA","3":"Common myna","4":"treurmaina","5":"martin triste","6":"2019-08-15","7":"Animalia"},{"1":"Ailanthus altissima (Mill.) Swingle","2":"NA","3":"Tree of heaven","4":"hemelboom","5":"ailante glanduleux","6":"2019-08-15","7":"Plantae"},{"1":"Alopochen aegyptiacus Linnaeus, 1766","2":"NA","3":"Egyptian goose","4":"nijlgans","5":"ouette d'Égypte","6":"2017-08-02","7":"Animalia"},{"1":"Alternanthera philoxeroides (Mart.) Griseb.","2":"NA","3":"Alligator weed","4":"alligatorkruid","5":"herbe à alligator","6":"2017-08-02","7":"Plantae"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 <div id="process-source-data" class="section level1" number="3">
-<h1><span class="header-section-number">3</span> Process source data</h1>
+<h1><span class="header-section-number">3</span> Process source
+data</h1>
 <div id="tidy-data" class="section level2" number="3.1">
 <h2><span class="header-section-number">3.1</span> Tidy data</h2>
-<p>The column <code>scientific_name_synonym</code> contains synonym names. We’ll create new rows for the values in this column, keeping their association with the original scientific name (<code>accepted_scientific_name</code>):</p>
+<p>The column <code>scientific_name_synonym</code> contains synonym
+names. We’ll create new rows for the values in this column, keeping
+their association with the original scientific name
+(<code>accepted_scientific_name</code>):</p>
 <pre class="r"><code>input_data %&lt;&gt;%
   mutate(scientific_name_accepted = scientific_name) %&gt;%
   pivot_longer(
@@ -407,22 +414,27 @@ library(digest)         # To generate hashes</code></pre>
   select(-col_name) %&gt;%
   relocate(scientific_name) %&gt;%
   filter(!is.na(scientific_name))</code></pre>
-<pre><code>## mutate: new variable &#39;scientific_name_accepted&#39; (character) with 66 unique values and 0% NA</code></pre>
-<pre><code>## pivot_longer: reorganized (scientific_name_synonym) into (col_name) [was 66x6, now 132x6]</code></pre>
+<pre><code>## mutate: new variable &#39;scientific_name_accepted&#39; (character) with 87 unique values and 0% NA</code></pre>
+<pre><code>## pivot_longer: reorganized (scientific_name_synonym) into (col_name) [was 87x8, now 174x8]</code></pre>
 <pre><code>## select: dropped one variable (col_name)</code></pre>
-<pre><code>## relocate: columns reordered (scientific_name, english_name, entry_into_force, kingdom, scientific_name_accepted)</code></pre>
-<pre><code>## filter: removed 57 rows (43%), 75 rows remaining</code></pre>
+<pre><code>## relocate: columns reordered (scientific_name, english_name, dutch_name, french_name, entry_into_force, …)</code></pre>
+<pre><code>## filter: removed 78 rows (45%), 96 rows remaining</code></pre>
 <p>Preview result of this operation:</p>
 <pre class="r"><code>input_data %&gt;% head()</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["scientific_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["english_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["entry_into_force"],"name":[3],"type":["date"],"align":["right"]},{"label":["kingdom"],"name":[4],"type":["chr"],"align":["left"]},{"label":["scientific_name_accepted"],"name":[5],"type":["chr"],"align":["left"]}],"data":[{"1":"Acacia saligna (Labill.) H.L.Wendl.","2":"Golden wreath wattle","3":"2019-08-15","4":"Plantae","5":"Acacia saligna (Labill.) H.L.Wendl."},{"1":"Acacia cyanophylla Lindl.","2":"Golden wreath wattle","3":"2019-08-15","4":"Plantae","5":"Acacia saligna (Labill.) H.L.Wendl."},{"1":"Acridotheres tristis Linnaeus, 1766","2":"Common myna","3":"2019-08-15","4":"Animalia","5":"Acridotheres tristis Linnaeus, 1766"},{"1":"Ailanthus altissima (Mill.) Swingle","2":"Tree of heaven","3":"2019-08-15","4":"Plantae","5":"Ailanthus altissima (Mill.) Swingle"},{"1":"Alopochen aegyptiacus Linnaeus, 1766","2":"Egyptian goose","3":"2017-08-02","4":"Animalia","5":"Alopochen aegyptiacus Linnaeus, 1766"},{"1":"Alternanthera philoxeroides (Mart.) Griseb.","2":"Alligator weed","3":"2017-08-02","4":"Plantae","5":"Alternanthera philoxeroides (Mart.) Griseb."}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["scientific_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["english_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["dutch_name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["french_name"],"name":[4],"type":["chr"],"align":["left"]},{"label":["entry_into_force"],"name":[5],"type":["date"],"align":["right"]},{"label":["kingdom"],"name":[6],"type":["chr"],"align":["left"]},{"label":["scientific_name_accepted"],"name":[7],"type":["chr"],"align":["left"]}],"data":[{"1":"Acacia saligna (Labill.) H.L.Wendl.","2":"Golden wreath wattle","3":"wilgacacia","4":"mimosa bleuâtre","5":"2019-08-15","6":"Plantae","7":"Acacia saligna (Labill.) H.L.Wendl."},{"1":"Acacia cyanophylla Lindl.","2":"Golden wreath wattle","3":"wilgacacia","4":"mimosa bleuâtre","5":"2019-08-15","6":"Plantae","7":"Acacia saligna (Labill.) H.L.Wendl."},{"1":"Acridotheres tristis Linnaeus, 1766","2":"Common myna","3":"treurmaina","4":"martin triste","5":"2019-08-15","6":"Animalia","7":"Acridotheres tristis Linnaeus, 1766"},{"1":"Ailanthus altissima (Mill.) Swingle","2":"Tree of heaven","3":"hemelboom","4":"ailante glanduleux","5":"2019-08-15","6":"Plantae","7":"Ailanthus altissima (Mill.) Swingle"},{"1":"Alopochen aegyptiacus Linnaeus, 1766","2":"Egyptian goose","3":"nijlgans","4":"ouette d'Égypte","5":"2017-08-02","6":"Animalia","7":"Alopochen aegyptiacus Linnaeus, 1766"},{"1":"Alternanthera philoxeroides (Mart.) Griseb.","2":"Alligator weed","3":"alligatorkruid","4":"herbe à alligator","5":"2017-08-02","6":"Plantae","7":"Alternanthera philoxeroides (Mart.) Griseb."}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 <div id="taxon-ids" class="section level2" number="3.2">
 <h2><span class="header-section-number">3.2</span> Taxon IDs</h2>
-<p>To link taxa with information in the extension(s), each taxon needs a unique and relatively stable <code>taxonID</code>. Here we create one in the form of <code>dataset_shortname:taxon:hash</code>, where <code>hash</code> is unique code based on scientific name and kingdom (that will remain the same as long as scientific name and kingdom remain the same):</p>
+<p>To link taxa with information in the extension(s), each taxon needs a
+unique and relatively stable <code>taxonID</code>. Here we create one in
+the form of <code>dataset_shortname:taxon:hash</code>, where
+<code>hash</code> is unique code based on scientific name and kingdom
+(that will remain the same as long as scientific name and kingdom remain
+the same):</p>
 <pre class="r"><code>vdigest &lt;- Vectorize(digest) # Vectorize digest function to work with vectors
 input_data %&lt;&gt;% mutate(taxon_id = paste(
   &quot;union-list&quot;,
@@ -430,21 +442,22 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
   vdigest(paste(scientific_name, kingdom), algo = &quot;md5&quot;),
   sep = &quot;:&quot;
 ))</code></pre>
-<pre><code>## mutate: new variable &#39;taxon_id&#39; (character) with 75 unique values and 0% NA</code></pre>
-<p>Join on <code>scientific_name_accepted</code> to get the <code>taxon_id_accepted</code>:</p>
+<pre><code>## mutate: new variable &#39;taxon_id&#39; (character) with 96 unique values and 0% NA</code></pre>
+<p>Join on <code>scientific_name_accepted</code> to get the
+<code>taxon_id_accepted</code>:</p>
 <pre class="r"><code>input_data %&lt;&gt;%
   left_join(
     select(input_data, &quot;scientific_name&quot;, &quot;taxon_id&quot;),
     by = c(&quot;scientific_name_accepted&quot; = &quot;scientific_name&quot;),
     suffix = c(&quot;&quot;, &quot;_accepted&quot;)
   )</code></pre>
-<pre><code>## select: dropped 4 variables (english_name, entry_into_force, kingdom, scientific_name_accepted)</code></pre>
+<pre><code>## select: dropped 6 variables (english_name, dutch_name, french_name, entry_into_force, kingdom, …)</code></pre>
 <pre><code>## left_join: added one column (taxon_id_accepted)</code></pre>
 <pre><code>##            &gt; rows only in x    0</code></pre>
 <pre><code>##            &gt; rows only in y  ( 9)</code></pre>
-<pre><code>##            &gt; matched rows     75</code></pre>
+<pre><code>##            &gt; matched rows     96</code></pre>
 <pre><code>##            &gt;                 ====</code></pre>
-<pre><code>##            &gt; rows total       75</code></pre>
+<pre><code>##            &gt; rows total       96</code></pre>
 </div>
 <div id="preview-data" class="section level2" number="3.3">
 <h2><span class="header-section-number">3.3</span> Preview data</h2>
@@ -457,29 +470,33 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
   ) %&gt;%
   adorn_totals(&quot;row&quot;)</code></pre>
 <pre><code>## group_by: one grouping variable (kingdom)</code></pre>
-<pre><code>## summarize: now 2 rows and 3 columns, ungrouped</code></pre>
+<pre><code>## summarize: now 3 rows and 3 columns, ungrouped</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["kingdom"],"name":[1],"type":["chr"],"align":["left"]},{"label":["# taxa"],"name":[2],"type":["int"],"align":["right"]},{"label":["# rows"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"Animalia","2":"33","3":"33"},{"1":"Plantae","2":"42","3":"42"},{"1":"Total","2":"75","3":"75"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["kingdom"],"name":[1],"type":["chr"],"align":["left"]},{"label":["# taxa"],"name":[2],"type":["int"],"align":["right"]},{"label":["# rows"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"Animalia","2":"49","3":"49"},{"1":"Chromista","2":"1","3":"1"},{"1":"Plantae","2":"46","3":"46"},{"1":"Total","2":"96","3":"96"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>Preview data:</p>
 <pre class="r"><code>input_data %&gt;% head()</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["scientific_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["english_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["entry_into_force"],"name":[3],"type":["date"],"align":["right"]},{"label":["kingdom"],"name":[4],"type":["chr"],"align":["left"]},{"label":["scientific_name_accepted"],"name":[5],"type":["chr"],"align":["left"]},{"label":["taxon_id"],"name":[6],"type":["chr"],"align":["left"]},{"label":["taxon_id_accepted"],"name":[7],"type":["chr"],"align":["left"]}],"data":[{"1":"Acacia saligna (Labill.) H.L.Wendl.","2":"Golden wreath wattle","3":"2019-08-15","4":"Plantae","5":"Acacia saligna (Labill.) H.L.Wendl.","6":"union-list:taxon:e75968a892a25181e92a7a16e2480191","7":"union-list:taxon:e75968a892a25181e92a7a16e2480191"},{"1":"Acacia cyanophylla Lindl.","2":"Golden wreath wattle","3":"2019-08-15","4":"Plantae","5":"Acacia saligna (Labill.) H.L.Wendl.","6":"union-list:taxon:49a114c68be9999ff8cb203bc418d9df","7":"union-list:taxon:e75968a892a25181e92a7a16e2480191"},{"1":"Acridotheres tristis Linnaeus, 1766","2":"Common myna","3":"2019-08-15","4":"Animalia","5":"Acridotheres tristis Linnaeus, 1766","6":"union-list:taxon:88fab226290e72ddf6e538d934aa58a6","7":"union-list:taxon:88fab226290e72ddf6e538d934aa58a6"},{"1":"Ailanthus altissima (Mill.) Swingle","2":"Tree of heaven","3":"2019-08-15","4":"Plantae","5":"Ailanthus altissima (Mill.) Swingle","6":"union-list:taxon:dc1a9c7d8ecbea2c17659b65aac590ef","7":"union-list:taxon:dc1a9c7d8ecbea2c17659b65aac590ef"},{"1":"Alopochen aegyptiacus Linnaeus, 1766","2":"Egyptian goose","3":"2017-08-02","4":"Animalia","5":"Alopochen aegyptiacus Linnaeus, 1766","6":"union-list:taxon:52f42b74b3d05c74023d8a75c402989d","7":"union-list:taxon:52f42b74b3d05c74023d8a75c402989d"},{"1":"Alternanthera philoxeroides (Mart.) Griseb.","2":"Alligator weed","3":"2017-08-02","4":"Plantae","5":"Alternanthera philoxeroides (Mart.) Griseb.","6":"union-list:taxon:b7674f5e6e0f6beed1f1360ed992f885","7":"union-list:taxon:b7674f5e6e0f6beed1f1360ed992f885"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["scientific_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["english_name"],"name":[2],"type":["chr"],"align":["left"]},{"label":["dutch_name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["french_name"],"name":[4],"type":["chr"],"align":["left"]},{"label":["entry_into_force"],"name":[5],"type":["date"],"align":["right"]},{"label":["kingdom"],"name":[6],"type":["chr"],"align":["left"]},{"label":["scientific_name_accepted"],"name":[7],"type":["chr"],"align":["left"]},{"label":["taxon_id"],"name":[8],"type":["chr"],"align":["left"]},{"label":["taxon_id_accepted"],"name":[9],"type":["chr"],"align":["left"]}],"data":[{"1":"Acacia saligna (Labill.) H.L.Wendl.","2":"Golden wreath wattle","3":"wilgacacia","4":"mimosa bleuâtre","5":"2019-08-15","6":"Plantae","7":"Acacia saligna (Labill.) H.L.Wendl.","8":"union-list:taxon:e75968a892a25181e92a7a16e2480191","9":"union-list:taxon:e75968a892a25181e92a7a16e2480191"},{"1":"Acacia cyanophylla Lindl.","2":"Golden wreath wattle","3":"wilgacacia","4":"mimosa bleuâtre","5":"2019-08-15","6":"Plantae","7":"Acacia saligna (Labill.) H.L.Wendl.","8":"union-list:taxon:49a114c68be9999ff8cb203bc418d9df","9":"union-list:taxon:e75968a892a25181e92a7a16e2480191"},{"1":"Acridotheres tristis Linnaeus, 1766","2":"Common myna","3":"treurmaina","4":"martin triste","5":"2019-08-15","6":"Animalia","7":"Acridotheres tristis Linnaeus, 1766","8":"union-list:taxon:88fab226290e72ddf6e538d934aa58a6","9":"union-list:taxon:88fab226290e72ddf6e538d934aa58a6"},{"1":"Ailanthus altissima (Mill.) Swingle","2":"Tree of heaven","3":"hemelboom","4":"ailante glanduleux","5":"2019-08-15","6":"Plantae","7":"Ailanthus altissima (Mill.) Swingle","8":"union-list:taxon:dc1a9c7d8ecbea2c17659b65aac590ef","9":"union-list:taxon:dc1a9c7d8ecbea2c17659b65aac590ef"},{"1":"Alopochen aegyptiacus Linnaeus, 1766","2":"Egyptian goose","3":"nijlgans","4":"ouette d'Égypte","5":"2017-08-02","6":"Animalia","7":"Alopochen aegyptiacus Linnaeus, 1766","8":"union-list:taxon:52f42b74b3d05c74023d8a75c402989d","9":"union-list:taxon:52f42b74b3d05c74023d8a75c402989d"},{"1":"Alternanthera philoxeroides (Mart.) Griseb.","2":"Alligator weed","3":"alligatorkruid","4":"herbe à alligator","5":"2017-08-02","6":"Plantae","7":"Alternanthera philoxeroides (Mart.) Griseb.","8":"union-list:taxon:b7674f5e6e0f6beed1f1360ed992f885","9":"union-list:taxon:b7674f5e6e0f6beed1f1360ed992f885"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
 </div>
 <div id="taxon-core" class="section level1" number="4">
 <h1><span class="header-section-number">4</span> Taxon core</h1>
-<p>Create a <code>taxon</code> dataframe starting from <code>input_data</code>:</p>
+<p>Create a <code>taxon</code> dataframe starting from
+<code>input_data</code>:</p>
 <pre class="r"><code>taxon &lt;- input_data</code></pre>
 <div id="term-mapping" class="section level2" number="4.1">
 <h2><span class="header-section-number">4.1</span> Term mapping</h2>
-<p>Map the data to <a href="https://rs.gbif.org/core/dwc_taxon_2022-02-02.xml">Darwin Core Taxon</a>.</p>
-<p>Start with record-level terms which contain metadata about the dataset (which is generally the same for all records).</p>
+<p>Map the data to <a
+href="https://rs.gbif.org/core/dwc_taxon_2022-02-02.xml">Darwin Core
+Taxon</a>.</p>
+<p>Start with record-level terms which contain metadata about the
+dataset (which is generally the same for all records).</p>
 <div id="language" class="section level3" number="4.1.1">
 <h3><span class="header-section-number">4.1.1</span> language</h3>
 <pre class="r"><code>taxon %&lt;&gt;% mutate(dwc_language = &quot;en&quot;)</code></pre>
@@ -496,7 +513,8 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
 <pre><code>## mutate: new variable &#39;dwc_rightsHolder&#39; (character) with one unique value and 0% NA</code></pre>
 </div>
 <div id="institutioncode" class="section level3" number="4.1.4">
-<h3><span class="header-section-number">4.1.4</span> institutionCode</h3>
+<h3><span class="header-section-number">4.1.4</span>
+institutionCode</h3>
 <pre class="r"><code>taxon %&lt;&gt;% mutate(dwc_institutionCode = &quot;INBO&quot;)</code></pre>
 <pre><code>## mutate: new variable &#39;dwc_institutionCode&#39; (character) with one unique value and 0% NA</code></pre>
 </div>
@@ -514,22 +532,24 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
 <div id="taxonid" class="section level3" number="4.1.7">
 <h3><span class="header-section-number">4.1.7</span> taxonID</h3>
 <pre class="r"><code>taxon %&lt;&gt;% mutate(dwc_taxonID = taxon_id)</code></pre>
-<pre><code>## mutate: new variable &#39;dwc_taxonID&#39; (character) with 75 unique values and 0% NA</code></pre>
+<pre><code>## mutate: new variable &#39;dwc_taxonID&#39; (character) with 96 unique values and 0% NA</code></pre>
 </div>
 <div id="acceptednameusageid" class="section level3" number="4.1.8">
-<h3><span class="header-section-number">4.1.8</span> acceptedNameUsageID</h3>
+<h3><span class="header-section-number">4.1.8</span>
+acceptedNameUsageID</h3>
 <pre class="r"><code>taxon %&lt;&gt;% mutate(dwc_acceptedNameUsageID = taxon_id_accepted)</code></pre>
-<pre><code>## mutate: new variable &#39;dwc_acceptedNameUsageID&#39; (character) with 66 unique values and 0% NA</code></pre>
+<pre><code>## mutate: new variable &#39;dwc_acceptedNameUsageID&#39; (character) with 87 unique values and 0% NA</code></pre>
 </div>
 <div id="scientificname" class="section level3" number="4.1.9">
 <h3><span class="header-section-number">4.1.9</span> scientificName</h3>
 <pre class="r"><code>taxon %&lt;&gt;% mutate(dwc_scientificName = scientific_name)</code></pre>
-<pre><code>## mutate: new variable &#39;dwc_scientificName&#39; (character) with 75 unique values and 0% NA</code></pre>
+<pre><code>## mutate: new variable &#39;dwc_scientificName&#39; (character) with 96 unique values and 0% NA</code></pre>
 </div>
 <div id="acceptednameusage" class="section level3" number="4.1.10">
-<h3><span class="header-section-number">4.1.10</span> acceptedNameUsage</h3>
+<h3><span class="header-section-number">4.1.10</span>
+acceptedNameUsage</h3>
 <pre class="r"><code>taxon %&lt;&gt;% mutate(dwc_acceptedNameUsage = scientific_name_accepted)</code></pre>
-<pre><code>## mutate: new variable &#39;dwc_acceptedNameUsage&#39; (character) with 66 unique values and 0% NA</code></pre>
+<pre><code>## mutate: new variable &#39;dwc_acceptedNameUsage&#39; (character) with 87 unique values and 0% NA</code></pre>
 </div>
 <div id="kingdom" class="section level3" number="4.1.11">
 <h3><span class="header-section-number">4.1.11</span> kingdom</h3>
@@ -538,19 +558,21 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
   group_by(kingdom) %&gt;%
   count()</code></pre>
 <pre><code>## group_by: one grouping variable (kingdom)</code></pre>
-<pre><code>## count: now 2 rows and 2 columns, one group variable remaining (kingdom)</code></pre>
+<pre><code>## count: now 3 rows and 2 columns, one group variable remaining (kingdom)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["kingdom"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"Animalia","2":"33"},{"1":"Plantae","2":"42"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["kingdom"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"Animalia","2":"49"},{"1":"Chromista","2":"1"},{"1":"Plantae","2":"46"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>Map values:</p>
 <pre class="r"><code>taxon %&lt;&gt;% mutate(dwc_kingdom = kingdom)</code></pre>
-<pre><code>## mutate: new variable &#39;dwc_kingdom&#39; (character) with 2 unique values and 0% NA</code></pre>
+<pre><code>## mutate: new variable &#39;dwc_kingdom&#39; (character) with 3 unique values and 0% NA</code></pre>
 </div>
 <div id="taxonrank" class="section level3" number="4.1.12">
 <h3><span class="header-section-number">4.1.12</span> taxonRank</h3>
-<p>Map values by recoding to the <a href="http://rs.gbif.org/vocabulary/gbif/rank_2015-04-24.xml">GBIF rank vocabulary</a>:</p>
+<p>Map values by recoding to the <a
+href="http://rs.gbif.org/vocabulary/gbif/rank_2015-04-24.xml">GBIF rank
+vocabulary</a>:</p>
 <pre class="r"><code>taxon %&lt;&gt;% mutate(dwc_taxonRank = case_when(
   # Scientific names often end with authors, so regex only considers beginning
   scientific_name == &quot;Lespedeza juncea var. sericea (Thunb.) Lace &amp; Hauech&quot; ~ &quot;variety&quot;,
@@ -566,7 +588,7 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
   filter(is.na(dwc_taxonRank)) %&gt;%
   select(dwc_scientificName)</code></pre>
 <pre><code>## filter: removed all rows (100%)</code></pre>
-<pre><code>## select: dropped 18 variables (scientific_name, english_name, entry_into_force, kingdom, scientific_name_accepted, …)</code></pre>
+<pre><code>## select: dropped 20 variables (scientific_name, english_name, dutch_name, french_name, entry_into_force, …)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
 {"columns":[{"label":["dwc_scientificName"],"name":[1],"type":["chr"],"align":["left"]}],"data":[],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
@@ -574,7 +596,8 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
 </div>
 </div>
 <div id="taxonomicstatus" class="section level3" number="4.1.13">
-<h3><span class="header-section-number">4.1.13</span> taxonomicStatus</h3>
+<h3><span class="header-section-number">4.1.13</span>
+taxonomicStatus</h3>
 <pre class="r"><code>taxon %&lt;&gt;% mutate(dwc_taxonomicStatus = case_when(
   taxon_id == taxon_id_accepted ~ &quot;accepted&quot;,
   TRUE ~ &quot;synonym&quot;
@@ -586,7 +609,7 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
 <h2><span class="header-section-number">4.2</span> Post-processing</h2>
 <p>Only keep the Darwin Core columns:</p>
 <pre class="r"><code>taxon %&lt;&gt;% select(starts_with(&quot;dwc_&quot;))</code></pre>
-<pre><code>## select: dropped 7 variables (scientific_name, english_name, entry_into_force, kingdom, scientific_name_accepted, …)</code></pre>
+<pre><code>## select: dropped 9 variables (scientific_name, english_name, dutch_name, french_name, entry_into_force, …)</code></pre>
 <p>Drop the <code>dwc_</code> prefix:</p>
 <pre class="r"><code>colnames(taxon) &lt;- str_remove(colnames(taxon), &quot;dwc_&quot;)</code></pre>
 <p>Preview data:</p>
@@ -600,45 +623,99 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
 <pre class="r"><code>write_csv(taxon, here(&quot;data&quot;, &quot;processed&quot;, &quot;taxon.csv&quot;), na = &quot;&quot;)</code></pre>
 </div>
 </div>
-<div id="map-vernacular-names-extension" class="section level1" number="5">
-<h1><span class="header-section-number">5</span> Map vernacular names extension</h1>
+<div id="map-vernacular-names-extension" class="section level1"
+number="5">
+<h1><span class="header-section-number">5</span> Map vernacular names
+extension</h1>
 <div id="pre-processing" class="section level2" number="5.1">
 <h2><span class="header-section-number">5.1</span> Pre-processing</h2>
-<p>Create a <code>vernacular</code> dataframe starting from <code>input_data</code>:</p>
+<p>Create a <code>vernacular</code> dataframe starting from
+<code>input_data</code>:</p>
 <pre class="r"><code>vernacular &lt;- input_data</code></pre>
 </div>
-<div id="term-mapping-1" class="section level2" number="5.2">
-<h2><span class="header-section-number">5.2</span> Term mapping</h2>
-<p>Map the data to <a href="http://rs.gbif.org/extension/gbif/1.0/vernacularname.xml">Vernacular Names</a>.</p>
-<div id="taxonid-1" class="section level3" number="5.2.1">
-<h3><span class="header-section-number">5.2.1</span> TaxonID</h3>
+<div id="tidy-data-1" class="section level2" number="5.2">
+<h2><span class="header-section-number">5.2</span> Tidy data</h2>
+<pre class="r"><code>vernacular &lt;- vernacular %&gt;%
+  pivot_longer(
+    c(&quot;english_name&quot;, &quot;dutch_name&quot;, &quot;french_name&quot;),
+    names_to = &quot;language&quot;,
+    values_to = &quot;vernacular_name&quot;) %&gt;%
+  mutate(language = case_match(language,
+                               &quot;english_name&quot; ~ &quot;en&quot;,
+                               &quot;dutch_name&quot; ~ &quot;nl&quot;,
+                               &quot;french_name&quot; ~ &quot;fr&quot;))</code></pre>
+<pre><code>## pivot_longer: reorganized (english_name, dutch_name, french_name) into (language, vernacular_name) [was 96x9, now 288x8]</code></pre>
+<pre><code>## mutate: changed 288 values (100%) of &#39;language&#39; (0 new NA)</code></pre>
+<p>Preview:</p>
+<pre class="r"><code>vernacular %&gt;% head(10)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["scientific_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["entry_into_force"],"name":[2],"type":["date"],"align":["right"]},{"label":["kingdom"],"name":[3],"type":["chr"],"align":["left"]},{"label":["scientific_name_accepted"],"name":[4],"type":["chr"],"align":["left"]},{"label":["taxon_id"],"name":[5],"type":["chr"],"align":["left"]},{"label":["taxon_id_accepted"],"name":[6],"type":["chr"],"align":["left"]},{"label":["language"],"name":[7],"type":["chr"],"align":["left"]},{"label":["vernacular_name"],"name":[8],"type":["chr"],"align":["left"]}],"data":[{"1":"Acacia saligna (Labill.) H.L.Wendl.","2":"2019-08-15","3":"Plantae","4":"Acacia saligna (Labill.) H.L.Wendl.","5":"union-list:taxon:e75968a892a25181e92a7a16e2480191","6":"union-list:taxon:e75968a892a25181e92a7a16e2480191","7":"en","8":"Golden wreath wattle"},{"1":"Acacia saligna (Labill.) H.L.Wendl.","2":"2019-08-15","3":"Plantae","4":"Acacia saligna (Labill.) H.L.Wendl.","5":"union-list:taxon:e75968a892a25181e92a7a16e2480191","6":"union-list:taxon:e75968a892a25181e92a7a16e2480191","7":"nl","8":"wilgacacia"},{"1":"Acacia saligna (Labill.) H.L.Wendl.","2":"2019-08-15","3":"Plantae","4":"Acacia saligna (Labill.) H.L.Wendl.","5":"union-list:taxon:e75968a892a25181e92a7a16e2480191","6":"union-list:taxon:e75968a892a25181e92a7a16e2480191","7":"fr","8":"mimosa bleuâtre"},{"1":"Acacia cyanophylla Lindl.","2":"2019-08-15","3":"Plantae","4":"Acacia saligna (Labill.) H.L.Wendl.","5":"union-list:taxon:49a114c68be9999ff8cb203bc418d9df","6":"union-list:taxon:e75968a892a25181e92a7a16e2480191","7":"en","8":"Golden wreath wattle"},{"1":"Acacia cyanophylla Lindl.","2":"2019-08-15","3":"Plantae","4":"Acacia saligna (Labill.) H.L.Wendl.","5":"union-list:taxon:49a114c68be9999ff8cb203bc418d9df","6":"union-list:taxon:e75968a892a25181e92a7a16e2480191","7":"nl","8":"wilgacacia"},{"1":"Acacia cyanophylla Lindl.","2":"2019-08-15","3":"Plantae","4":"Acacia saligna (Labill.) H.L.Wendl.","5":"union-list:taxon:49a114c68be9999ff8cb203bc418d9df","6":"union-list:taxon:e75968a892a25181e92a7a16e2480191","7":"fr","8":"mimosa bleuâtre"},{"1":"Acridotheres tristis Linnaeus, 1766","2":"2019-08-15","3":"Animalia","4":"Acridotheres tristis Linnaeus, 1766","5":"union-list:taxon:88fab226290e72ddf6e538d934aa58a6","6":"union-list:taxon:88fab226290e72ddf6e538d934aa58a6","7":"en","8":"Common myna"},{"1":"Acridotheres tristis Linnaeus, 1766","2":"2019-08-15","3":"Animalia","4":"Acridotheres tristis Linnaeus, 1766","5":"union-list:taxon:88fab226290e72ddf6e538d934aa58a6","6":"union-list:taxon:88fab226290e72ddf6e538d934aa58a6","7":"nl","8":"treurmaina"},{"1":"Acridotheres tristis Linnaeus, 1766","2":"2019-08-15","3":"Animalia","4":"Acridotheres tristis Linnaeus, 1766","5":"union-list:taxon:88fab226290e72ddf6e538d934aa58a6","6":"union-list:taxon:88fab226290e72ddf6e538d934aa58a6","7":"fr","8":"martin triste"},{"1":"Ailanthus altissima (Mill.) Swingle","2":"2019-08-15","3":"Plantae","4":"Ailanthus altissima (Mill.) Swingle","5":"union-list:taxon:dc1a9c7d8ecbea2c17659b65aac590ef","6":"union-list:taxon:dc1a9c7d8ecbea2c17659b65aac590ef","7":"en","8":"Tree of heaven"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<p>Some taxa have two vernacular names of the same language:</p>
+<pre class="r"><code>vernacular %&gt;%
+  filter(stringr::str_detect(
+    string = .$vernacular_name,
+    pattern = &quot;;&quot;)) %&gt;%
+  relocate(vernacular_name, language)</code></pre>
+<pre><code>## filter: removed 284 rows (99%), 4 rows remaining</code></pre>
+<pre><code>## relocate: columns reordered (vernacular_name, language, scientific_name, entry_into_force, kingdom, …)</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["vernacular_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["language"],"name":[2],"type":["chr"],"align":["left"]},{"label":["scientific_name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["entry_into_force"],"name":[4],"type":["date"],"align":["right"]},{"label":["kingdom"],"name":[5],"type":["chr"],"align":["left"]},{"label":["scientific_name_accepted"],"name":[6],"type":["chr"],"align":["left"]},{"label":["taxon_id"],"name":[7],"type":["chr"],"align":["left"]},{"label":["taxon_id_accepted"],"name":[8],"type":["chr"],"align":["left"]}],"data":[{"1":"gewone gunnera;reuzenrabarber","2":"nl","3":"Gunnera tinctoria (Molina) Mirbel","4":"2017-08-02","5":"Plantae","6":"Gunnera tinctoria (Molina) Mirbel","7":"union-list:taxon:7160703d7486b64e70a884302467af4a","8":"union-list:taxon:7160703d7486b64e70a884302467af4a"},{"1":"Amerikaanse stierkikker;brulkikker","2":"nl","3":"Lithobates (Rana) catesbeianus Shaw, 1802","4":"2016-08-03","5":"Animalia","6":"Lithobates (Rana) catesbeianus Shaw, 1802","7":"union-list:taxon:a16d58676096359dcd467a42c6e05ace","8":"union-list:taxon:a16d58676096359dcd467a42c6e05ace"},{"1":"Salvinia moss;kariba weed","2":"en","3":"Salvinia molesta D.S. Mitch.","4":"2019-08-15","5":"Plantae","6":"Salvinia molesta D.S. Mitch.","7":"union-list:taxon:c0d7212e97f334e8c2000caa8f73a35f","8":"union-list:taxon:c0d7212e97f334e8c2000caa8f73a35f"},{"1":"Salvinia moss;kariba weed","2":"en","3":"Salvinia adnata Desv.","4":"2019-08-15","5":"Plantae","6":"Salvinia molesta D.S. Mitch.","7":"union-list:taxon:0aa74bf623b9700c704f4331fa4edac3","8":"union-list:taxon:c0d7212e97f334e8c2000caa8f73a35f"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+<pre class="r"><code>vernacular &lt;- vernacular %&gt;%
+  separate_longer_delim(vernacular_name, delim = &quot;;&quot;)</code></pre>
+<p>Preview:</p>
+<pre class="r"><code>vernacular %&gt;%
+  filter(vernacular_name %in% c(&quot;gewone gunnera&quot;,
+                                &quot;reuzenrabarber&quot;,
+                                &quot;Salvinia moss&quot;,
+                                &quot;kariba weed&quot;)) %&gt;%
+  distinct(vernacular_name, language)</code></pre>
+<pre><code>## filter: removed 286 rows (98%), 6 rows remaining</code></pre>
+<pre><code>## distinct: removed 2 rows (33%), 4 rows remaining</code></pre>
+<div data-pagedtable="false">
+<script data-pagedtable-source type="application/json">
+{"columns":[{"label":["vernacular_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["language"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"gewone gunnera","2":"nl"},{"1":"reuzenrabarber","2":"nl"},{"1":"Salvinia moss","2":"en"},{"1":"kariba weed","2":"en"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+  </script>
+</div>
+</div>
+<div id="term-mapping-1" class="section level2" number="5.3">
+<h2><span class="header-section-number">5.3</span> Term mapping</h2>
+<p>Map the data to <a
+href="http://rs.gbif.org/extension/gbif/1.0/vernacularname.xml">Vernacular
+Names</a>.</p>
+<div id="taxonid-1" class="section level3" number="5.3.1">
+<h3><span class="header-section-number">5.3.1</span> TaxonID</h3>
 <pre class="r"><code>vernacular %&lt;&gt;% mutate(dwc_taxonID = taxon_id)</code></pre>
-<pre><code>## mutate: new variable &#39;dwc_taxonID&#39; (character) with 75 unique values and 0% NA</code></pre>
+<pre><code>## mutate: new variable &#39;dwc_taxonID&#39; (character) with 96 unique values and 0% NA</code></pre>
 </div>
-<div id="vernacularname" class="section level3" number="5.2.2">
-<h3><span class="header-section-number">5.2.2</span> vernacularName</h3>
-<pre class="r"><code>vernacular %&lt;&gt;% mutate(dwc_vernacularName = english_name)</code></pre>
-<pre><code>## mutate: new variable &#39;dwc_vernacularName&#39; (character) with 66 unique values and 0% NA</code></pre>
+<div id="vernacularname" class="section level3" number="5.3.2">
+<h3><span class="header-section-number">5.3.2</span> vernacularName</h3>
+<pre class="r"><code>vernacular %&lt;&gt;% mutate(dwc_vernacularName = vernacular_name)</code></pre>
+<pre><code>## mutate: new variable &#39;dwc_vernacularName&#39; (character) with 262 unique values and 0% NA</code></pre>
 </div>
-<div id="language-1" class="section level3" number="5.2.3">
-<h3><span class="header-section-number">5.2.3</span> language</h3>
-<p>Set language code to <code>en</code> (English):</p>
-<pre class="r"><code>vernacular %&lt;&gt;% mutate(dwc_language = &quot;en&quot;)</code></pre>
-<pre><code>## mutate: new variable &#39;dwc_language&#39; (character) with one unique value and 0% NA</code></pre>
+<div id="language-1" class="section level3" number="5.3.3">
+<h3><span class="header-section-number">5.3.3</span> language</h3>
+<pre class="r"><code>vernacular %&lt;&gt;% mutate(dwc_language = language)</code></pre>
+<pre><code>## mutate: new variable &#39;dwc_language&#39; (character) with 3 unique values and 0% NA</code></pre>
 </div>
 </div>
-<div id="post-processing-1" class="section level2" number="5.3">
-<h2><span class="header-section-number">5.3</span> Post-processing</h2>
+<div id="post-processing-1" class="section level2" number="5.4">
+<h2><span class="header-section-number">5.4</span> Post-processing</h2>
 <p>Only keep the Darwin Core columns:</p>
 <pre class="r"><code>vernacular %&lt;&gt;% select(starts_with(&quot;dwc_&quot;))</code></pre>
-<pre><code>## select: dropped 7 variables (scientific_name, english_name, entry_into_force, kingdom, scientific_name_accepted, …)</code></pre>
+<pre><code>## select: dropped 8 variables (scientific_name, entry_into_force, kingdom, scientific_name_accepted, taxon_id, …)</code></pre>
 <p>Drop the <code>dwc_</code> prefix:</p>
 <pre class="r"><code>colnames(vernacular) &lt;- str_remove(colnames(vernacular), &quot;dwc_&quot;)</code></pre>
 <p>Preview data:</p>
 <pre class="r"><code>vernacular %&gt;% head()</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["taxonID"],"name":[1],"type":["chr"],"align":["left"]},{"label":["vernacularName"],"name":[2],"type":["chr"],"align":["left"]},{"label":["language"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"union-list:taxon:e75968a892a25181e92a7a16e2480191","2":"Golden wreath wattle","3":"en"},{"1":"union-list:taxon:49a114c68be9999ff8cb203bc418d9df","2":"Golden wreath wattle","3":"en"},{"1":"union-list:taxon:88fab226290e72ddf6e538d934aa58a6","2":"Common myna","3":"en"},{"1":"union-list:taxon:dc1a9c7d8ecbea2c17659b65aac590ef","2":"Tree of heaven","3":"en"},{"1":"union-list:taxon:52f42b74b3d05c74023d8a75c402989d","2":"Egyptian goose","3":"en"},{"1":"union-list:taxon:b7674f5e6e0f6beed1f1360ed992f885","2":"Alligator weed","3":"en"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["taxonID"],"name":[1],"type":["chr"],"align":["left"]},{"label":["vernacularName"],"name":[2],"type":["chr"],"align":["left"]},{"label":["language"],"name":[3],"type":["chr"],"align":["left"]}],"data":[{"1":"union-list:taxon:e75968a892a25181e92a7a16e2480191","2":"Golden wreath wattle","3":"en"},{"1":"union-list:taxon:e75968a892a25181e92a7a16e2480191","2":"wilgacacia","3":"nl"},{"1":"union-list:taxon:e75968a892a25181e92a7a16e2480191","2":"mimosa bleuâtre","3":"fr"},{"1":"union-list:taxon:49a114c68be9999ff8cb203bc418d9df","2":"Golden wreath wattle","3":"en"},{"1":"union-list:taxon:49a114c68be9999ff8cb203bc418d9df","2":"wilgacacia","3":"nl"},{"1":"union-list:taxon:49a114c68be9999ff8cb203bc418d9df","2":"mimosa bleuâtre","3":"fr"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>Save to CSV:</p>
@@ -646,34 +723,42 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
 </div>
 </div>
 <div id="map-description-extension" class="section level1" number="6">
-<h1><span class="header-section-number">6</span> Map description extension</h1>
-<p>In the description extension we want to include the date a species has been added to the list.</p>
+<h1><span class="header-section-number">6</span> Map description
+extension</h1>
+<p>In the description extension we want to include the date a species
+has been added to the list.</p>
 <div id="pre-processing-1" class="section level2" number="6.1">
 <h2><span class="header-section-number">6.1</span> Pre-processing</h2>
-<p>Create a <code>description</code> dataframe starting from <code>input_data</code>:</p>
+<p>Create a <code>description</code> dataframe starting from
+<code>input_data</code>:</p>
 <pre class="r"><code>description &lt;- input_data</code></pre>
 </div>
 <div id="entry-into-force" class="section level2" number="6.2">
 <h2><span class="header-section-number">6.2</span> Entry into force</h2>
-<p>The column <code>entry_into_force</code> contains the date each species has been added to the list. We use it to create a description column:</p>
+<p>The column <code>entry_into_force</code> contains the date each
+species has been added to the list. We use it to create a description
+column:</p>
 <pre class="r"><code>description %&lt;&gt;% mutate(description = entry_into_force)</code></pre>
-<pre><code>## mutate: new variable &#39;description&#39; (Date) with 4 unique values and 0% NA</code></pre>
-<p>Create a <code>type</code> field to indicate the type of description:</p>
+<pre><code>## mutate: new variable &#39;description&#39; (Date) with 8 unique values and 0% NA</code></pre>
+<p>Create a <code>type</code> field to indicate the type of
+description:</p>
 <pre class="r"><code>description %&lt;&gt;% mutate(type = &quot;entry into force&quot;)</code></pre>
 <pre><code>## mutate: new variable &#39;type&#39; (character) with one unique value and 0% NA</code></pre>
 </div>
 <div id="term-mapping-2" class="section level2" number="6.3">
 <h2><span class="header-section-number">6.3</span> Term mapping</h2>
-<p>Map the data to <a href="https://rs.gbif.org/extension/gbif/1.0/description.xml">Taxon Description</a>:</p>
+<p>Map the data to <a
+href="https://rs.gbif.org/extension/gbif/1.0/description.xml">Taxon
+Description</a>:</p>
 <div id="taxonid-2" class="section level3" number="6.3.1">
 <h3><span class="header-section-number">6.3.1</span> taxonID</h3>
 <pre class="r"><code>description %&lt;&gt;% mutate(dwc_taxonID = taxon_id)</code></pre>
-<pre><code>## mutate: new variable &#39;dwc_taxonID&#39; (character) with 75 unique values and 0% NA</code></pre>
+<pre><code>## mutate: new variable &#39;dwc_taxonID&#39; (character) with 96 unique values and 0% NA</code></pre>
 </div>
 <div id="description" class="section level3" number="6.3.2">
 <h3><span class="header-section-number">6.3.2</span> description</h3>
 <pre class="r"><code>description %&lt;&gt;% mutate(dwc_description = description)</code></pre>
-<pre><code>## mutate: new variable &#39;dwc_description&#39; (Date) with 4 unique values and 0% NA</code></pre>
+<pre><code>## mutate: new variable &#39;dwc_description&#39; (Date) with 8 unique values and 0% NA</code></pre>
 </div>
 <div id="type" class="section level3" number="6.3.3">
 <h3><span class="header-section-number">6.3.3</span> type</h3>
@@ -690,7 +775,7 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
 <h2><span class="header-section-number">6.4</span> Post-processing</h2>
 <p>Only keep the Darwin Core columns:</p>
 <pre class="r"><code>description %&lt;&gt;% select(starts_with(&quot;dwc_&quot;))</code></pre>
-<pre><code>## select: dropped 9 variables (scientific_name, english_name, entry_into_force, kingdom, scientific_name_accepted, …)</code></pre>
+<pre><code>## select: dropped 11 variables (scientific_name, english_name, dutch_name, french_name, entry_into_force, …)</code></pre>
 <p>Drop the <code>dwc_</code> prefix:</p>
 <pre class="r"><code>colnames(description) &lt;- str_remove(colnames(description), &quot;dwc_&quot;)</code></pre>
 <p>Preview description:</p>

@@ -297,6 +297,51 @@ Create a `vernacular` dataframe starting from `input_data`:
 vernacular <- input_data
 ```
 
+## Tidy data
+
+```{r}
+vernacular <- vernacular %>%
+  pivot_longer(
+    c("english_name", "dutch_name", "french_name"),
+    names_to = "language",
+    values_to = "vernacular_name") %>%
+  mutate(language = case_match(language,
+                               "english_name" ~ "en",
+                               "dutch_name" ~ "nl",
+                               "french_name" ~ "fr"))
+```
+
+Preview:
+
+```{r preview_post_tidy}
+vernacular %>% head(10)
+```
+Some taxa have two vernacular names of the same language:
+
+```{r}
+vernacular %>%
+  filter(stringr::str_detect(
+    string = .$vernacular_name,
+    pattern = ";")) %>%
+  relocate(vernacular_name, language)
+```
+
+```{r}
+vernacular <- vernacular %>%
+  separate_longer_delim(vernacular_name, delim = ";")
+```
+
+Preview:
+
+```{r preview_separate}
+vernacular %>%
+  filter(vernacular_name %in% c("gewone gunnera",
+                                "reuzenrabarber",
+                                "Salvinia moss",
+                                "kariba weed")) %>%
+  distinct(vernacular_name, language)
+```
+
 ## Term mapping
 
 Map the data to [Vernacular Names](http://rs.gbif.org/extension/gbif/1.0/vernacularname.xml).
@@ -310,15 +355,13 @@ vernacular %<>% mutate(dwc_taxonID = taxon_id)
 ### vernacularName
 
 ```{r}
-vernacular %<>% mutate(dwc_vernacularName = english_name)
+vernacular %<>% mutate(dwc_vernacularName = vernacular_name)
 ```
 
 ### language
 
-Set language code to `en` (English):
-
 ```{r}
-vernacular %<>% mutate(dwc_language = "en")
+vernacular %<>% mutate(dwc_language = language)
 ```
 
 ## Post-processing
