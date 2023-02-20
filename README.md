@@ -12,7 +12,7 @@ This repository contains the functionality to standardize the data of the [List 
 
 The source data are manually created from:
 
-- [2019 consolidated version pdf](https://ec.europa.eu/environment/nature/invasivealien/docs/R_2016_1141_Union-list-2019-consolidation.pdf): scientific names with authors, synonym names (in parenthesis) with authors
+- [2022 consolidated version pdf](https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:02016R1141-20220802&from=EN): scientific names with authors, synonym names (in parenthesis) with authors
 - [web page](https://ec.europa.eu/environment/nature/invasivealien/list/index_en.htm): English name, entry into force, kingdom (table headers)
 
 ## Published dataset
