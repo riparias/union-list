@@ -8,7 +8,7 @@ This repository contains the functionality to standardize the data of the [List 
 
 ## Workflow
 
-[source data](data/raw) → Darwin Core [mapping script](src/dwc_mapping.Rmd) → generated [Darwin Core files](data/processed)
+[source data](https://github.com/riparias/union-list/tree/main/data/raw) → Darwin Core [mapping script](https://riparias.github.io/union-list/dwc_mapping.html) → generated [Darwin Core files](https://github.com/riparias/union-list/tree/main/data/processed)
 
 The source data are manually created from:
 
