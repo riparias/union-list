@@ -316,6 +316,31 @@ Preview:
 ```{r preview_post_tidy}
 vernacular %>% head(10)
 ```
+Some taxa have two vernacular names of the same language:
+
+```{r}
+vernacular %>%
+  filter(stringr::str_detect(
+    string = .$vernacular_name,
+    pattern = ";")) %>%
+  relocate(vernacular_name, language)
+```
+
+```{r}
+vernacular <- vernacular %>%
+  separate_longer_delim(vernacular_name, delim = ";")
+```
+
+Preview:
+
+```{r preview_separate}
+vernacular %>%
+  filter(vernacular_name %in% c("gewone gunnera",
+                                "reuzenrabarber",
+                                "Salvinia moss",
+                                "kariba weed")) %>%
+  distinct(vernacular_name, language)
+```
 
 ## Term mapping
 
