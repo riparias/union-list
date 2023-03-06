@@ -250,6 +250,8 @@ All taxa should have a rank:
 taxon %>%
   filter(is.na(dwc_taxonRank)) %>%
   nrow() == 0
+```
+
 Show mapped values: 
 
 ```{r}
