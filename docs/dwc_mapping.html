@@ -418,7 +418,7 @@ their association with the original scientific name
 <pre><code>## pivot_longer: reorganized (scientific_name_synonym) into (col_name) [was 88x9, now 176x9]</code></pre>
 <pre><code>## select: dropped one variable (col_name)</code></pre>
 <pre><code>## relocate: columns reordered (scientific_name, english_name, dutch_name, french_name, german_name, …)</code></pre>
-<pre><code>## filter: removed 79 rows (45%), 97 rows remaining</code></pre>
+<pre><code>## filter: removed 78 rows (44%), 98 rows remaining</code></pre>
 <p>Preview result of this operation:</p>
 <pre class="r"><code>input_data %&gt;% head()</code></pre>
 <div data-pagedtable="false">
@@ -442,7 +442,7 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
   vdigest(paste(scientific_name, kingdom), algo = &quot;md5&quot;),
   sep = &quot;:&quot;
 ))</code></pre>
-<pre><code>## mutate: new variable &#39;taxon_id&#39; (character) with 97 unique values and 0% NA</code></pre>
+<pre><code>## mutate: new variable &#39;taxon_id&#39; (character) with 98 unique values and 0% NA</code></pre>
 <p>Join on <code>scientific_name_accepted</code> to get the
 <code>taxon_id_accepted</code>:</p>
 <pre class="r"><code>input_data %&lt;&gt;%
@@ -454,10 +454,10 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
 <pre><code>## select: dropped 7 variables (english_name, dutch_name, french_name, german_name, entry_into_force, …)</code></pre>
 <pre><code>## left_join: added one column (taxon_id_accepted)</code></pre>
 <pre><code>##            &gt; rows only in x    0</code></pre>
-<pre><code>##            &gt; rows only in y  ( 9)</code></pre>
-<pre><code>##            &gt; matched rows     97</code></pre>
+<pre><code>##            &gt; rows only in y  (10)</code></pre>
+<pre><code>##            &gt; matched rows     98</code></pre>
 <pre><code>##            &gt;                 ====</code></pre>
-<pre><code>##            &gt; rows total       97</code></pre>
+<pre><code>##            &gt; rows total       98</code></pre>
 </div>
 <div id="preview-data" class="section level2" number="3.3">
 <h2><span class="header-section-number">3.3</span> Preview data</h2>
@@ -473,7 +473,7 @@ input_data %&lt;&gt;% mutate(taxon_id = paste(
 <pre><code>## summarize: now 3 rows and 3 columns, ungrouped</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["kingdom"],"name":[1],"type":["chr"],"align":["left"]},{"label":["# taxa"],"name":[2],"type":["int"],"align":["right"]},{"label":["# rows"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"Animalia","2":"50","3":"50"},{"1":"Chromista","2":"1","3":"1"},{"1":"Plantae","2":"46","3":"46"},{"1":"Total","2":"97","3":"97"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["kingdom"],"name":[1],"type":["chr"],"align":["left"]},{"label":["# taxa"],"name":[2],"type":["int"],"align":["right"]},{"label":["# rows"],"name":[3],"type":["int"],"align":["right"]}],"data":[{"1":"Animalia","2":"51","3":"51"},{"1":"Chromista","2":"1","3":"1"},{"1":"Plantae","2":"46","3":"46"},{"1":"Total","2":"98","3":"98"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>Preview data:</p>
@@ -532,7 +532,7 @@ institutionCode</h3>
 <div id="taxonid" class="section level3" number="4.1.7">
 <h3><span class="header-section-number">4.1.7</span> taxonID</h3>
 <pre class="r"><code>taxon %&lt;&gt;% mutate(dwc_taxonID = taxon_id)</code></pre>
-<pre><code>## mutate: new variable &#39;dwc_taxonID&#39; (character) with 97 unique values and 0% NA</code></pre>
+<pre><code>## mutate: new variable &#39;dwc_taxonID&#39; (character) with 98 unique values and 0% NA</code></pre>
 </div>
 <div id="acceptednameusageid" class="section level3" number="4.1.8">
 <h3><span class="header-section-number">4.1.8</span>
@@ -543,7 +543,7 @@ acceptedNameUsageID</h3>
 <div id="scientificname" class="section level3" number="4.1.9">
 <h3><span class="header-section-number">4.1.9</span> scientificName</h3>
 <pre class="r"><code>taxon %&lt;&gt;% mutate(dwc_scientificName = scientific_name)</code></pre>
-<pre><code>## mutate: new variable &#39;dwc_scientificName&#39; (character) with 97 unique values and 0% NA</code></pre>
+<pre><code>## mutate: new variable &#39;dwc_scientificName&#39; (character) with 98 unique values and 0% NA</code></pre>
 </div>
 <div id="acceptednameusage" class="section level3" number="4.1.10">
 <h3><span class="header-section-number">4.1.10</span>
@@ -561,7 +561,7 @@ acceptedNameUsage</h3>
 <pre><code>## count: now 3 rows and 2 columns, one group variable remaining (kingdom)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["kingdom"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"Animalia","2":"50"},{"1":"Chromista","2":"1"},{"1":"Plantae","2":"46"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["kingdom"],"name":[1],"type":["chr"],"align":["left"]},{"label":["n"],"name":[2],"type":["int"],"align":["right"]}],"data":[{"1":"Animalia","2":"51"},{"1":"Chromista","2":"1"},{"1":"Plantae","2":"46"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <p>Map values:</p>
@@ -594,7 +594,7 @@ vocabulary</a>:</p>
 <pre><code>## select: dropped 20 variables (scientific_name, english_name, dutch_name, french_name, german_name, …)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["dwc_scientificName"],"name":[1],"type":["chr"],"align":["left"]},{"label":["dwc_taxonRank"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"Acacia saligna (Labill.) H.L.Wendl.","2":"species"},{"1":"Acacia cyanophylla Lindl.","2":"species"},{"1":"Acridotheres tristis Linnaeus, 1766","2":"species"},{"1":"Ailanthus altissima (Mill.) Swingle","2":"species"},{"1":"Alopochen aegyptiacus Linnaeus, 1766","2":"species"},{"1":"Alternanthera philoxeroides (Mart.) Griseb.","2":"species"},{"1":"Ameiurus melas (Rafinesque, 1820)","2":"species"},{"1":"Andropogon virginicus L.","2":"species"},{"1":"Arthurdendyus triangulatus (Dendy, 1894) Jones & Gerard (1999)","2":"species"},{"1":"Asclepias syriaca L.","2":"species"},{"1":"Axis axis (Erxleben, 1777)","2":"species"},{"1":"Baccharis halimifolia L.","2":"species"},{"1":"Cabomba caroliniana Gray","2":"species"},{"1":"Callosciurus erythraeus Pallas, 1779","2":"species"},{"1":"Callosciurus finlaysonii (Horsfield, 1823)","2":"species"},{"1":"Cardiospermum grandiflorum Sw.","2":"species"},{"1":"Celastrus orbiculatus Thunb.","2":"species"},{"1":"Channa argus (Cantor, 1842)","2":"species"},{"1":"Cortaderia jubata (Lemoine ex Carrière) Stapf","2":"species"},{"1":"Corvus splendens Viellot, 1817","2":"species"},{"1":"Ehrharta calycina Sm.","2":"species"},{"1":"Eichhornia crassipes (Martius) Solms","2":"species"},{"1":"Elodea nuttallii (Planch.) St. John","2":"species"},{"1":"Eriocheir sinensis H. Milne Edwards, 1854","2":"species"},{"1":"Faxonius rusticus (Girard, 1852)","2":"species"},{"1":"Fundulus heteroclitus (Linnaeus, 1766)","2":"species"},{"1":"Gambusia affinis (Baird & Girard, 1853)","2":"species"},{"1":"Gambusia holbrooki Girard, 1859","2":"species"},{"1":"Gunnera tinctoria (Molina) Mirbel","2":"species"},{"1":"Gymnocoronis spilanthoides (D.Don ex Hook. & Arn.) DC.","2":"species"},{"1":"Hakea sericea Schrad. & J.C.Wendl.","2":"species"},{"1":"Heracleum mantegazzianum Sommier & Levier","2":"species"},{"1":"Heracleum persicum Fischer","2":"species"},{"1":"Heracleum sosnowskyi Mandenova","2":"species"},{"1":"Herpestes javanicus É. Geoffroy Saint-Hilaire, 1818","2":"species"},{"1":"Humulus scandens (Lour.) Merr.","2":"species"},{"1":"Hydrocotyle ranunculoides L. f.","2":"species"},{"1":"Impatiens glandulifera Royle","2":"species"},{"1":"Koenigia polystachya (Wall. ex Meisn.) T.M.Schust. & Reveal","2":"species"},{"1":"Lagarosiphon major (Ridley) Moss","2":"species"},{"1":"Lampropeltis getula (Linnaeus, 1766)","2":"species"},{"1":"Lepomis gibbosus Linnaeus, 1758","2":"species"},{"1":"Lespedeza cuneata (Dum.Cours.) G.Don","2":"species"},{"1":"Lespedeza juncea var. sericea (Thunb.) Lace & Hauech","2":"variety"},{"1":"Limnoperna fortunei (Dunker, 1857)","2":"species"},{"1":"Lithobates (Rana) catesbeianus Shaw, 1802","2":"species"},{"1":"Ludwigia grandiflora (Michx.) Greuter & Burdet","2":"species"},{"1":"Ludwigia peploides (Kunth) P.H. Raven","2":"species"},{"1":"Lygodium japonicum (Thunb.) Sw.","2":"species"},{"1":"Lysichiton americanus Hultén and St. John","2":"species"},{"1":"Microstegium vimineum (Trin.) A. Camus","2":"species"},{"1":"Morone americana (Gmelin, 1789)","2":"species"},{"1":"Muntiacus reevesi Ogilby, 1839","2":"species"},{"1":"Myocastor coypus Molina, 1782","2":"species"},{"1":"Myriophyllum aquaticum (Vell.) Verdc.","2":"species"},{"1":"Myriophyllum heterophyllum Michaux","2":"species"},{"1":"Nasua nasua Linnaeus, 1766","2":"species"},{"1":"Nyctereutes procyonoides Gray, 1834","2":"species"},{"1":"Ondatra zibethicus Linnaeus, 1766","2":"species"},{"1":"Orconectes limosus Rafinesque, 1817","2":"species"},{"1":"Faxonius limosus Rafinesque, 1817","2":"species"},{"1":"Orconectes virilis Hagen, 1870","2":"species"},{"1":"Faxonius virilis Hagen, 1870","2":"species"},{"1":"Oxyura jamaicensis Gmelin, 1789","2":"species"},{"1":"Pacifastacus leniusculus Dana, 1852","2":"species"},{"1":"Parthenium hysterophorus L.","2":"species"},{"1":"Pennisetum setaceum (Forssk.) Chiov.","2":"species"},{"1":"Perccottus glenii Dybowski, 1877","2":"species"},{"1":"Persicaria perfoliata (L.) H. Gross","2":"species"},{"1":"Polygonum perfoliatum L.","2":"species"},{"1":"Pistia stratiotes L.","2":"species"},{"1":"Plotosus lineatus (Thunberg, 1787)","2":"species"},{"1":"Procambarus clarkii Girard, 1852","2":"species"},{"1":"Procambarus fallax (Hagen, 1870) f. virginalis","2":"form"},{"1":"Procambarus virginalis Lyko, 2017","2":"species"},{"1":"Procyon lotor Linnaeus, 1758","2":"species"},{"1":"Prosopis juliflora (Sw.) DC.","2":"species"},{"1":"Pseudorasbora parva Temminck & Schlegel, 1846","2":"species"},{"1":"Pueraria montana (Lour.) Merr. var. lobata (Willd.)","2":"variety"},{"1":"Pueraria lobata (Willd.) Ohwi","2":"species"},{"1":"Pycnonotus cafer (Linnaeus, 1766)","2":"species"},{"1":"Rugulopteryx okamurae (E.Y.Dawson) I.K.Hwang, W.J.Lee & H.S.Kim, 2009","2":"species"},{"1":"Salvinia molesta D.S. Mitch.","2":"species"},{"1":"Salvinia adnata Desv.","2":"species"},{"1":"Sciurus carolinensis Gmelin,1788","2":"species"},{"1":"Sciurus niger Linnaeus, 1758","2":"species"},{"1":"Solenopsis geminata (Fabricius, 1804)","2":"species"},{"1":"Solenopsis invicta Buren, 1972","2":"species"},{"1":"Solenopsis richteri Forel, 1909","2":"species"},{"1":"Tamias sibiricus Laxmann, 1769","2":"species"},{"1":"Threskiornis aethiopicus Latham, 1790","2":"species"},{"1":"Trachemys scripta Schoepff, 1792","2":"species"},{"1":"Triadica sebifera (L.) Small","2":"species"},{"1":"Sapium sebiferum (L.) Roxb.","2":"species"},{"1":"Vespa velutina nigrithorax de Buysson, 1905","2":"subspecies"},{"1":"Wasmannia auropunctata (Roger, 1863)","2":"species"},{"1":"Xenopus laevis (Daudin, 1802)","2":"species"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["dwc_scientificName"],"name":[1],"type":["chr"],"align":["left"]},{"label":["dwc_taxonRank"],"name":[2],"type":["chr"],"align":["left"]}],"data":[{"1":"Acacia saligna (Labill.) H.L.Wendl.","2":"species"},{"1":"Acacia cyanophylla Lindl.","2":"species"},{"1":"Acridotheres tristis Linnaeus, 1766","2":"species"},{"1":"Ailanthus altissima (Mill.) Swingle","2":"species"},{"1":"Alopochen aegyptiacus Linnaeus, 1766","2":"species"},{"1":"Alternanthera philoxeroides (Mart.) Griseb.","2":"species"},{"1":"Ameiurus melas (Rafinesque, 1820)","2":"species"},{"1":"Andropogon virginicus L.","2":"species"},{"1":"Arthurdendyus triangulatus (Dendy, 1894) Jones & Gerard (1999)","2":"species"},{"1":"Asclepias syriaca L.","2":"species"},{"1":"Axis axis (Erxleben, 1777)","2":"species"},{"1":"Baccharis halimifolia L.","2":"species"},{"1":"Cabomba caroliniana Gray","2":"species"},{"1":"Callosciurus erythraeus Pallas, 1779","2":"species"},{"1":"Callosciurus finlaysonii (Horsfield, 1823)","2":"species"},{"1":"Cardiospermum grandiflorum Sw.","2":"species"},{"1":"Celastrus orbiculatus Thunb.","2":"species"},{"1":"Channa argus (Cantor, 1842)","2":"species"},{"1":"Cortaderia jubata (Lemoine ex Carrière) Stapf","2":"species"},{"1":"Corvus splendens Viellot, 1817","2":"species"},{"1":"Ehrharta calycina Sm.","2":"species"},{"1":"Eichhornia crassipes (Martius) Solms","2":"species"},{"1":"Elodea nuttallii (Planch.) St. John","2":"species"},{"1":"Eriocheir sinensis H. Milne Edwards, 1854","2":"species"},{"1":"Faxonius rusticus (Girard, 1852)","2":"species"},{"1":"Fundulus heteroclitus (Linnaeus, 1766)","2":"species"},{"1":"Gambusia affinis (Baird & Girard, 1853)","2":"species"},{"1":"Gambusia holbrooki Girard, 1859","2":"species"},{"1":"Gunnera tinctoria (Molina) Mirbel","2":"species"},{"1":"Gymnocoronis spilanthoides (D.Don ex Hook. & Arn.) DC.","2":"species"},{"1":"Hakea sericea Schrad. & J.C.Wendl.","2":"species"},{"1":"Heracleum mantegazzianum Sommier & Levier","2":"species"},{"1":"Heracleum persicum Fischer","2":"species"},{"1":"Heracleum sosnowskyi Mandenova","2":"species"},{"1":"Herpestes javanicus É. Geoffroy Saint-Hilaire, 1818","2":"species"},{"1":"Humulus scandens (Lour.) Merr.","2":"species"},{"1":"Hydrocotyle ranunculoides L. f.","2":"species"},{"1":"Impatiens glandulifera Royle","2":"species"},{"1":"Koenigia polystachya (Wall. ex Meisn.) T.M.Schust. & Reveal","2":"species"},{"1":"Lagarosiphon major (Ridley) Moss","2":"species"},{"1":"Lampropeltis getula (Linnaeus, 1766)","2":"species"},{"1":"Lepomis gibbosus Linnaeus, 1758","2":"species"},{"1":"Lespedeza cuneata (Dum.Cours.) G.Don","2":"species"},{"1":"Lespedeza juncea var. sericea (Thunb.) Lace & Hauech","2":"variety"},{"1":"Limnoperna fortunei (Dunker, 1857)","2":"species"},{"1":"Lithobates catesbeianus Shaw, 1802","2":"species"},{"1":"Rana catesbeiana Shaw, 1802","2":"species"},{"1":"Ludwigia grandiflora (Michx.) Greuter & Burdet","2":"species"},{"1":"Ludwigia peploides (Kunth) P.H. Raven","2":"species"},{"1":"Lygodium japonicum (Thunb.) Sw.","2":"species"},{"1":"Lysichiton americanus Hultén and St. John","2":"species"},{"1":"Microstegium vimineum (Trin.) A. Camus","2":"species"},{"1":"Morone americana (Gmelin, 1789)","2":"species"},{"1":"Muntiacus reevesi Ogilby, 1839","2":"species"},{"1":"Myocastor coypus Molina, 1782","2":"species"},{"1":"Myriophyllum aquaticum (Vell.) Verdc.","2":"species"},{"1":"Myriophyllum heterophyllum Michaux","2":"species"},{"1":"Nasua nasua Linnaeus, 1766","2":"species"},{"1":"Nyctereutes procyonoides Gray, 1834","2":"species"},{"1":"Ondatra zibethicus Linnaeus, 1766","2":"species"},{"1":"Orconectes limosus Rafinesque, 1817","2":"species"},{"1":"Faxonius limosus Rafinesque, 1817","2":"species"},{"1":"Orconectes virilis Hagen, 1870","2":"species"},{"1":"Faxonius virilis Hagen, 1870","2":"species"},{"1":"Oxyura jamaicensis Gmelin, 1789","2":"species"},{"1":"Pacifastacus leniusculus Dana, 1852","2":"species"},{"1":"Parthenium hysterophorus L.","2":"species"},{"1":"Pennisetum setaceum (Forssk.) Chiov.","2":"species"},{"1":"Perccottus glenii Dybowski, 1877","2":"species"},{"1":"Persicaria perfoliata (L.) H. Gross","2":"species"},{"1":"Polygonum perfoliatum L.","2":"species"},{"1":"Pistia stratiotes L.","2":"species"},{"1":"Plotosus lineatus (Thunberg, 1787)","2":"species"},{"1":"Procambarus clarkii Girard, 1852","2":"species"},{"1":"Procambarus fallax (Hagen, 1870) f. virginalis","2":"form"},{"1":"Procambarus virginalis Lyko, 2017","2":"species"},{"1":"Procyon lotor Linnaeus, 1758","2":"species"},{"1":"Prosopis juliflora (Sw.) DC.","2":"species"},{"1":"Pseudorasbora parva Temminck & Schlegel, 1846","2":"species"},{"1":"Pueraria montana (Lour.) Merr. var. lobata (Willd.)","2":"variety"},{"1":"Pueraria lobata (Willd.) Ohwi","2":"species"},{"1":"Pycnonotus cafer (Linnaeus, 1766)","2":"species"},{"1":"Rugulopteryx okamurae (E.Y.Dawson) I.K.Hwang, W.J.Lee & H.S.Kim, 2009","2":"species"},{"1":"Salvinia molesta D.S. Mitch.","2":"species"},{"1":"Salvinia adnata Desv.","2":"species"},{"1":"Sciurus carolinensis Gmelin,1788","2":"species"},{"1":"Sciurus niger Linnaeus, 1758","2":"species"},{"1":"Solenopsis geminata (Fabricius, 1804)","2":"species"},{"1":"Solenopsis invicta Buren, 1972","2":"species"},{"1":"Solenopsis richteri Forel, 1909","2":"species"},{"1":"Tamias sibiricus Laxmann, 1769","2":"species"},{"1":"Threskiornis aethiopicus Latham, 1790","2":"species"},{"1":"Trachemys scripta Schoepff, 1792","2":"species"},{"1":"Triadica sebifera (L.) Small","2":"species"},{"1":"Sapium sebiferum (L.) Roxb.","2":"species"},{"1":"Vespa velutina nigrithorax de Buysson, 1905","2":"subspecies"},{"1":"Wasmannia auropunctata (Roger, 1863)","2":"species"},{"1":"Xenopus laevis (Daudin, 1802)","2":"species"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 </div>
@@ -648,8 +648,8 @@ extension</h1>
                                &quot;dutch_name&quot; ~ &quot;nl&quot;,
                                &quot;french_name&quot; ~ &quot;fr&quot;,
                                &quot;german_name&quot; ~&quot;de&quot;))</code></pre>
-<pre><code>## pivot_longer: reorganized (english_name, dutch_name, french_name, german_name) into (language, vernacular_name) [was 97x10, now 388x8]</code></pre>
-<pre><code>## mutate: changed 388 values (100%) of &#39;language&#39; (0 new NA)</code></pre>
+<pre><code>## pivot_longer: reorganized (english_name, dutch_name, french_name, german_name) into (language, vernacular_name) [was 98x10, now 392x8]</code></pre>
+<pre><code>## mutate: changed 392 values (100%) of &#39;language&#39; (0 new NA)</code></pre>
 <p>Preview:</p>
 <pre class="r"><code>vernacular %&gt;% head(10)</code></pre>
 <div data-pagedtable="false">
@@ -663,11 +663,11 @@ extension</h1>
     string = .$vernacular_name,
     pattern = &quot;;&quot;)) %&gt;%
   relocate(vernacular_name, language)</code></pre>
-<pre><code>## filter: removed 383 rows (99%), 5 rows remaining</code></pre>
+<pre><code>## filter: removed 386 rows (98%), 6 rows remaining</code></pre>
 <pre><code>## relocate: columns reordered (vernacular_name, language, scientific_name, entry_into_force, kingdom, …)</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
-{"columns":[{"label":["vernacular_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["language"],"name":[2],"type":["chr"],"align":["left"]},{"label":["scientific_name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["entry_into_force"],"name":[4],"type":["date"],"align":["right"]},{"label":["kingdom"],"name":[5],"type":["chr"],"align":["left"]},{"label":["scientific_name_accepted"],"name":[6],"type":["chr"],"align":["left"]},{"label":["taxon_id"],"name":[7],"type":["chr"],"align":["left"]},{"label":["taxon_id_accepted"],"name":[8],"type":["chr"],"align":["left"]}],"data":[{"1":"Blauband-Kärpfling;Zebra-Killifisch","2":"de","3":"Fundulus heteroclitus (Linnaeus, 1766)","4":"2024-08-02","5":"Animalia","6":"Fundulus heteroclitus (Linnaeus, 1766)","7":"union-list:taxon:58df507c0b79a936f786c068e4956648","8":"union-list:taxon:58df507c0b79a936f786c068e4956648"},{"1":"gewone gunnera;reuzenrabarber","2":"nl","3":"Gunnera tinctoria (Molina) Mirbel","4":"2017-08-02","5":"Plantae","6":"Gunnera tinctoria (Molina) Mirbel","7":"union-list:taxon:7160703d7486b64e70a884302467af4a","8":"union-list:taxon:7160703d7486b64e70a884302467af4a"},{"1":"Amerikaanse stierkikker;brulkikker","2":"nl","3":"Lithobates (Rana) catesbeianus Shaw, 1802","4":"2016-08-03","5":"Animalia","6":"Lithobates (Rana) catesbeianus Shaw, 1802","7":"union-list:taxon:a16d58676096359dcd467a42c6e05ace","8":"union-list:taxon:a16d58676096359dcd467a42c6e05ace"},{"1":"Salvinia moss;kariba weed","2":"en","3":"Salvinia molesta D.S. Mitch.","4":"2019-08-15","5":"Plantae","6":"Salvinia molesta D.S. Mitch.","7":"union-list:taxon:c0d7212e97f334e8c2000caa8f73a35f","8":"union-list:taxon:c0d7212e97f334e8c2000caa8f73a35f"},{"1":"Salvinia moss;kariba weed","2":"en","3":"Salvinia adnata Desv.","4":"2019-08-15","5":"Plantae","6":"Salvinia molesta D.S. Mitch.","7":"union-list:taxon:0aa74bf623b9700c704f4331fa4edac3","8":"union-list:taxon:c0d7212e97f334e8c2000caa8f73a35f"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
+{"columns":[{"label":["vernacular_name"],"name":[1],"type":["chr"],"align":["left"]},{"label":["language"],"name":[2],"type":["chr"],"align":["left"]},{"label":["scientific_name"],"name":[3],"type":["chr"],"align":["left"]},{"label":["entry_into_force"],"name":[4],"type":["date"],"align":["right"]},{"label":["kingdom"],"name":[5],"type":["chr"],"align":["left"]},{"label":["scientific_name_accepted"],"name":[6],"type":["chr"],"align":["left"]},{"label":["taxon_id"],"name":[7],"type":["chr"],"align":["left"]},{"label":["taxon_id_accepted"],"name":[8],"type":["chr"],"align":["left"]}],"data":[{"1":"Blauband-Kärpfling;Zebra-Killifisch","2":"de","3":"Fundulus heteroclitus (Linnaeus, 1766)","4":"2024-08-02","5":"Animalia","6":"Fundulus heteroclitus (Linnaeus, 1766)","7":"union-list:taxon:58df507c0b79a936f786c068e4956648","8":"union-list:taxon:58df507c0b79a936f786c068e4956648"},{"1":"gewone gunnera;reuzenrabarber","2":"nl","3":"Gunnera tinctoria (Molina) Mirbel","4":"2017-08-02","5":"Plantae","6":"Gunnera tinctoria (Molina) Mirbel","7":"union-list:taxon:7160703d7486b64e70a884302467af4a","8":"union-list:taxon:7160703d7486b64e70a884302467af4a"},{"1":"Amerikaanse stierkikker;brulkikker","2":"nl","3":"Lithobates catesbeianus Shaw, 1802","4":"2016-08-03","5":"Animalia","6":"Lithobates catesbeianus Shaw, 1802","7":"union-list:taxon:b66f1a4a05d28fcfa53c1394ece05316","8":"union-list:taxon:b66f1a4a05d28fcfa53c1394ece05316"},{"1":"Amerikaanse stierkikker;brulkikker","2":"nl","3":"Rana catesbeiana Shaw, 1802","4":"2016-08-03","5":"Animalia","6":"Lithobates catesbeianus Shaw, 1802","7":"union-list:taxon:91ce69259d5fe60e33521befc8c7dfc2","8":"union-list:taxon:b66f1a4a05d28fcfa53c1394ece05316"},{"1":"Salvinia moss;kariba weed","2":"en","3":"Salvinia molesta D.S. Mitch.","4":"2019-08-15","5":"Plantae","6":"Salvinia molesta D.S. Mitch.","7":"union-list:taxon:c0d7212e97f334e8c2000caa8f73a35f","8":"union-list:taxon:c0d7212e97f334e8c2000caa8f73a35f"},{"1":"Salvinia moss;kariba weed","2":"en","3":"Salvinia adnata Desv.","4":"2019-08-15","5":"Plantae","6":"Salvinia molesta D.S. Mitch.","7":"union-list:taxon:0aa74bf623b9700c704f4331fa4edac3","8":"union-list:taxon:c0d7212e97f334e8c2000caa8f73a35f"}],"options":{"columns":{"min":{},"max":[10]},"rows":{"min":[10],"max":[10]},"pages":{}}}
   </script>
 </div>
 <pre class="r"><code>vernacular &lt;- vernacular %&gt;%
@@ -679,7 +679,7 @@ extension</h1>
                                 &quot;Salvinia moss&quot;,
                                 &quot;kariba weed&quot;)) %&gt;%
   distinct(vernacular_name, language)</code></pre>
-<pre><code>## filter: removed 387 rows (98%), 6 rows remaining</code></pre>
+<pre><code>## filter: removed 392 rows (98%), 6 rows remaining</code></pre>
 <pre><code>## distinct: removed 2 rows (33%), 4 rows remaining</code></pre>
 <div data-pagedtable="false">
 <script data-pagedtable-source type="application/json">
@@ -695,7 +695,7 @@ Names</a>.</p>
 <div id="taxonid-1" class="section level3" number="5.3.1">
 <h3><span class="header-section-number">5.3.1</span> TaxonID</h3>
 <pre class="r"><code>vernacular %&lt;&gt;% mutate(dwc_taxonID = taxon_id)</code></pre>
-<pre><code>## mutate: new variable &#39;dwc_taxonID&#39; (character) with 97 unique values and 0% NA</code></pre>
+<pre><code>## mutate: new variable &#39;dwc_taxonID&#39; (character) with 98 unique values and 0% NA</code></pre>
 </div>
 <div id="vernacularname" class="section level3" number="5.3.2">
 <h3><span class="header-section-number">5.3.2</span> vernacularName</h3>
@@ -757,7 +757,7 @@ Description</a>:</p>
 <div id="taxonid-2" class="section level3" number="6.3.1">
 <h3><span class="header-section-number">6.3.1</span> taxonID</h3>
 <pre class="r"><code>description %&lt;&gt;% mutate(dwc_taxonID = taxon_id)</code></pre>
-<pre><code>## mutate: new variable &#39;dwc_taxonID&#39; (character) with 97 unique values and 0% NA</code></pre>
+<pre><code>## mutate: new variable &#39;dwc_taxonID&#39; (character) with 98 unique values and 0% NA</code></pre>
 </div>
 <div id="description" class="section level3" number="6.3.2">
 <h3><span class="header-section-number">6.3.2</span> description</h3>
