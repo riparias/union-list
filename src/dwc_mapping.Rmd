@@ -244,12 +244,16 @@ taxon %<>% mutate(dwc_taxonRank = case_when(
 ))
 ```
 
-Show mapped values: 
+All taxa should have a rank:
 
 ```{r}
 taxon %>%
   filter(is.na(dwc_taxonRank)) %>%
-  select(dwc_scientificName)
+  nrow() == 0
+Show mapped values: 
+
+```{r}
+taxon %>% select(dwc_scientificName, dwc_taxonRank)
 ```
 
 ### taxonomicStatus
