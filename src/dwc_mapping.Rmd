@@ -302,13 +302,14 @@ vernacular <- input_data
 ```{r}
 vernacular <- vernacular %>%
   pivot_longer(
-    c("english_name", "dutch_name", "french_name"),
+    c("english_name", "dutch_name", "french_name", "german_name"),
     names_to = "language",
     values_to = "vernacular_name") %>%
   mutate(language = case_match(language,
                                "english_name" ~ "en",
                                "dutch_name" ~ "nl",
-                               "french_name" ~ "fr"))
+                               "french_name" ~ "fr",
+                               "german_name" ~"de"))
 ```
 
 Preview:
