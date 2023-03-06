@@ -236,7 +236,6 @@ Map values by recoding to the [GBIF rank vocabulary](http://rs.gbif.org/vocabula
 taxon %<>% mutate(dwc_taxonRank = case_when(
   # Scientific names often end with authors, so regex only considers beginning
   scientific_name == "Lespedeza juncea var. sericea (Thunb.) Lace & Hauech" ~ "variety",
-  scientific_name == "Lithobates (Rana) catesbeianus Shaw, 1802" ~ "species",
   scientific_name == "Procambarus fallax (Hagen, 1870) f. virginalis" ~ "form",
   scientific_name == "Pueraria montana (Lour.) Merr. var. lobata (Willd.)" ~ "variety",
   scientific_name == "Vespa velutina nigrithorax de Buysson, 1905" ~ "subspecies",
@@ -244,12 +243,18 @@ taxon %<>% mutate(dwc_taxonRank = case_when(
 ))
 ```
 
-Show mapped values: 
+All taxa should have a rank:
 
 ```{r}
 taxon %>%
   filter(is.na(dwc_taxonRank)) %>%
-  select(dwc_scientificName)
+  nrow() == 0
+```
+
+Show mapped values: 
+
+```{r}
+taxon %>% select(dwc_scientificName, dwc_taxonRank)
 ```
 
 ### taxonomicStatus
@@ -302,13 +307,14 @@ vernacular <- input_data
 ```{r}
 vernacular <- vernacular %>%
   pivot_longer(
-    c("english_name", "dutch_name", "french_name"),
+    c("english_name", "dutch_name", "french_name", "german_name"),
     names_to = "language",
     values_to = "vernacular_name") %>%
   mutate(language = case_match(language,
                                "english_name" ~ "en",
                                "dutch_name" ~ "nl",
-                               "french_name" ~ "fr"))
+                               "french_name" ~ "fr",
+                               "german_name" ~"de"))
 ```
 
 Preview:

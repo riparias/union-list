@@ -2,292 +2,398 @@ taxonID,vernacularName,language
 union-list:taxon:e75968a892a25181e92a7a16e2480191,Golden wreath wattle,en
 union-list:taxon:e75968a892a25181e92a7a16e2480191,wilgacacia,nl
 union-list:taxon:e75968a892a25181e92a7a16e2480191,mimosa bleuâtre,fr
+union-list:taxon:e75968a892a25181e92a7a16e2480191,Weidenblatt-Akazie,de
 union-list:taxon:49a114c68be9999ff8cb203bc418d9df,Golden wreath wattle,en
 union-list:taxon:49a114c68be9999ff8cb203bc418d9df,wilgacacia,nl
 union-list:taxon:49a114c68be9999ff8cb203bc418d9df,mimosa bleuâtre,fr
+union-list:taxon:49a114c68be9999ff8cb203bc418d9df,Weidenblatt-Akazie,de
 union-list:taxon:88fab226290e72ddf6e538d934aa58a6,Common myna,en
 union-list:taxon:88fab226290e72ddf6e538d934aa58a6,treurmaina,nl
 union-list:taxon:88fab226290e72ddf6e538d934aa58a6,martin triste,fr
+union-list:taxon:88fab226290e72ddf6e538d934aa58a6,Hirtenmaina,de
 union-list:taxon:dc1a9c7d8ecbea2c17659b65aac590ef,Tree of heaven,en
 union-list:taxon:dc1a9c7d8ecbea2c17659b65aac590ef,hemelboom,nl
 union-list:taxon:dc1a9c7d8ecbea2c17659b65aac590ef,ailante glanduleux,fr
+union-list:taxon:dc1a9c7d8ecbea2c17659b65aac590ef,Götterbaum,de
 union-list:taxon:52f42b74b3d05c74023d8a75c402989d,Egyptian goose,en
 union-list:taxon:52f42b74b3d05c74023d8a75c402989d,nijlgans,nl
 union-list:taxon:52f42b74b3d05c74023d8a75c402989d,ouette d'Égypte,fr
+union-list:taxon:52f42b74b3d05c74023d8a75c402989d,Nilgans,de
 union-list:taxon:b7674f5e6e0f6beed1f1360ed992f885,Alligator weed,en
 union-list:taxon:b7674f5e6e0f6beed1f1360ed992f885,alligatorkruid,nl
 union-list:taxon:b7674f5e6e0f6beed1f1360ed992f885,herbe à alligator,fr
+union-list:taxon:b7674f5e6e0f6beed1f1360ed992f885,Alligatorkraut,de
+union-list:taxon:8aaacb40fb899153168d3ea045e724d2,Black bullhead,en
+union-list:taxon:8aaacb40fb899153168d3ea045e724d2,zwarte dwergmeerval,nl
+union-list:taxon:8aaacb40fb899153168d3ea045e724d2,poisson-chat commun,fr
+union-list:taxon:8aaacb40fb899153168d3ea045e724d2,Schwarzer Zwergwels,de
 union-list:taxon:4849c38a09acc788fa58486f94c9f213,Broomsedge bluestem,en
 union-list:taxon:4849c38a09acc788fa58486f94c9f213,Amerikaans bezemgras,nl
 union-list:taxon:4849c38a09acc788fa58486f94c9f213,barbon de Virginie,fr
+union-list:taxon:4849c38a09acc788fa58486f94c9f213,Blaustängelige Besensegge,de
 union-list:taxon:19adb9e2d372d7a045d8b156690d3952,New Zealand flatworm,en
 union-list:taxon:19adb9e2d372d7a045d8b156690d3952,nieuw-Zeelandse platworm,nl
 union-list:taxon:19adb9e2d372d7a045d8b156690d3952,ver plat de Nouvelle-Zélande,fr
+union-list:taxon:19adb9e2d372d7a045d8b156690d3952,Neuseeland-Plattwurm,de
 union-list:taxon:a75a5b3dd389493da0a2d178ed1d304c,Common milkweed,en
 union-list:taxon:a75a5b3dd389493da0a2d178ed1d304c,zijdeplant,nl
 union-list:taxon:a75a5b3dd389493da0a2d178ed1d304c,asclépiade de Syrie,fr
+union-list:taxon:a75a5b3dd389493da0a2d178ed1d304c,Gewöhnliche Seidenpflanze,de
 union-list:taxon:a150b4c8daa56805598fe8431f85416f,axis deer,en
 union-list:taxon:a150b4c8daa56805598fe8431f85416f,Axishert,nl
 union-list:taxon:a150b4c8daa56805598fe8431f85416f,cerf axis,fr
+union-list:taxon:a150b4c8daa56805598fe8431f85416f,Axishirsch,de
 union-list:taxon:39645efd6ea88c7d8f4dc15682fd846f,Eastern baccharis,en
 union-list:taxon:39645efd6ea88c7d8f4dc15682fd846f,struikaster,nl
 union-list:taxon:39645efd6ea88c7d8f4dc15682fd846f,séneçon en arbre,fr
+union-list:taxon:39645efd6ea88c7d8f4dc15682fd846f,Kreuzstrauch,de
 union-list:taxon:4c8bc768708a70e1f8b19f3ab9ed43ee,Fanwort,en
 union-list:taxon:4c8bc768708a70e1f8b19f3ab9ed43ee,waterwaaier,nl
 union-list:taxon:4c8bc768708a70e1f8b19f3ab9ed43ee,cabomba de Caroline,fr
+union-list:taxon:4c8bc768708a70e1f8b19f3ab9ed43ee,Karolina-Haarnixe,de
 union-list:taxon:0b2e3151811441f6e2acbbfb5bdc4140,Pallas' squirrel,en
 union-list:taxon:0b2e3151811441f6e2acbbfb5bdc4140,Pallas eekhoorn,nl
 union-list:taxon:0b2e3151811441f6e2acbbfb5bdc4140,écureuil de Pallas,fr
+union-list:taxon:0b2e3151811441f6e2acbbfb5bdc4140,Pallas-Schönhörnchen,de
 union-list:taxon:ecfd7f09f601677eb47467776169038f,Finlayson's squirrel,en
 union-list:taxon:ecfd7f09f601677eb47467776169038f,Thaise eekhoorn,nl
 union-list:taxon:ecfd7f09f601677eb47467776169038f,écureuil de Finlayson,fr
+union-list:taxon:ecfd7f09f601677eb47467776169038f,Finlayson-Hörnchen,de
 union-list:taxon:9dae038c1d31ba59909a3334ca075932,Balloon vine,en
 union-list:taxon:9dae038c1d31ba59909a3334ca075932,ballonrank,nl
 union-list:taxon:9dae038c1d31ba59909a3334ca075932,corinde à grandes fleurs,fr
+union-list:taxon:9dae038c1d31ba59909a3334ca075932,Ballonrebe,de
 union-list:taxon:d0bb21cbd59886823b84dac2ae243008,Oriental bittersweet,en
 union-list:taxon:d0bb21cbd59886823b84dac2ae243008,Aziatische Boomwurger,nl
 union-list:taxon:d0bb21cbd59886823b84dac2ae243008,célastre asiatique,fr
+union-list:taxon:d0bb21cbd59886823b84dac2ae243008,Rundblättriger Baumwürger,de
 union-list:taxon:761bd7bd499576347745b0965bbd2acb,northern snakehead,en
 union-list:taxon:761bd7bd499576347745b0965bbd2acb,noordelijke slangekopvis,nl
 union-list:taxon:761bd7bd499576347745b0965bbd2acb,poisson à tête de serpent,fr
+union-list:taxon:761bd7bd499576347745b0965bbd2acb,Argus-Schlangenkopffisch,de
 union-list:taxon:b78d1f501c4a7c55a5258315914fd765,Purple pampas grass,en
 union-list:taxon:b78d1f501c4a7c55a5258315914fd765,hoog pampasgras,nl
 union-list:taxon:b78d1f501c4a7c55a5258315914fd765,herbe de la pampa pourpre,fr
+union-list:taxon:b78d1f501c4a7c55a5258315914fd765,Andenpampasgras,de
 union-list:taxon:df0ad9c3c3a8987696999eeaa706293a,Indian house crow,en
 union-list:taxon:df0ad9c3c3a8987696999eeaa706293a,huiskraai,nl
 union-list:taxon:df0ad9c3c3a8987696999eeaa706293a,corbeau familier,fr
+union-list:taxon:df0ad9c3c3a8987696999eeaa706293a,Glanzkrähe,de
 union-list:taxon:ac136f6187e2882d2e080368e01b2c0b,Perrenial veldt grass,en
 union-list:taxon:ac136f6187e2882d2e080368e01b2c0b,roze rimpelgras,nl
 union-list:taxon:ac136f6187e2882d2e080368e01b2c0b,ehrharte calicinale,fr
+union-list:taxon:ac136f6187e2882d2e080368e01b2c0b,Ausdauerndes veldtgras,de
 union-list:taxon:15ac43ee4b02bcf60227f74d8517fc44,Water hyacinth,en
 union-list:taxon:15ac43ee4b02bcf60227f74d8517fc44,waterhyacint,nl
 union-list:taxon:15ac43ee4b02bcf60227f74d8517fc44,jacinthe d'eau,fr
+union-list:taxon:15ac43ee4b02bcf60227f74d8517fc44,Wasserhyazinthe,de
 union-list:taxon:2e09a2866f4457b3890927faba38c52a,Nuttall's waterweed,en
 union-list:taxon:2e09a2866f4457b3890927faba38c52a,smalle waterpest,nl
 union-list:taxon:2e09a2866f4457b3890927faba38c52a,élodée de Nuttall,fr
+union-list:taxon:2e09a2866f4457b3890927faba38c52a,Schmalblättrige Wasserpest,de
 union-list:taxon:17cfe4544afdfdeba70d61de2e7327cf,Chinese mittencrab,en
 union-list:taxon:17cfe4544afdfdeba70d61de2e7327cf,Chinese wolhandkrab,nl
 union-list:taxon:17cfe4544afdfdeba70d61de2e7327cf,crabe chinois,fr
+union-list:taxon:17cfe4544afdfdeba70d61de2e7327cf,Wollhandkrabbe,de
 union-list:taxon:ace9990de333b0f9f3de92da4582dc32,rusty crayfish,en
 union-list:taxon:ace9990de333b0f9f3de92da4582dc32,roestbruine Amerikaanse Rivierkreeft,nl
 union-list:taxon:ace9990de333b0f9f3de92da4582dc32,écrevisse à taches rouges,fr
+union-list:taxon:ace9990de333b0f9f3de92da4582dc32,Amerikanischer Rostkrebs,de
 union-list:taxon:58df507c0b79a936f786c068e4956648,mummichog,en
 union-list:taxon:58df507c0b79a936f786c068e4956648,mummichog,nl
 union-list:taxon:58df507c0b79a936f786c068e4956648,choquemort,fr
+union-list:taxon:58df507c0b79a936f786c068e4956648,Blauband-Kärpfling,de
+union-list:taxon:58df507c0b79a936f786c068e4956648,Zebra-Killifisch,de
 union-list:taxon:95935d9a527a2a5d567aa80f02401104,western mosquitofish,en
 union-list:taxon:95935d9a527a2a5d567aa80f02401104,westelijk muskietenvisje,nl
 union-list:taxon:95935d9a527a2a5d567aa80f02401104,gambusie de l’ouest,fr
+union-list:taxon:95935d9a527a2a5d567aa80f02401104,Westlicher Moskitofisch,de
 union-list:taxon:b7c1a95dc37cb3872da7e101c48aed8b,eastern mosquitofish,en
 union-list:taxon:b7c1a95dc37cb3872da7e101c48aed8b,oostelijk muskietenvisje,nl
 union-list:taxon:b7c1a95dc37cb3872da7e101c48aed8b,gambusie de l’est,fr
+union-list:taxon:b7c1a95dc37cb3872da7e101c48aed8b,Östliche Moskitofisch,de
 union-list:taxon:7160703d7486b64e70a884302467af4a,Chilean rhubarb,en
 union-list:taxon:7160703d7486b64e70a884302467af4a,gewone gunnera,nl
 union-list:taxon:7160703d7486b64e70a884302467af4a,reuzenrabarber,nl
 union-list:taxon:7160703d7486b64e70a884302467af4a,rhubarbe géante du Chili,fr
+union-list:taxon:7160703d7486b64e70a884302467af4a,Chilenischer Riesenrhabarber,de
 union-list:taxon:f2878338323f2d1cb22aaf1746d0ed22,Senegal tea plant,en
 union-list:taxon:f2878338323f2d1cb22aaf1746d0ed22,smalle theeplant,nl
 union-list:taxon:f2878338323f2d1cb22aaf1746d0ed22,faux hygrophile,fr
+union-list:taxon:f2878338323f2d1cb22aaf1746d0ed22,Falscher wasserfreund,de
 union-list:taxon:f73a924504e75ee4016488ba760ec92b,bushy needlewood,en
 union-list:taxon:f73a924504e75ee4016488ba760ec92b,hakea,nl
 union-list:taxon:f73a924504e75ee4016488ba760ec92b,hakéa soyeux,fr
+union-list:taxon:f73a924504e75ee4016488ba760ec92b,Nadelblättriges Nadelkissen,de
 union-list:taxon:af00bafde618b074f09cf3ec149ca9a7,Giant hogweed,en
 union-list:taxon:af00bafde618b074f09cf3ec149ca9a7,reuzenberenklauw,nl
 union-list:taxon:af00bafde618b074f09cf3ec149ca9a7,berce du Caucase,fr
+union-list:taxon:af00bafde618b074f09cf3ec149ca9a7,Riesenbärenklau,de
 union-list:taxon:1623ed3ebe2a2bfee72c835807482202,Persian hogweed,en
 union-list:taxon:1623ed3ebe2a2bfee72c835807482202,Perzische berenklauw,nl
 union-list:taxon:1623ed3ebe2a2bfee72c835807482202,berce de Perse,fr
+union-list:taxon:1623ed3ebe2a2bfee72c835807482202,Persischer Bärenklau,de
 union-list:taxon:f11f888571d616fccca840f0553fc906,Sosnowsky's hogweed,en
 union-list:taxon:f11f888571d616fccca840f0553fc906,Sosnowsky's berenklauw,nl
 union-list:taxon:f11f888571d616fccca840f0553fc906,berce de Sosnowsky,fr
+union-list:taxon:f11f888571d616fccca840f0553fc906,Sosnowskyi Bärenklau,de
 union-list:taxon:b870c156a2edacc94a9481757991cb88,Small Asian mongoose,en
 union-list:taxon:b870c156a2edacc94a9481757991cb88,Indische mangoeste,nl
 union-list:taxon:b870c156a2edacc94a9481757991cb88,mangouste,fr
+union-list:taxon:b870c156a2edacc94a9481757991cb88,Kleiner Mungo,de
 union-list:taxon:381bb05ccf7c58075dbae67555bbe92e,Japanese hop,en
 union-list:taxon:381bb05ccf7c58075dbae67555bbe92e,oosterse hop,nl
 union-list:taxon:381bb05ccf7c58075dbae67555bbe92e,houblon du Japon,fr
+union-list:taxon:381bb05ccf7c58075dbae67555bbe92e,Japanischer hopfen,de
 union-list:taxon:487238e9d3235731e8f12cbcd01d4a35,Floating pennywort,en
 union-list:taxon:487238e9d3235731e8f12cbcd01d4a35,grote waternavel,nl
 union-list:taxon:487238e9d3235731e8f12cbcd01d4a35,hydrocotyle fausse-renoncule,fr
+union-list:taxon:487238e9d3235731e8f12cbcd01d4a35,Großer Wassernabel,de
 union-list:taxon:51cf5ff18a396017e1252c3c45575a04,Himalayan balsam,en
 union-list:taxon:51cf5ff18a396017e1252c3c45575a04,reuzenbalsemien,nl
 union-list:taxon:51cf5ff18a396017e1252c3c45575a04,balsamine de l'Himalaya,fr
+union-list:taxon:51cf5ff18a396017e1252c3c45575a04,Drüsiges springkraut,de
 union-list:taxon:a74afb80f5f7c9ef9a7b61b36a09931c,Himalayan knotweed,en
 union-list:taxon:a74afb80f5f7c9ef9a7b61b36a09931c,Afghaanse duizendknoop,nl
 union-list:taxon:a74afb80f5f7c9ef9a7b61b36a09931c,renouée à nombreux épis,fr
+union-list:taxon:a74afb80f5f7c9ef9a7b61b36a09931c,Himalaja-Knöterich,de
 union-list:taxon:4314213c1e1e2d0eac734eebd9d6a6f2,Curly waterweed,en
 union-list:taxon:4314213c1e1e2d0eac734eebd9d6a6f2,verspreidbladige waterpest,nl
 union-list:taxon:4314213c1e1e2d0eac734eebd9d6a6f2,élodée à feuilles alternes,fr
+union-list:taxon:4314213c1e1e2d0eac734eebd9d6a6f2,Wechselblatt-Wasserpest,de
 union-list:taxon:0fd9eb90e522c0e74f52b17cd05eea3e,common kingsnake,en
 union-list:taxon:0fd9eb90e522c0e74f52b17cd05eea3e,koningsslang,nl
 union-list:taxon:0fd9eb90e522c0e74f52b17cd05eea3e,serpent roi de Californie,fr
+union-list:taxon:0fd9eb90e522c0e74f52b17cd05eea3e,Ketten-Königsnatter,de
 union-list:taxon:3af71b7fed6cf5ded48f9d0ae3a5deaa,Pumpkinseed,en
 union-list:taxon:3af71b7fed6cf5ded48f9d0ae3a5deaa,zonnebaars,nl
 union-list:taxon:3af71b7fed6cf5ded48f9d0ae3a5deaa,perche soleil,fr
+union-list:taxon:3af71b7fed6cf5ded48f9d0ae3a5deaa,Gemeiner sonnenbarsch,de
 union-list:taxon:cd87991d909e51695ac89bc68d9482e0,Chinese bushclover,en
 union-list:taxon:cd87991d909e51695ac89bc68d9482e0,Chinese struikklaver,nl
 union-list:taxon:cd87991d909e51695ac89bc68d9482e0,lespédéza soyeux,fr
+union-list:taxon:cd87991d909e51695ac89bc68d9482e0,Japanischer klee,de
 union-list:taxon:a8b695e24272320983e2668a44901a8b,Chinese bushclover,en
 union-list:taxon:a8b695e24272320983e2668a44901a8b,Chinese struikklaver,nl
 union-list:taxon:a8b695e24272320983e2668a44901a8b,lespédéza soyeux,fr
+union-list:taxon:a8b695e24272320983e2668a44901a8b,Japanischer klee,de
 union-list:taxon:a366a16fa6a8075507be620fc2d943bc,golden mussel,en
 union-list:taxon:a366a16fa6a8075507be620fc2d943bc,gouden mossel,nl
 union-list:taxon:a366a16fa6a8075507be620fc2d943bc,moule pygmée,fr
-union-list:taxon:a16d58676096359dcd467a42c6e05ace,American bullfrog,en
-union-list:taxon:a16d58676096359dcd467a42c6e05ace,Amerikaanse stierkikker,nl
-union-list:taxon:a16d58676096359dcd467a42c6e05ace,brulkikker,nl
-union-list:taxon:a16d58676096359dcd467a42c6e05ace,grenouille taureau,fr
+union-list:taxon:a366a16fa6a8075507be620fc2d943bc,,de
+union-list:taxon:b66f1a4a05d28fcfa53c1394ece05316,American bullfrog,en
+union-list:taxon:b66f1a4a05d28fcfa53c1394ece05316,Amerikaanse stierkikker,nl
+union-list:taxon:b66f1a4a05d28fcfa53c1394ece05316,brulkikker,nl
+union-list:taxon:b66f1a4a05d28fcfa53c1394ece05316,grenouille taureau,fr
+union-list:taxon:b66f1a4a05d28fcfa53c1394ece05316,Amerikanischer Ochsenfrosch,de
+union-list:taxon:91ce69259d5fe60e33521befc8c7dfc2,American bullfrog,en
+union-list:taxon:91ce69259d5fe60e33521befc8c7dfc2,Amerikaanse stierkikker,nl
+union-list:taxon:91ce69259d5fe60e33521befc8c7dfc2,brulkikker,nl
+union-list:taxon:91ce69259d5fe60e33521befc8c7dfc2,grenouille taureau,fr
+union-list:taxon:91ce69259d5fe60e33521befc8c7dfc2,Amerikanischer Ochsenfrosch,de
 union-list:taxon:d7e8d97874af0e572e3e32eb6bae8b7b,Water-primrose,en
 union-list:taxon:d7e8d97874af0e572e3e32eb6bae8b7b,waterteunisbloem,nl
 union-list:taxon:d7e8d97874af0e572e3e32eb6bae8b7b,jussie à grandes fleurs,fr
+union-list:taxon:d7e8d97874af0e572e3e32eb6bae8b7b,Großblütiges Heusenkraut,de
 union-list:taxon:5c5701252bbdefcded25a15920dbc890,Floating primrose-willow,en
 union-list:taxon:5c5701252bbdefcded25a15920dbc890,kleine waterteunisbloem,nl
 union-list:taxon:5c5701252bbdefcded25a15920dbc890,jussie rampante,fr
+union-list:taxon:5c5701252bbdefcded25a15920dbc890,Flutendes Heusenkraut,de
 union-list:taxon:234b55303bbec0961188169ba80d90aa,Vine-like fern,en
 union-list:taxon:234b55303bbec0961188169ba80d90aa,Japanse klimvaren,nl
 union-list:taxon:234b55303bbec0961188169ba80d90aa,fougère grimpante du Japon,fr
+union-list:taxon:234b55303bbec0961188169ba80d90aa,Japanischer kletterfarn,de
 union-list:taxon:1a5ce47f15a3a1baab1f2339ff6e09b6,American skunk cabbage,en
 union-list:taxon:1a5ce47f15a3a1baab1f2339ff6e09b6,moerasaronskelk,nl
 union-list:taxon:1a5ce47f15a3a1baab1f2339ff6e09b6,faux arum,fr
+union-list:taxon:1a5ce47f15a3a1baab1f2339ff6e09b6,Gelbe Scheincalla,de
 union-list:taxon:5edab6622287930a1d9647792b10eac5,Japanese stiltgrass,en
 union-list:taxon:5edab6622287930a1d9647792b10eac5,Japans steltgras,nl
 union-list:taxon:5edab6622287930a1d9647792b10eac5,herbe à échasses japonaise,fr
+union-list:taxon:5edab6622287930a1d9647792b10eac5,Japanisches stelzengras,de
 union-list:taxon:00300bd4820a4cac429fcbc34c3b8177,white perch,en
 union-list:taxon:00300bd4820a4cac429fcbc34c3b8177,Amerikaanse baars,nl
 union-list:taxon:00300bd4820a4cac429fcbc34c3b8177,bar blanc d’Amérique,fr
+union-list:taxon:00300bd4820a4cac429fcbc34c3b8177,Amerikanische Kermesbeere,de
 union-list:taxon:2858dd69ce600e2f8de3ad8d9b7de364,Muntjac deer,en
 union-list:taxon:2858dd69ce600e2f8de3ad8d9b7de364,Chinese muntjak,nl
 union-list:taxon:2858dd69ce600e2f8de3ad8d9b7de364,muntjac de Chine,fr
+union-list:taxon:2858dd69ce600e2f8de3ad8d9b7de364,Chinesischer Muntjak,de
 union-list:taxon:4c90a0cc6adea286e0cfa9800b6c687f,Coypu,en
 union-list:taxon:4c90a0cc6adea286e0cfa9800b6c687f,beverrat,nl
 union-list:taxon:4c90a0cc6adea286e0cfa9800b6c687f,ragondin,fr
+union-list:taxon:4c90a0cc6adea286e0cfa9800b6c687f,Nutria,de
 union-list:taxon:1af23afca02d69627a73b1c96d716661,Parrot's feather,en
 union-list:taxon:1af23afca02d69627a73b1c96d716661,parelvederkruid,nl
 union-list:taxon:1af23afca02d69627a73b1c96d716661,myriophylle du Brésil,fr
+union-list:taxon:1af23afca02d69627a73b1c96d716661,Brasilianisches Tausendblatt,de
 union-list:taxon:fdfdd3923b25b5a6fb86b7f3996181c5,Broadleaf watermilfoil,en
 union-list:taxon:fdfdd3923b25b5a6fb86b7f3996181c5,ongelijkbladig vederkruid,nl
 union-list:taxon:fdfdd3923b25b5a6fb86b7f3996181c5,myriophylle hétérophylle,fr
+union-list:taxon:fdfdd3923b25b5a6fb86b7f3996181c5,Verschiedenblättriges Tausendblatt,de
 union-list:taxon:496ac7b62bc71964bcbb2ce3389c3dda,Coati rode,en
 union-list:taxon:496ac7b62bc71964bcbb2ce3389c3dda,neusbeer,nl
-union-list:taxon:496ac7b62bc71964bcbb2ce3389c3dda,coati roux,fr
+union-list:taxon:496ac7b62bc71964bcbb2ce3389c3dda,coati roux  Roter,fr
+union-list:taxon:496ac7b62bc71964bcbb2ce3389c3dda,Nasenbär,de
 union-list:taxon:15bb47456ffdc7d6cc73bc9b7e20501c,Raccoon dog,en
 union-list:taxon:15bb47456ffdc7d6cc73bc9b7e20501c,wasbeerhond,nl
 union-list:taxon:15bb47456ffdc7d6cc73bc9b7e20501c,chien viverrin,fr
+union-list:taxon:15bb47456ffdc7d6cc73bc9b7e20501c,Marderhund,de
 union-list:taxon:c2eceaff657f5d9ec6735f68425a605b,Muskrat,en
 union-list:taxon:c2eceaff657f5d9ec6735f68425a605b,muskusrat,nl
 union-list:taxon:c2eceaff657f5d9ec6735f68425a605b,rat musqué,fr
+union-list:taxon:c2eceaff657f5d9ec6735f68425a605b,Bisam,de
 union-list:taxon:63eb39c287c2f01a66019ff34a469f19,Spiny-cheek crayfish,en
 union-list:taxon:63eb39c287c2f01a66019ff34a469f19,gevlekte rivierkreeft,nl
 union-list:taxon:63eb39c287c2f01a66019ff34a469f19,écrevisse américaine,fr
+union-list:taxon:63eb39c287c2f01a66019ff34a469f19,Kamberkrebs,de
 union-list:taxon:05ba41c60ef652556b8ab9196756b31d,Spiny-cheek crayfish,en
 union-list:taxon:05ba41c60ef652556b8ab9196756b31d,gevlekte rivierkreeft,nl
 union-list:taxon:05ba41c60ef652556b8ab9196756b31d,écrevisse américaine,fr
+union-list:taxon:05ba41c60ef652556b8ab9196756b31d,Kamberkrebs,de
 union-list:taxon:db216249730f55c742b48e1a46642584,Virile crayfish,en
 union-list:taxon:db216249730f55c742b48e1a46642584,geknobbelde Amerikaanse rivierkreeft,nl
 union-list:taxon:db216249730f55c742b48e1a46642584,écrevisse à pinces bleues,fr
+union-list:taxon:db216249730f55c742b48e1a46642584,Viril-Flusskrebs,de
 union-list:taxon:567527f8bf8a15a3a9afeea3f3b2c648,Virile crayfish,en
 union-list:taxon:567527f8bf8a15a3a9afeea3f3b2c648,geknobbelde Amerikaanse rivierkreeft,nl
 union-list:taxon:567527f8bf8a15a3a9afeea3f3b2c648,écrevisse à pinces bleues,fr
+union-list:taxon:567527f8bf8a15a3a9afeea3f3b2c648,Viril-Flusskrebs,de
 union-list:taxon:46766cbfea3fbf94c8995f4d9ca05d32,Ruddy duck,en
 union-list:taxon:46766cbfea3fbf94c8995f4d9ca05d32,rosse stekelstaart,nl
 union-list:taxon:46766cbfea3fbf94c8995f4d9ca05d32,érismature rousse,fr
+union-list:taxon:46766cbfea3fbf94c8995f4d9ca05d32,Schwarzkopf-Ruderente,de
 union-list:taxon:ee330ef52fdb6375ae0223e945ccdbe3,Signal crayfish,en
 union-list:taxon:ee330ef52fdb6375ae0223e945ccdbe3,Californische rivierkreeft,nl
 union-list:taxon:ee330ef52fdb6375ae0223e945ccdbe3,écrevisse signal,fr
+union-list:taxon:ee330ef52fdb6375ae0223e945ccdbe3,Signalkrebs,de
 union-list:taxon:5c2d10adb3fc8b43e9f6306ac50e71c3,Whitetop weed,en
 union-list:taxon:5c2d10adb3fc8b43e9f6306ac50e71c3,schijnambrosia,nl
 union-list:taxon:5c2d10adb3fc8b43e9f6306ac50e71c3,fausse camomille,fr
+union-list:taxon:5c2d10adb3fc8b43e9f6306ac50e71c3,Karottenkraut,de
 union-list:taxon:2252885048cc2297c1dd5b31b917f5ca,Crimson fountaingrass,en
 union-list:taxon:2252885048cc2297c1dd5b31b917f5ca,fraai lampenpoetsersgras,nl
 union-list:taxon:2252885048cc2297c1dd5b31b917f5ca,herbe aux écouvillons pourpres,fr
+union-list:taxon:2252885048cc2297c1dd5b31b917f5ca,Afrikanisches Lampenputzergras,de
 union-list:taxon:2aea54bb9450b326bcab0e63f8fdefc1,Amur sleeper,en
 union-list:taxon:2aea54bb9450b326bcab0e63f8fdefc1,amoergrondel,nl
 union-list:taxon:2aea54bb9450b326bcab0e63f8fdefc1,goujon de l'amour,fr
+union-list:taxon:2aea54bb9450b326bcab0e63f8fdefc1,Amur-Schläfergrundel,de
 union-list:taxon:f6080f462684f01c273ab81bc8765a2a,Asiatic tearthumb,en
 union-list:taxon:f6080f462684f01c273ab81bc8765a2a,gestekelde duizendknoop,nl
 union-list:taxon:f6080f462684f01c273ab81bc8765a2a,renouée perfoliée,fr
+union-list:taxon:f6080f462684f01c273ab81bc8765a2a,Durchwachsener Knöterich,de
 union-list:taxon:f23795a07eb65449a456cfb63c0ba87a,Asiatic tearthumb,en
 union-list:taxon:f23795a07eb65449a456cfb63c0ba87a,gestekelde duizendknoop,nl
 union-list:taxon:f23795a07eb65449a456cfb63c0ba87a,renouée perfoliée,fr
+union-list:taxon:f23795a07eb65449a456cfb63c0ba87a,Durchwachsener Knöterich,de
 union-list:taxon:21e5a6919ccfea1fb1588ce43785e2e7,water lettuce,en
 union-list:taxon:21e5a6919ccfea1fb1588ce43785e2e7,watersla,nl
 union-list:taxon:21e5a6919ccfea1fb1588ce43785e2e7,laitue d’eau,fr
+union-list:taxon:21e5a6919ccfea1fb1588ce43785e2e7,Wassersalat,de
 union-list:taxon:163a39867c156bbfd1725dfa0a751ac8,Striped eel catfish,en
 union-list:taxon:163a39867c156bbfd1725dfa0a751ac8,gestreepte koraalmeerval,nl
 union-list:taxon:163a39867c156bbfd1725dfa0a751ac8,poisson-chat-rayé,fr
+union-list:taxon:163a39867c156bbfd1725dfa0a751ac8,Gestreifter korallenwels,de
 union-list:taxon:79847bb81e5180ae0645758dff35be2b,Red swamp crayfish,en
 union-list:taxon:79847bb81e5180ae0645758dff35be2b,rode Amerikaanse rivierkreeft,nl
 union-list:taxon:79847bb81e5180ae0645758dff35be2b,écrevisse de Louisiane,fr
+union-list:taxon:79847bb81e5180ae0645758dff35be2b,Roter Amerikanischer Sumpfkrebs,de
 union-list:taxon:2ae7aa0268ac3a57f0f0d5c66055fae9,Marbled crayfish,en
 union-list:taxon:2ae7aa0268ac3a57f0f0d5c66055fae9,marmerkreeft,nl
 union-list:taxon:2ae7aa0268ac3a57f0f0d5c66055fae9,écrevisse marbrée,fr
+union-list:taxon:2ae7aa0268ac3a57f0f0d5c66055fae9,Marmorkrebs,de
 union-list:taxon:71faf68df58e2aa4d68f3ce282b97621,Marbled crayfish,en
 union-list:taxon:71faf68df58e2aa4d68f3ce282b97621,marmerkreeft,nl
 union-list:taxon:71faf68df58e2aa4d68f3ce282b97621,écrevisse marbrée,fr
+union-list:taxon:71faf68df58e2aa4d68f3ce282b97621,Marmorkrebs,de
 union-list:taxon:54c9284b5e4af193c432b03d99f0194e,Raccoon,en
 union-list:taxon:54c9284b5e4af193c432b03d99f0194e,wasbeer,nl
 union-list:taxon:54c9284b5e4af193c432b03d99f0194e,raton laveur,fr
+union-list:taxon:54c9284b5e4af193c432b03d99f0194e,Waschbär,de
 union-list:taxon:99305db298468c301aab9d55f6179fac,Mesquite,en
 union-list:taxon:99305db298468c301aab9d55f6179fac,mesquite,nl
 union-list:taxon:99305db298468c301aab9d55f6179fac,bayahonde,fr
+union-list:taxon:99305db298468c301aab9d55f6179fac,Mesquite-strauch,de
 union-list:taxon:a4e7707bd80f188365377a5e93b481e1,Stone moroko,en
 union-list:taxon:a4e7707bd80f188365377a5e93b481e1,blauwbandgrondel,nl
 union-list:taxon:a4e7707bd80f188365377a5e93b481e1,goujon Asiatique,fr
+union-list:taxon:a4e7707bd80f188365377a5e93b481e1,Blaubandbärbling,de
 union-list:taxon:5e7c81aad21334eec9db3f9d52acfc80,Kudzu vine,en
 union-list:taxon:5e7c81aad21334eec9db3f9d52acfc80,kudzu,nl
 union-list:taxon:5e7c81aad21334eec9db3f9d52acfc80,kudzu,fr
+union-list:taxon:5e7c81aad21334eec9db3f9d52acfc80,Kudzu,de
 union-list:taxon:89f0024cd173114d3c245dfc9fe524ca,Kudzu vine,en
 union-list:taxon:89f0024cd173114d3c245dfc9fe524ca,kudzu,nl
 union-list:taxon:89f0024cd173114d3c245dfc9fe524ca,kudzu,fr
+union-list:taxon:89f0024cd173114d3c245dfc9fe524ca,Kudzu,de
 union-list:taxon:de33b9edfd60eaf11e4794c262d96992,red-vented bulbul,en
 union-list:taxon:de33b9edfd60eaf11e4794c262d96992,roodbuikbuulbuul,nl
 union-list:taxon:de33b9edfd60eaf11e4794c262d96992,bulbul à ventre rouge,fr
+union-list:taxon:de33b9edfd60eaf11e4794c262d96992,Rotsteißbülbül,de
 union-list:taxon:1f60aa50a56d6930b330b1c245da4d38,algae stomp,en
 union-list:taxon:1f60aa50a56d6930b330b1c245da4d38,gaffelwier,nl
 union-list:taxon:1f60aa50a56d6930b330b1c245da4d38,algue brune du Japon,fr
+union-list:taxon:1f60aa50a56d6930b330b1c245da4d38,Meeresalge,de
 union-list:taxon:c0d7212e97f334e8c2000caa8f73a35f,Salvinia moss,en
 union-list:taxon:c0d7212e97f334e8c2000caa8f73a35f,kariba weed,en
 union-list:taxon:c0d7212e97f334e8c2000caa8f73a35f,grote vlotvaren,nl
 union-list:taxon:c0d7212e97f334e8c2000caa8f73a35f,salvinie géante,fr
+union-list:taxon:c0d7212e97f334e8c2000caa8f73a35f,Riesen-schwimmfarn,de
 union-list:taxon:0aa74bf623b9700c704f4331fa4edac3,Salvinia moss,en
 union-list:taxon:0aa74bf623b9700c704f4331fa4edac3,kariba weed,en
 union-list:taxon:0aa74bf623b9700c704f4331fa4edac3,grote vlotvaren,nl
 union-list:taxon:0aa74bf623b9700c704f4331fa4edac3,salvinie géante,fr
+union-list:taxon:0aa74bf623b9700c704f4331fa4edac3,Riesen-schwimmfarn,de
 union-list:taxon:66a78da61f8a5e9e220d313daf90e87b,Grey squirrel,en
 union-list:taxon:66a78da61f8a5e9e220d313daf90e87b,grijze eekhoorn,nl
 union-list:taxon:66a78da61f8a5e9e220d313daf90e87b,écureuil gris,fr
+union-list:taxon:66a78da61f8a5e9e220d313daf90e87b,Grauhörnchen,de
 union-list:taxon:ea75f869bf4fef4a9b278a4cca5b17ca,Fox squirrel,en
 union-list:taxon:ea75f869bf4fef4a9b278a4cca5b17ca,Amerikaanse voseekhoorn,nl
 union-list:taxon:ea75f869bf4fef4a9b278a4cca5b17ca,écureuil fauve,fr
+union-list:taxon:ea75f869bf4fef4a9b278a4cca5b17ca,Fuchshörnchen,de
 union-list:taxon:644152f140aacecf03bbf5b082f45868,tropical imported fire ant,en
 union-list:taxon:644152f140aacecf03bbf5b082f45868,tropische vuurmier,nl
 union-list:taxon:644152f140aacecf03bbf5b082f45868,fourmi de feu tropicale,fr
+union-list:taxon:644152f140aacecf03bbf5b082f45868,Tropische Feuerameise,de
 union-list:taxon:3db654096b594ec3a20df3d104783ade,red imported fire ant,en
 union-list:taxon:3db654096b594ec3a20df3d104783ade,rode vuurmier,nl
 union-list:taxon:3db654096b594ec3a20df3d104783ade,grande fourmi de feu,fr
+union-list:taxon:3db654096b594ec3a20df3d104783ade,Rote Feuerameise,de
 union-list:taxon:2a19eeb03ac9175ecf89f0092f578909,black imported fire ant,en
 union-list:taxon:2a19eeb03ac9175ecf89f0092f578909,zwarte vuurmier,nl
 union-list:taxon:2a19eeb03ac9175ecf89f0092f578909,fourmi de feu noire,fr
+union-list:taxon:2a19eeb03ac9175ecf89f0092f578909,Schwarze feuerameise,de
 union-list:taxon:da1e73a1d426b24db0ca4f186d6aea73,Siberian chipmunk,en
 union-list:taxon:da1e73a1d426b24db0ca4f186d6aea73,Siberische grondeekhoorn,nl
 union-list:taxon:da1e73a1d426b24db0ca4f186d6aea73,tamia de Sibérie,fr
+union-list:taxon:da1e73a1d426b24db0ca4f186d6aea73,Sibirisches Streifenhörnchen,de
 union-list:taxon:e6f0112aec457de98b2848f2ad24c4ba,Sacred ibis,en
 union-list:taxon:e6f0112aec457de98b2848f2ad24c4ba,heilige ibis,nl
 union-list:taxon:e6f0112aec457de98b2848f2ad24c4ba,ibis sacré,fr
+union-list:taxon:e6f0112aec457de98b2848f2ad24c4ba,Heiliger Ibis,de
 union-list:taxon:b4d8d4e2c93b6a704156e1b53001938e,"Red-eared, yellow-bellied and Cumberland sliders",en
 union-list:taxon:b4d8d4e2c93b6a704156e1b53001938e,lettersierschildpad,nl
 union-list:taxon:b4d8d4e2c93b6a704156e1b53001938e,tortue de Floride,fr
+union-list:taxon:b4d8d4e2c93b6a704156e1b53001938e,Buchstaben-Schmuckschildkröte,de
 union-list:taxon:679de6d53e7e545f70b6845216275f46,Chinese tallow,en
 union-list:taxon:679de6d53e7e545f70b6845216275f46,talgboom,nl
 union-list:taxon:679de6d53e7e545f70b6845216275f46,arbre à suif,fr
+union-list:taxon:679de6d53e7e545f70b6845216275f46,Chinesischer Talgbaum,de
 union-list:taxon:15a236503f494849f5c2c4b9e03b9369,Chinese tallow,en
 union-list:taxon:15a236503f494849f5c2c4b9e03b9369,talgboom,nl
 union-list:taxon:15a236503f494849f5c2c4b9e03b9369,arbre à suif,fr
+union-list:taxon:15a236503f494849f5c2c4b9e03b9369,Chinesischer Talgbaum,de
 union-list:taxon:07b5286edbd48415d4e154b4aba5cbf9,Asian hornet,en
 union-list:taxon:07b5286edbd48415d4e154b4aba5cbf9,Aziatische hoornaar,nl
 union-list:taxon:07b5286edbd48415d4e154b4aba5cbf9,frelon asiatique,fr
+union-list:taxon:07b5286edbd48415d4e154b4aba5cbf9,Asiatische Hornisse,de
 union-list:taxon:f7c8bed2b36b21e3a4bff1632c5f1c2d,little fire ant,en
 union-list:taxon:f7c8bed2b36b21e3a4bff1632c5f1c2d,dwergvuurmier,nl
 union-list:taxon:f7c8bed2b36b21e3a4bff1632c5f1c2d,petite fourmi de feu,fr
+union-list:taxon:f7c8bed2b36b21e3a4bff1632c5f1c2d,Kleine Feuerameise,de
 union-list:taxon:69c04e84e8c6abc981ad1c57068556cb,African clawed frog,en
 union-list:taxon:69c04e84e8c6abc981ad1c57068556cb,Afrikaanse klauwkikker,nl
 union-list:taxon:69c04e84e8c6abc981ad1c57068556cb,xénope lisse,fr
+union-list:taxon:69c04e84e8c6abc981ad1c57068556cb,Glatte Krallenfrosch,de
