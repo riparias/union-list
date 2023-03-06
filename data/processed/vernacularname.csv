@@ -17,6 +17,9 @@ union-list:taxon:52f42b74b3d05c74023d8a75c402989d,ouette d'Égypte,fr
 union-list:taxon:b7674f5e6e0f6beed1f1360ed992f885,Alligator weed,en
 union-list:taxon:b7674f5e6e0f6beed1f1360ed992f885,alligatorkruid,nl
 union-list:taxon:b7674f5e6e0f6beed1f1360ed992f885,herbe à alligator,fr
+union-list:taxon:8aaacb40fb899153168d3ea045e724d2,Black bullhead,en
+union-list:taxon:8aaacb40fb899153168d3ea045e724d2,zwarte dwergmeerval,nl
+union-list:taxon:8aaacb40fb899153168d3ea045e724d2,poisson-chat commun,fr
 union-list:taxon:4849c38a09acc788fa58486f94c9f213,Broomsedge bluestem,en
 union-list:taxon:4849c38a09acc788fa58486f94c9f213,Amerikaans bezemgras,nl
 union-list:taxon:4849c38a09acc788fa58486f94c9f213,barbon de Virginie,fr
@@ -168,7 +171,7 @@ union-list:taxon:fdfdd3923b25b5a6fb86b7f3996181c5,ongelijkbladig vederkruid,nl
 union-list:taxon:fdfdd3923b25b5a6fb86b7f3996181c5,myriophylle hétérophylle,fr
 union-list:taxon:496ac7b62bc71964bcbb2ce3389c3dda,Coati rode,en
 union-list:taxon:496ac7b62bc71964bcbb2ce3389c3dda,neusbeer,nl
-union-list:taxon:496ac7b62bc71964bcbb2ce3389c3dda,coati roux,fr
+union-list:taxon:496ac7b62bc71964bcbb2ce3389c3dda,coati roux  Roter,fr
 union-list:taxon:15bb47456ffdc7d6cc73bc9b7e20501c,Raccoon dog,en
 union-list:taxon:15bb47456ffdc7d6cc73bc9b7e20501c,wasbeerhond,nl
 union-list:taxon:15bb47456ffdc7d6cc73bc9b7e20501c,chien viverrin,fr
