@@ -236,7 +236,6 @@ Map values by recoding to the [GBIF rank vocabulary](http://rs.gbif.org/vocabula
 taxon %<>% mutate(dwc_taxonRank = case_when(
   # Scientific names often end with authors, so regex only considers beginning
   scientific_name == "Lespedeza juncea var. sericea (Thunb.) Lace & Hauech" ~ "variety",
-  scientific_name == "Lithobates (Rana) catesbeianus Shaw, 1802" ~ "species",
   scientific_name == "Procambarus fallax (Hagen, 1870) f. virginalis" ~ "form",
   scientific_name == "Pueraria montana (Lour.) Merr. var. lobata (Willd.)" ~ "variety",
   scientific_name == "Vespa velutina nigrithorax de Buysson, 1905" ~ "subspecies",

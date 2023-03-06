@@ -576,7 +576,6 @@ vocabulary</a>:</p>
 <pre class="r"><code>taxon %&lt;&gt;% mutate(dwc_taxonRank = case_when(
   # Scientific names often end with authors, so regex only considers beginning
   scientific_name == &quot;Lespedeza juncea var. sericea (Thunb.) Lace &amp; Hauech&quot; ~ &quot;variety&quot;,
-  scientific_name == &quot;Lithobates (Rana) catesbeianus Shaw, 1802&quot; ~ &quot;species&quot;,
   scientific_name == &quot;Procambarus fallax (Hagen, 1870) f. virginalis&quot; ~ &quot;form&quot;,
   scientific_name == &quot;Pueraria montana (Lour.) Merr. var. lobata (Willd.)&quot; ~ &quot;variety&quot;,
   scientific_name == &quot;Vespa velutina nigrithorax de Buysson, 1905&quot; ~ &quot;subspecies&quot;,
