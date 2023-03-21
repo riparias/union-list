@@ -20,7 +20,7 @@ The source data are manually created from:
 <!-- This section provides links to the published dataset. Obviously, you'll only be able to add those links once you have published your dataset. 😋 -->
 
 - [Dataset on the IPT](https://ipt.inbo.be/resource?r=union-list)
-- [Dataset on GBIF](<!-- Add the DOI of the dataset on GBIF here -->)
+- [Dataset on GBIF](https://doi.org/10.15468/97aucj)
 
 ## Repo structure
 
