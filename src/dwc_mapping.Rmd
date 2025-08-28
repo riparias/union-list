@@ -53,7 +53,7 @@ The Union list is published officially on EASIN. We pull source data from the EA
 
 ```{r read_from_json}
 input_data <- jsonlite::fromJSON(
-  "https://easin.jrc.ec.europa.eu/api/cat/euconcern/",
+  "https://easin.jrc.ec.europa.eu/apixg/catxg/euconcern",
   simplifyVector = TRUE,
   flatten = TRUE
 )
