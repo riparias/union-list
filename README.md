@@ -14,6 +14,7 @@ The source data are manually created from:
 
 - [2022 consolidated version pdf](https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:02016R1141-20220802&from=EN): scientific names with authors, synonym names (in parenthesis) with authors
 - spreadsheets containing common names: [first version](https://circabc.europa.eu/ui/group/4cd6cb36-b0f1-4db4-915e-65cd29067f49/library/2ed2ee2a-730f-4583-a3ac-bb2a1815ad6a/details) (January 2018) and later additions ([April 2020](https://circabc.europa.eu/ui/group/4cd6cb36-b0f1-4db4-915e-65cd29067f49/library/1ac00d12-613b-447c-ab91-3016af071bcf/details) and [January 2022](https://circabc.europa.eu/ui/group/4cd6cb36-b0f1-4db4-915e-65cd29067f49/library/fad036d3-e2df-4adb-9c7a-7b9593a4c2f8/details))
+- [Commission Implementing Regulation (EU) 2025/1422](https://eur-lex.europa.eu/eli/reg_impl/2025/1422/oj/eng) updating the list of invasive alien species of Union concern
 
 ## Published dataset
 

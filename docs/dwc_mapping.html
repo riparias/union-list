@@ -11,7 +11,7 @@
 
 <meta name="author" content="Damiano Oldoni" />
 
-<meta name="date" content="2025-08-28" />
+<meta name="date" content="2025-09-04" />
 
 <title>Darwin Core mapping</title>
 
@@ -349,7 +349,7 @@ div.tocify {
 <h3 class="subtitle">For: List of Invasive Alien Species of Union
 concern</h3>
 <h4 class="author">Damiano Oldoni</h4>
-<h4 class="date">2025-08-28</h4>
+<h4 class="date">2025-09-04</h4>
 
 </div>
 
@@ -754,7 +754,7 @@ has been added to the list.</p>
 species has been added to the list. We use it to create a description
 column:</p>
 <pre class="r"><code>description %&lt;&gt;% mutate(description = entry_into_force)</code></pre>
-<pre><code>## mutate: new variable &#39;description&#39; (Date) with 9 unique values and 0% NA</code></pre>
+<pre><code>## mutate: new variable &#39;description&#39; (Date) with 10 unique values and 0% NA</code></pre>
 <p>Create a <code>type</code> field to indicate the type of
 description:</p>
 <pre class="r"><code>description %&lt;&gt;% mutate(type = &quot;entry into force&quot;)</code></pre>
@@ -773,7 +773,7 @@ Description</a>:</p>
 <div id="description" class="section level3" number="6.3.2">
 <h3><span class="header-section-number">6.3.2</span> description</h3>
 <pre class="r"><code>description %&lt;&gt;% mutate(dwc_description = description)</code></pre>
-<pre><code>## mutate: new variable &#39;dwc_description&#39; (Date) with 9 unique values and 0% NA</code></pre>
+<pre><code>## mutate: new variable &#39;dwc_description&#39; (Date) with 10 unique values and 0% NA</code></pre>
 </div>
 <div id="type" class="section level3" number="6.3.3">
 <h3><span class="header-section-number">6.3.3</span> type</h3>
